@@ -186,7 +186,7 @@ d'entrée embed (1024 vs 4096), seuil de filtre titre, taille fenêtre.
 | D7 | 14/09/2026 | G (routing par taille) rejeté | Mesuré à l'échelle (796) : dégrade MRR vs fusion libre |
 | D8 | 14/09/2026 | Abstention/scope : zone graduée sur score CE (pas de seuil dur) + gate d'entrée déterministe + clause de refus dans le prompt | Aucun seuil ne sépare proprement in-domain/hors-sujet (distributions qui se chevauchent) — voir SAFETY.md |
 | D9 | 17/09/2026 | **Pas de LangChain** — patterns repris sans la dépendance | Voir §9 |
-| D10 | 17/09/2026 | Réécriture de requête multi-tour via modèle dédié léger (`condense_query`, llama3.1:8b) — repli sur le message brut si indispo | Retrieval ne voyait que le dernier message ; bug réel observé en usage (17/09). Modèle non-thinking choisi exprès (qwen3:4b engloutit son budget dans le champ `reasoning`) |
+| D10 | 17/09/2026, **révisée même jour** | Réécriture de requête multi-tour (`condense_query`) via **`qwen3:30b-a3b-q6k`** — le LLM principal, pas un modèle dédié | Retrieval ne voyait que le dernier message ; bug réel observé en usage. Première mouture `llama3.1:8b` (qwen3:4b engloutissait son budget dans `reasoning`) ; test comparatif → le MoE (~3B actifs) condense en ~1.0s vs 1.6s, qualité égale, **un modèle résident de moins** en RAM. `think:false` forcé dans la requête (garde-fou thinking, ignoré sans erreur par les non-thinking) |
 
 ## 9. Stack : pourquoi pas LangChain (et ce qu'on en retient)
 
@@ -213,8 +213,9 @@ concept :
 **Ce qu'on a quand même repris de ce monde** : la **réécriture de requête
 conversationnelle** (pattern *condense question* / *history-aware retriever*
 de LangChain, et littérature QReCC/CANARD) — implémentée dans
-`Retrieval.condense_query` avec un petit modèle dédié : le dernier message +
-les 3 tours précédents → une requête autonome avant embedding.
+`Retrieval.condense_query` : le dernier message + les 3 tours précédents →
+une requête autonome avant embedding. Le modèle qui réécrit est **le même
+Qwen3-30B que la génération** (D10) — voir PIPELINE.md « pourquoi un MoE ».
 
 ## 8. Questions ouvertes — état
 

@@ -52,8 +52,27 @@ Sanitizer serveur : [[n]] → URLs /t/slug/id  ← liens générés côté serve
 |---|---|---|---|
 | **bge-m3** | bi-encoder (embedding) | texte → vecteur 1024-dim. Encode chaque post **une fois** (backfill) et chaque question **à la volée** | Ollama — RTX 2060 laptop en dev ; Ollama mini PC `:32134` en prod |
 | **cross-encoder mmarco-mMiniLMv2-L12-H384** | cross-encoder | score de pertinence d'une **paire** (question, candidat) — lit les deux ensemble | dev : `sentence-transformers` CPU laptop ; **prod : TEI `/rerank` sur le mini PC** (pod k3s `reranker`, NodePort 32136, Tailscale only) |
-| **LLM chat** | génératif | rédige la réponse à partir des 6 sources fournies | mini PC |
+| **LLM chat `qwen3:30b-a3b-q6k`** | génératif (MoE ~3B actifs) | rédige la réponse à partir des 6 sources fournies **+** réécriture de requête multi-tour (`condense_query`, `think:false`) | mini PC (Ollama `:32134`) — **un seul modèle résident** pour les deux rôles |
 | Postgres/pgvector | — | stockage + distance cosine/hamming | conteneur Discourse (VPS en prod) |
+
+### Pourquoi un MoE 30B sur un iGPU modeste — le choix structurel
+
+La iGPU 780M du mini PC n'a **pas de VRAM dédiée** : les poids vivent dans
+la RAM unifiée (GTT, plusieurs dizaines de Gio). Deux conséquences :
+
+- **Capacité** : un 30B quantifié (~20+ Gio) tient là où une dGPU du même
+  format plafonnerait à 8-16 Go de VRAM — le facteur limitant n'est pas la
+  VRAM mais la RAM système, dont on a 48 Go.
+- **Vitesse** : l'inférence sur iGPU est **bound par la bande passante
+  mémoire** (chaque token relit les poids actifs). Un MoE n'active que
+  ~3B paramètres par token → le débit reste élevé malgré la taille totale
+  du modèle. Mesuré : réécriture de requête en **~1.0 s** à chaud vs 1.6 s
+  pour un llama3.1:8B dense — le « gros » modèle est plus rapide que le
+  petit, **parce qu'il est MoE**.
+
+C'est pourquoi la réécriture de requête a basculé de `llama3.1:8b` vers le
+LLM principal (D10, 17/09) : plus rapide, qualité égale ou meilleure, et un
+modèle résident de moins à garder chaud en RAM.
 
 ### Bi-encoder vs cross-encoder — pourquoi les deux
 
