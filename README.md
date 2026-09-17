@@ -71,7 +71,7 @@ rewrite (`think:false`) and generation.
 
 Deliberate choice: **no RAG framework** (LangChain & co.) — a linear
 pipeline in direct code, instrumented for evaluation. Full reasoning:
-[`docs/rag/DESIGN.md`](docs/rag/DESIGN.md) §9.
+[`docs/rag/DESIGN.md` §9](docs/rag/DESIGN.md#user-content-9-pourquoi-pas-langchain).
 
 ## Measured results (real corpus, 812-question eval set)
 

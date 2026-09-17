@@ -186,10 +186,29 @@ d'entrée embed (1024 vs 4096), seuil de filtre titre, taille fenêtre.
 | D6 | 14/09/2026 | Config E (B + rerank cross-encoder) = solution finale retrieval | Mesuré : 0.97 Hit@5 / 0.89 MRR, coût ~100ms négligeable |
 | D7 | 14/09/2026 | G (routing par taille) rejeté | Mesuré à l'échelle (796) : dégrade MRR vs fusion libre |
 | D8 | 14/09/2026 | Abstention/scope : zone graduée sur score CE (pas de seuil dur) + gate d'entrée déterministe + clause de refus dans le prompt | Aucun seuil ne sépare proprement in-domain/hors-sujet (distributions qui se chevauchent) — voir SAFETY.md |
-| D9 | 17/09/2026 | **Pas de LangChain** — patterns repris sans la dépendance | Voir §9 |
+| D9 | 17/09/2026 | **Pas de LangChain** — patterns repris sans la dépendance | Voir [§9](#user-content-9-pourquoi-pas-langchain) |
 | D10 | 17/09/2026, **révisée même jour** | Réécriture de requête multi-tour (`condense_query`) via **`qwen3:30b-a3b-q6k`** — le LLM principal, pas un modèle dédié | Retrieval ne voyait que le dernier message ; bug réel observé en usage. Première mouture `llama3.1:8b` (qwen3:4b engloutissait son budget dans `reasoning`) ; test comparatif → le MoE (~3B actifs) condense en ~1.0s vs 1.6s, qualité égale, **un modèle résident de moins** en RAM. `think:false` forcé dans la requête (garde-fou thinking, ignoré sans erreur par les non-thinking) |
 
-## 9. Stack : pourquoi pas LangChain (et ce qu'on en retient)
+## 8. Questions ouvertes — état
+
+- ~~`OP excerpt` dans l'enrichi~~ → **tranché** : mesuré et rejeté (D5/D2).
+- Fenêtre voisinage (config D) : **non mesurée isolément** — le rerank +
+  extrait 320c suffit en pratique sur l'éval bout-en-bout (`SAFETY.md`
+  run 812) ; à revisiter seulement si des cas d'anaphore non résolue
+  sont observés en usage réel.
+- Reranker : **tranché** — oui, +0.03 Hit@5 / +0.05 MRR pour ~100ms.
+  Tourne sur CPU, mini PC ou VPS EPYC Rome tous deux suffisants
+  (mesuré : `PIPELINE.md`).
+- Abstention : **tranché** — pas un seuil unique, zone graduée
+  (`< -4` abstention, `[-4,0)` prudence, `≥0` normal) + gate d'entrée
+  pour l'axe sécurité (indépendant de la pertinence). Voir SAFETY.md.
+- `INTENT_QUERIES` codées main (prod actuelle) : **non repris** dans le
+  nouveau pipeline — le rerank cross-encoder couvre ce besoin sans règles
+  ad hoc à maintenir ; à confirmer si un cas de régression apparaît.
+- Config D (voisinage génération), config F (RRF) : optionnelles,
+  gain marginal mesuré — pas nécessaires pour le MVP.
+
+## 9. Pourquoi pas LangChain
 
 LangChain est une **bibliothèque** (Python/JS — pas un LLM, pas un service à
 déployer) qui fournit des briques d'orchestration LLM : retrieval, mémoire,
@@ -217,22 +236,3 @@ de LangChain, et littérature QReCC/CANARD) — implémentée dans
 `Retrieval.condense_query` : le dernier message + les 3 tours précédents →
 une requête autonome avant embedding. Le modèle qui réécrit est **le même
 Qwen3-30B que la génération** (D10) — voir PIPELINE.md « pourquoi un MoE ».
-
-## 8. Questions ouvertes — état
-
-- ~~`OP excerpt` dans l'enrichi~~ → **tranché** : mesuré et rejeté (D5/D2).
-- Fenêtre voisinage (config D) : **non mesurée isolément** — le rerank +
-  extrait 320c suffit en pratique sur l'éval bout-en-bout (`SAFETY.md`
-  run 812) ; à revisiter seulement si des cas d'anaphore non résolue
-  sont observés en usage réel.
-- Reranker : **tranché** — oui, +0.03 Hit@5 / +0.05 MRR pour ~100ms.
-  Tourne sur CPU, mini PC ou VPS EPYC Rome tous deux suffisants
-  (mesuré : `PIPELINE.md`).
-- Abstention : **tranché** — pas un seuil unique, zone graduée
-  (`< -4` abstention, `[-4,0)` prudence, `≥0` normal) + gate d'entrée
-  pour l'axe sécurité (indépendant de la pertinence). Voir SAFETY.md.
-- `INTENT_QUERIES` codées main (prod actuelle) : **non repris** dans le
-  nouveau pipeline — le rerank cross-encoder couvre ce besoin sans règles
-  ad hoc à maintenir ; à confirmer si un cas de régression apparaît.
-- Config D (voisinage génération), config F (RRF) : optionnelles,
-  gain marginal mesuré — pas nécessaires pour le MVP.

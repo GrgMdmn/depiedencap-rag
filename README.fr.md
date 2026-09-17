@@ -72,7 +72,7 @@ réécriture (`think:false`) **et** la génération.
 
 Le choix délibéré : **pas de framework RAG** (LangChain & co.) — pipeline
 linéaire en code direct, instrumenté pour l'évaluation. Le raisonnement
-complet : [`docs/rag/DESIGN.md`](docs/rag/DESIGN.md) §9.
+complet : [`docs/rag/DESIGN.md` §9](docs/rag/DESIGN.md#user-content-9-pourquoi-pas-langchain).
 
 ## Résultats mesurés (corpus réel, 812 questions d'éval)
 
