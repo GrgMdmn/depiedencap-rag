@@ -1,83 +1,83 @@
-# depiedencap-rag — Agent RAG ancré dans Discourse
+# depiedencap-rag — Discourse-embedded RAG agent
 
-> ⚠️ **Work in progress.** L'agent est en cours de test sur un groupe
-> restreint de démonstration et **n'est pas encore déployé publiquement**
-> sur le forum. Ce dépôt documente le chantier — aucune URL de démo n'est
-> publiée.
+📘 Ce projet est également disponible en [français 🇫🇷](./README.fr.md)
 
-Un plugin **Discourse** + un pipeline RAG auto-hébergé, conçu pour un forum
-associatif francophone (Depiedencap — souliers pour homme, ~428k messages).
-Principe produit : **le bot oriente vers les fils existants, il ne répond
-pas à la place des membres.**
+> ⚠️ **Work in progress.** The agent is currently being tested on a
+> restricted demo group and is **not publicly deployed** on the forum.
+> This repository documents the work — no demo URL is published.
 
-## Ce que fait le plugin
+A **Discourse plugin** + a self-hosted RAG pipeline, built for a French
+community forum (Depiedencap — men's shoes, ~428k posts). Product
+principle: **the bot points members to existing threads instead of
+answering in their place.**
 
-- Retrieval au **grain post** (et non au grain topic) : embeddings `bge-m3`
-  dans `ai_posts_embeddings` (pgvector dans la Postgres du forum), top-25
-  par cosine puis **rerank cross-encoder** (TEI), déduplication par fil.
-- **Réécriture de requête multi-tour** : le dernier message + les tours
-  précédents sont condensés en une requête autonome par un petit modèle
-  dédié avant retrieval (pattern *condense question* / history-aware
-  retriever).
-- **Citations vérifiées côté serveur** : le LLM n'écrit que des marqueurs
-  `[[n]]` ; le plugin les transforme en liens `/t/slug/id/post_number` et
-  jette tout lien qui n'existe pas réellement en base (whitelist Postgres,
-  le LLM n'a jamais le dernier mot sur une URL).
-- **Zones d'evidence graduées** (abstention / prudent / normal) pilotées
-  par le score du reranker + **gate d'entrée déterministe** (regex
-  d'intention) pour les demandes dangereuses ou hors-rôle — zéro appel LLM.
-- Dégradation gracieuse : endpoint embedding ou reranker indisponible →
-  repli legacy/abstention honnête, jamais d'invention.
+## What it does
+
+- **Post-grain retrieval** (not topic-grain): `bge-m3` embeddings in
+  `ai_posts_embeddings` (pgvector inside the forum's Postgres), top-25 by
+  cosine then **cross-encoder rerank** (TEI), per-thread dedup.
+- **Multi-turn query rewriting**: the latest message plus earlier turns
+  are condensed into a standalone query by a small dedicated model before
+  retrieval (*condense question* / history-aware retriever pattern).
+- **Server-side verified citations**: the LLM only emits bare `[[n]]`
+  markers; the plugin maps them to `/t/slug/id/post_number` links and
+  discards any link that does not actually exist in Postgres (URL
+  whitelist — the LLM never gets the last word on a link).
+- **Graduated evidence zones** (abstain / cautious / normal) driven by
+  reranker score + a **deterministic input gate** (intent regexes) for
+  dangerous or out-of-role requests — zero LLM calls.
+- Graceful degradation: embedding or reranker endpoint down → legacy
+  fallback / honest abstention, never invention.
 
 ## Architecture
 
 ```
-Discourse (plugin Ruby, dans le process du forum)
-   │  question → gate → réécriture (modèle léger) → embed → pgvector → rerank → LLM → sanitizer
+Discourse (Ruby plugin, inside the forum process)
+   │  question → gate → rewrite (small model) → embed → pgvector → rerank → LLM → sanitizer
    ▼
-Mini PC auto-hébergé (k3s)                     VPS
+Self-hosted mini PC (k3s)                      VPS
   Ollama : bge-m3 (embeddings)                   Discourse + Postgres/pgvector
-           qwen3 30B (génération)               (~428k posts embeddés)
-           llama3.1 8B (réécriture requête)
-  TEI    : cross-encoder mmarco-mMiniLMv2 (rerank)
+           qwen3 30B (generation)               (~428k embedded posts)
+           llama3.1 8B (query rewriting)
+  TEI    : mmarco-mMiniLMv2 cross-encoder (rerank)
 ```
 
-Le choix délibéré : **pas de framework RAG** (LangChain & co.) — pipeline
-linéaire en code direct, instrumenté pour l'évaluation. Le raisonnement
-complet : [`docs/rag/DESIGN.md`](docs/rag/DESIGN.md) §9.
+Deliberate choice: **no RAG framework** (LangChain & co.) — a linear
+pipeline in direct code, instrumented for evaluation. Full reasoning:
+[`docs/rag/DESIGN.md`](docs/rag/DESIGN.md) §9.
 
-## Résultats mesurés (corpus réel, 812 questions d'éval)
+## Measured results (real corpus, 812-question eval set)
 
-| Métrique | Valeur |
+| Metric | Value |
 |---|---|
 | Hit@5 retrieval | **0.97** |
 | MRR | 0.89 |
-| Sécurité (red-team, gate, refus, injection-evidence) | 20/20 |
-| Surcoût rerank | ~100 ms |
+| Safety (red-team, gate, refusal, evidence injection) | 20/20 |
+| Rerank overhead | ~100 ms |
 
-Détail : [`docs/rag/EVAL.md`](docs/rag/EVAL.md) ·
+Details: [`docs/rag/EVAL.md`](docs/rag/EVAL.md) ·
 [`docs/rag/SAFETY.md`](docs/rag/SAFETY.md) ·
 [`docs/rag/PIPELINE.md`](docs/rag/PIPELINE.md) ·
 [`docs/rag/REFERENCES.md`](docs/rag/REFERENCES.md)
 
-## Contenu du dépôt
+## Repository layout
 
-| Chemin | Contenu |
+| Path | Content |
 |---|---|
-| racine (`plugin.rb`, `lib/`, `app/`, `config/`) | Le plugin Discourse, installable par `git clone` dans `plugins/` |
-| `docs/rag/` | Design, éval, sécurité, références, recette dev local |
-| `prompts/` | System prompt de production (v3.1) |
-| `tools/` | Smoke test live (API Discourse) |
+| root (`plugin.rb`, `lib/`, `app/`, `config/`) | The Discourse plugin — installable via `git clone` into `plugins/` |
+| `docs/rag/` | Design, evaluation, safety, references, local dev recipe |
+| `prompts/` | Production system prompt (v3.1) |
+| `tools/` | Live smoke test (Discourse API) |
 
-## Sécurité & confidentialité
+## Security & privacy
 
-- Aucun endpoint interne, IP ou compte n'est publié (export sanitisé
-  depuis le dépôt privé de travail + denylist-check automatique).
-- L'agent reste limité à un groupe de démonstration pendant la phase
-  d'observation ; rollback < 5 min documenté.
-- Le bot refuse les demandes dangereuses, illégales ou généralistes et
-  ignore les instructions hostiles trouvées dans les extraits du forum.
+- No internal endpoint, IP or account is published (sanitised export from
+  the private working repo + automated denylist check).
+- The agent stays limited to a demo group during the observation phase;
+  documented < 5 min rollback.
+- The bot refuses dangerous, illegal or generalist requests and ignores
+  hostile instructions found inside retrieved forum excerpts.
 
-## Licence
+## License
 
-MIT — voir `LICENSE`.
+AGPL-3.0 — see `LICENSE`.
