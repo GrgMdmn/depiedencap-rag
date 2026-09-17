@@ -1,5 +1,7 @@
 # Évaluation RAG — protocole et jeu de questions
 
+📘 This page is also available in [English 🇬🇧](./EVAL.en.md)
+
 > **Statut** : actif (13/09/2026). Jeu étendu à **101 questions** sourcées
 > depuis la base locale (goldens vérifiés existants en base ; pertinence des
 > fils canoniques à valider par un humain du forum).

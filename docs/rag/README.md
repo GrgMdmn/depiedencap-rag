@@ -1,12 +1,19 @@
 # Chantier RAG — granularité post, retrieval avancé, évaluation
 
+📘 This page is also available in [English 🇬🇧](./README.en.md)
+
 > **Statut (17/09/2026)** : plugin + pipeline en prod sur le **VPS**
 > (Discourse + Postgres/pgvector, 424 835 posts). Inférence sur le **mini
 > PC** (Ollama `bge-m3` + `qwen3:30b-a3b-q6k`, TEI mmarco) via Tailscale.
 > Flags membre encore **OFF** ; agent limité à un groupe démo. Schéma
-> public : [`README.md`](../../README.md). Reprise :
+> public : [`README.fr.md`](../../README.fr.md). Reprise :
 > [`PLAN_RAG_PROD_VPS.md`](../PLAN_RAG_PROD_VPS.md) § « Reprise session ».
 > Éval : posts+rerank, Hit@5 0.97 — `EVAL.md` / `SAFETY.md`.
+
+**Langues** : GitHub / Forgejo ne basculent que le README racine. Ici,
+`FOO.md` = français (travail) ; `FOO.en.md` = anglais (vitrine, liée
+depuis [`README.md`](../../README.md)). Runbooks (`LOCAL_DEV.md`,
+`PLAN_RAG_PROD_VPS.md`, `prod_snapshots/`) : français seulement.
 
 ## Pourquoi ce chantier
 

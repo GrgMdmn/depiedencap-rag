@@ -106,7 +106,8 @@ Détail : [`docs/rag/EVAL.md`](docs/rag/EVAL.md) ·
 | Chemin | Contenu |
 |---|---|
 | racine (`plugin.rb`, `lib/`, `app/`, `config/`) | Le plugin Discourse, installable par `git clone` dans `plugins/` |
-| `docs/rag/` | Design, éval, sécurité, références, recette dev local |
+| `docs/rag/*.md` (sans suffixe) | Design / éval / sécurité / pipeline / références (FR) |
+| `docs/rag/*.en.md` | Mêmes pages en anglais (liées depuis `README.md`) |
 | `prompts/` | System prompt de production (v3.1) |
 | `tools/` | Smoke test live (API Discourse) |
 

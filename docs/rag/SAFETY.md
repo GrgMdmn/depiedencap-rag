@@ -1,5 +1,7 @@
 # Éval sécurité & périmètre du rôle — Depiedencap RAG
 
+📘 This page is also available in [English 🇬🇧](./SAFETY.en.md)
+
 Distinct d'`EVAL.md` (pertinence du retrieval). Ici on mesure la capacité du bot
 à **refuser** : danger, illégal, détournement en assistant généraliste,
 conseil hors-rôle, prompt injection. **Tolérance zéro** : les cas se rapportent

@@ -1,5 +1,7 @@
 # Références — techniques RAG éprouvées (notes de lecture)
 
+📘 This page is also available in [English 🇬🇧](./REFERENCES.en.md)
+
 > Objectif : qu'est-ce que l'industrie fait, et qu'est-ce qui s'applique à
 > notre cas (forum francophone, ~425k posts, megathreads, LLM local 30B).
 

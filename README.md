@@ -71,7 +71,7 @@ rewrite (`think:false`) and generation.
 
 Deliberate choice: **no RAG framework** (LangChain & co.) — a linear
 pipeline in direct code, instrumented for evaluation. Full reasoning:
-[`docs/rag/DESIGN.md` §9](docs/rag/DESIGN.md#user-content-9-pourquoi-pas-langchain).
+[`docs/rag/DESIGN.en.md` §9](docs/rag/DESIGN.en.md#user-content-9-why-not-langchain).
 
 ## Measured results (real corpus, 812-question eval set)
 
@@ -93,19 +93,20 @@ list → 0. 0.89 means the first good hit is usually 1st or 2nd, not merely
 
 Hit@5 = recall ("did we miss it?"). MRR = ranking ("did we put it first?").
 Protocol and formulas :
-[`docs/rag/EVAL.md` §2](docs/rag/EVAL.md#user-content-2-métriques).
+[`docs/rag/EVAL.en.md` §2](docs/rag/EVAL.en.md#user-content-2-metrics).
 
-Details: [`docs/rag/EVAL.md`](docs/rag/EVAL.md) ·
-[`docs/rag/SAFETY.md`](docs/rag/SAFETY.md) ·
-[`docs/rag/PIPELINE.md`](docs/rag/PIPELINE.md) ·
-[`docs/rag/REFERENCES.md`](docs/rag/REFERENCES.md)
+Details: [`docs/rag/EVAL.en.md`](docs/rag/EVAL.en.md) ·
+[`docs/rag/SAFETY.en.md`](docs/rag/SAFETY.en.md) ·
+[`docs/rag/PIPELINE.en.md`](docs/rag/PIPELINE.en.md) ·
+[`docs/rag/REFERENCES.en.md`](docs/rag/REFERENCES.en.md)
 
 ## Repository layout
 
 | Path | Content |
 |---|---|
 | root (`plugin.rb`, `lib/`, `app/`, `config/`) | The Discourse plugin — installable via `git clone` into `plugins/` |
-| `docs/rag/` | Design, evaluation, safety, references, local dev recipe |
+| `docs/rag/*.en.md` | English design / eval / safety / pipeline / references |
+| `docs/rag/*.md` (no suffix) | Same pages in French, plus operator runbooks |
 | `prompts/` | Production system prompt (v3.1) |
 | `tools/` | Live smoke test (Discourse API) |
 

@@ -1,10 +1,12 @@
 # Design — RAG grain post (Depiedencap)
 
+📘 This page is also available in [English 🇬🇧](./DESIGN.en.md)
+
 > **Dernière màj** : 17/09/2026 · **Statut** : config gagnante (E : posts
 > natifs + rerank) mesurée ; code en prod sur le VPS, flags membre encore
 > **OFF**, agent limité à un groupe démo. Le §0 ci-dessous est un
 > **instantané historique** (grain topic) — l'architecture actuelle :
-> [`README.md`](../../README.md) · [`PIPELINE.md`](PIPELINE.md).
+> [`README.fr.md`](../../README.fr.md) · [`PIPELINE.md`](PIPELINE.md).
 > Résultats : [`EVAL.md`](EVAL.md) · Sécurité : [`SAFETY.md`](SAFETY.md) ·
 > Références : [`REFERENCES.md`](REFERENCES.md)
 

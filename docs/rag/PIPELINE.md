@@ -1,5 +1,7 @@
 # Pipeline RAG — de la base Postgres à la réponse du bot
 
+📘 This page is also available in [English 🇬🇧](./PIPELINE.en.md)
+
 Document d'architecture : le chemin complet d'une question utilisateur,
 des données brutes du forum jusqu'à la réponse citée. Voir `DESIGN.md`
 pour les choix structurants et `EVAL.md` pour les métriques mesurées.
