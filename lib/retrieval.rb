@@ -171,7 +171,8 @@ module DepiedencapAiCitations
          advice) that are not literally in the excerpts.
       2) You may cautiously point to the closest thread(s) with [[n]] — framed as
          "peut-être en rapport", never as a real answer.
-      3) Invite the user to post in a fitting category or rephrase.
+      3) Invite the user to post in a fitting category — name the most relevant
+         one from the « Forum categories » list below.
       4) All citation and role-limit rules from the main prompt still apply.
 
       ### Evidence
@@ -182,7 +183,8 @@ module DepiedencapAiCitations
       ## STABLE FORUM EVIDENCE
       No sufficiently relevant forum threads were retrieved.
       Reply briefly in the user's language that you lack solid forum evidence for this question.
-      Invite them to post in a fitting category. Do NOT invent threads, brands, or /t/ URLs.
+      Invite them to post in the most fitting category — name it from the
+      « Forum categories » list below. Do NOT invent threads, brands, or /t/ URLs.
       Do NOT write ### Sources. Do NOT call tools.
     TXT
 
@@ -244,18 +246,50 @@ module DepiedencapAiCitations
 
     def self.instructions_block(question)
       pack = retrieve_pack(question)
-      return legacy_instructions_block(pack[:sources]) if pack[:zone] == :legacy
+      block =
+        if pack[:zone] == :legacy
+          legacy_instructions_block(pack[:sources])
+        elsif pack[:sources].blank? || pack[:zone] == :empty
+          NO_EVIDENCE_BLOCK.strip
+        else
+          lines =
+            pack[:sources].each_with_index.map do |s, i|
+              cat = s[:category].present? ? " [cat:#{s[:category]}]" : ""
+              excerpt = s[:excerpt].present? ? "\n   excerpt: #{s[:excerpt]}" : ""
+              "#{i + 1}. title: #{s[:title]} [via:#{s[:via]}]#{cat}#{excerpt}"
+            end
 
-      return NO_EVIDENCE_BLOCK.strip if pack[:sources].blank? || pack[:zone] == :empty
-
-      lines =
-        pack[:sources].each_with_index.map do |s, i|
-          excerpt = s[:excerpt].present? ? "\n   excerpt: #{s[:excerpt]}" : ""
-          "#{i + 1}. title: #{s[:title]} [via:#{s[:via]}]#{excerpt}"
+          tpl = pack[:zone] == :weak ? WEAK_EVIDENCE_TEMPLATE : EVIDENCE_TEMPLATE
+          format(tpl, lines: lines.join("\n")).strip
         end
 
-      tpl = pack[:zone] == :weak ? WEAK_EVIDENCE_TEMPLATE : EVIDENCE_TEMPLATE
-      format(tpl, lines: lines.join("\n")).strip
+      "#{block}\n\n#{forum_taxonomy_block}".strip
+    end
+
+    # Taxonomie publique du forum, injectée dans le bloc d'instructions : le LLM
+    # peut nommer la bonne (sous-)catégorie quand il invite à poster, même sans
+    # evidence probante. Cachée 12 h — les catégories bougent rarement.
+    def self.forum_taxonomy_block
+      Discourse.cache.fetch("dpec_taxonomy", expires_in: 12.hours) do
+        cats =
+          Category
+            .where(read_restricted: false)
+            .where.not(id: SiteSetting.uncategorized_category_id)
+            .order(:position)
+            .to_a
+        by_parent = cats.group_by(&:parent_category_id)
+
+        lines = ["## Forum categories (public — where discussions live)"]
+        by_parent[nil].to_a.each do |parent|
+          pdesc = parent.description.to_s.gsub(/<[^>]+>/, " ").squish
+          lines << "#{parent.name}#{pdesc.present? ? " — #{pdesc}" : ""}"
+          by_parent[parent.id].to_a.each do |child|
+            cdesc = child.description.to_s.gsub(/<[^>]+>/, " ").squish
+            lines << "  - #{child.name}#{cdesc.present? ? " — #{cdesc}" : ""}"
+          end
+        end
+        lines.join("\n")
+      end
     end
 
     def self.for_question(question)
@@ -445,6 +479,8 @@ module DepiedencapAiCitations
               title: h[:title],
               url: "/t/#{h[:slug]}/#{h[:topic_id]}/#{h[:post_number]}",
               excerpt: h[:raw_excerpt],
+              category: h[:cat_label],
+              category_id: h[:category_id],
               via: "posts",
             }
           end
@@ -460,10 +496,14 @@ module DepiedencapAiCitations
     def self.post_candidates(qvec, vdef)
       sql = <<~SQL
         SELECT e.post_id, p.topic_id, p.post_number, t.title, t.slug, p.raw,
+               t.category_id,
+               c.name AS cat_name, pc.name AS parent_cat_name,
                e.embeddings <=> '#{qvec}' AS dist
         FROM ai_posts_embeddings e
         JOIN posts p ON p.id = e.post_id
         JOIN topics t ON t.id = p.topic_id
+        LEFT JOIN categories c ON c.id = t.category_id
+        LEFT JOIN categories pc ON pc.id = c.parent_category_id
         WHERE e.model_id = #{vdef.id.to_i} AND e.strategy_id = #{vdef.strategy_id.to_i}
           AND p.deleted_at IS NULL AND p.post_type = 1
           AND t.deleted_at IS NULL AND t.archetype = 'regular'
@@ -480,12 +520,16 @@ module DepiedencapAiCitations
 
       ActiveRecord::Base.connection.execute(sql).to_a.map do |row|
         raw = row["raw"].to_s.gsub(/\s+/, " ").strip[0, 300]
+        parent = row["parent_cat_name"].to_s.presence
+        cat = row["cat_name"].to_s.presence
         {
           post_id: row["post_id"].to_i,
           topic_id: row["topic_id"].to_i,
           post_number: row["post_number"].to_i,
           slug: row["slug"],
           title: row["title"],
+          category_id: row["category_id"].to_i,
+          cat_label: [parent, cat].compact.join(" → "),
           dist: row["dist"].to_f,
           raw_excerpt: raw,
           ce_text: "#{row["title"]}. #{raw}",

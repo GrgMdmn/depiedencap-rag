@@ -194,7 +194,7 @@ module DepiedencapAiCitations
       cta_sources(sources).each do |s|
         lines << "- [#{s[:title]}](#{canonical(s[:url])}) : #{cta_invitation(s)}"
       end
-      cat = suggested_category(question)
+      cat = suggested_category(question, sources)
       lines << "- [#{cat[:label]}](#{cat[:path]}) : #{cat[:cta]}" if cat
       lines.join("\n")
     end
@@ -285,31 +285,52 @@ module DepiedencapAiCitations
       end
     end
 
-    def self.suggested_category(question)
+    # Catégorie suggérée, par priorité :
+    # 1) intention de la question (mots-clés — ex. « entretien » → sous-cat
+    #    dédiée, même si les sources citées vivent ailleurs) ;
+    # 2) catégorie dominante des sources citées (la géographie du forum décide
+    #    quand la question n'a pas de mot-clé connu — ex. whisky → Comptoir) ;
+    # 3) défaut historique « Le prêt à chausser ».
+    def self.suggested_category(question, sources = nil)
       q = question.to_s
-      spec =
-        if q.match?(/entretien|cirage|patine|glac|tr[ée]pointe/i)
-          {
-            parent: "Les souliers",
-            child: "Entretien, réparation, glaçage et patine",
+      if q.match?(/entretien|cirage|patine|glac|tr[ée]pointe/i)
+        cat = find_named_category("Les souliers", "Entretien, réparation, glaçage et patine")
+        if cat
+          return {
+            label: "Les souliers → #{cat.name}",
+            path: category_href(cat),
             cta: "ouvre un sujet avec photos / produits si ton cas n’y est pas.",
           }
-        else
-          {
-            parent: "Les souliers",
-            child: "Le prêt à chausser",
-            cta: "si aucun de ces fils ne colle à *ton* cas, ouvre un sujet (usage, contraintes, ce que tu cherches).",
-          }
         end
+      end
 
-      cat = find_named_category(spec[:parent], spec[:child])
+      if (cat = dominant_source_category(sources))
+        label =
+          cat.parent_category ? "#{cat.parent_category.name} → #{cat.name}" : cat.name
+        return {
+          label: label,
+          path: category_href(cat),
+          cta: "les discussions citées vivent dans cette catégorie — ouvre-y ton sujet si aucune ne colle à *ton* cas.",
+        }
+      end
+
+      cat = find_named_category("Les souliers", "Le prêt à chausser")
       return nil unless cat
 
       {
-        label: "#{spec[:parent]} → #{cat.name}",
+        label: "Les souliers → #{cat.name}",
         path: category_href(cat),
-        cta: spec[:cta],
+        cta: "si aucun de ces fils ne colle à *ton* cas, ouvre un sujet (usage, contraintes, ce que tu cherches).",
       }
+    end
+
+    # Catégorie la plus fréquente parmi les sources citées. Nil si les sources
+    # n'ont pas de catégorie (canal legacy) ou sont toutes sans catégorie.
+    def self.dominant_source_category(sources)
+      ids = Array(sources).map { |s| s[:category_id] }.compact
+      return nil if ids.empty?
+
+      Category.find_by(id: ids.tally.max_by { |_id, n| n }&.first)
     end
 
     def self.find_named_category(parent_name, child_name)
