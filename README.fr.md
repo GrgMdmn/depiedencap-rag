@@ -39,8 +39,9 @@ Discourse (plugin Ruby, dans le process du forum)
    ▼
 Mini PC auto-hébergé (k3s)                     VPS
   Ollama : bge-m3 (embeddings)                   Discourse + Postgres/pgvector
-           qwen3 30B (génération)               (~428k posts embeddés)
-           llama3.1 8B (réécriture requête)
+           qwen3 30B MoE (~3B actifs)           (~428k posts embeddés)
+             — génération ET réécriture de
+             requête (un seul modèle résident)
   TEI    : cross-encoder mmarco-mMiniLMv2 (rerank)
 ```
 

@@ -338,6 +338,11 @@ module DepiedencapAiCitations
         ],
         max_tokens: CONDENSE_MAX_TOKENS,
         temperature: 0,
+        # thinking désactivé : inutile pour une réécriture d'une phrase, et
+        # qwen3 peut engloutir le budget de tokens dans un raisonnement vide
+        # (observé avec qwen3:4b). Ignoré sans erreur par les modèles
+        # non-thinking (llama).
+        think: false,
       }
 
       conn =
