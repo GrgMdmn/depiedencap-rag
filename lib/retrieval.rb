@@ -281,10 +281,10 @@ module DepiedencapAiCitations
 
         lines = ["## Forum categories (public — where discussions live)"]
         by_parent[nil].to_a.each do |parent|
-          pdesc = parent.description.to_s.gsub(/<[^>]+>/, " ").squish
+          pdesc = CGI.unescapeHTML(parent.description.to_s.gsub(/<[^>]+>/, " ")).squish
           lines << "#{parent.name}#{pdesc.present? ? " — #{pdesc}" : ""}"
           by_parent[parent.id].to_a.each do |child|
-            cdesc = child.description.to_s.gsub(/<[^>]+>/, " ").squish
+            cdesc = CGI.unescapeHTML(child.description.to_s.gsub(/<[^>]+>/, " ")).squish
             lines << "  - #{child.name}#{cdesc.present? ? " — #{cdesc}" : ""}"
           end
         end
