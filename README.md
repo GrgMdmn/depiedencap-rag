@@ -82,6 +82,19 @@ pipeline in direct code, instrumented for evaluation. Full reasoning:
 | Safety (red-team, gate, refusal, evidence injection) | 20/20 |
 | Rerank overhead | ~100 ms |
 
+**Hit@5** : share of eval questions whose expected thread (or post) appears
+in the **top 5** retrieved results. 0.97 means the right source is in that
+shortlist 97 times out of 100. It does not say *where* in the five.
+
+**MRR** (Mean Reciprocal Rank) : scores the **rank of the first** relevant
+hit, then averages. Rank 1 → 1, rank 2 → 0.5, rank 5 → 0.2, not in the
+list → 0. 0.89 means the first good hit is usually 1st or 2nd, not merely
+"somewhere in the top 5".
+
+Hit@5 = recall ("did we miss it?"). MRR = ranking ("did we put it first?").
+Protocol and formulas :
+[`docs/rag/EVAL.md` §2](docs/rag/EVAL.md#user-content-2-métriques).
+
 Details: [`docs/rag/EVAL.md`](docs/rag/EVAL.md) ·
 [`docs/rag/SAFETY.md`](docs/rag/SAFETY.md) ·
 [`docs/rag/PIPELINE.md`](docs/rag/PIPELINE.md) ·

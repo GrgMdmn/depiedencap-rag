@@ -55,13 +55,52 @@ Couverture réelle (101 questions, `questions.yml` sections A–J) :
 
 ## 2. Métriques
 
-### Retrieval (automatique)
+Les deux chiffres du README (**Hit@5 = 0.97**, **MRR = 0.89**) mesurent
+**uniquement le retrieval** (le bon fil/post remonte-t-il ?), pas la
+qualité de la phrase générée. Ils sont calculés sur le jeu golden
+(`questions.yml`) : chaque question a un ou plusieurs `expected_topic_ids`
+(et parfois `expected_post_ids`).
+
+### Hit@5 (rappel dans le top-5)
+
+Pour une question, le retrieval **réussit** si **au moins un** document
+golden apparaît dans les 5 premiers résultats. Hit@5 = cette réussite
+moyennée sur le jeu (0 ou 1 par question).
+
+- **0.97** (config E, n=796) : 97 questions sur 100 voient le bon fil dans
+  le top-5.
+- Un Hit@5 à 1.0 avec le bon fil toujours en 5e place resterait « parfait »
+  au sens du rappel, et mauvais au classement → d'où le MRR à côté.
+- Variantes dans les tableaux : **Hit@k topic** (le fil golden est dans le
+  top-k) ; **Hit@k post** (le *message* golden est dans le top-k, grain
+  post uniquement). Le chiffre vitrine est le Hit@5 **topic** à l'échelle
+  (lot K). Les premières passes utilisaient aussi k ∈ {3, 6} sur le lot
+  curé A–J.
+
+### MRR — Mean Reciprocal Rank (classement du premier hit)
+
+Pour chaque question : `1 / rang` du **premier** résultat pertinent
+(1er → 1, 2e → 0.5, 3e → ≈ 0.33, 5e → 0.2). Si le golden est hors de la
+liste renvoyée : **0**. MRR = moyenne de ces scores.
+
+- **0.89** (config E) : le premier hit pertinent est en pratique 1er ou
+  2e, rarement 4e/5e.
+- Contrairement au Hit@5, un golden passé de #1 à #5 **fait baisser** le
+  MRR (1 → 0.2) même s'il reste « dans le top-5 ».
+
+En une ligne : **Hit@5 = est-ce qu'on a raté ?** · **MRR = est-ce qu'on
+l'a mis en haut ?** Le saut topic → post (0.68 → 0.94 Hit@5) est le gain
+principal ; le rerank (0.94 → 0.97 Hit@5, 0.84 → 0.89 MRR) améliore
+surtout l'ordre.
+
+### Retrieval (automatique) — récap
 
 | Métrique | Définition |
 |---|---|
-| **Hit@k topic** | au moins un `expected_topic` dans le top-k (k ∈ {3, 6}) |
+| **Hit@5 topic** | au moins un `expected_topic` dans le top-5 (chiffre README) |
+| **Hit@k topic** | idem pour un k donné (lots A–J : aussi k ∈ {3, 6}) |
 | **Hit@k post** | le `expected_post` dans le top-k posts (grain post uniquement) |
-| MRR | rang du premier hit pertinent |
+| **MRR** | moyenne de `1/rang` du premier hit pertinent (0 si absent) |
 | Pollution | slots evidence occupés par un même topic (mesure l'agrégation) |
 
 ### Génération (semi-auto)

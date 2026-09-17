@@ -83,6 +83,19 @@ complet : [`docs/rag/DESIGN.md` §9](docs/rag/DESIGN.md#user-content-9-pourquoi-
 | Sécurité (red-team, gate, refus, injection-evidence) | 20/20 |
 | Surcoût rerank | ~100 ms |
 
+**Hit@5** : part des questions d'éval dont le fil (ou le post) attendu
+apparaît dans les **5 premiers** résultats. 0.97 = la bonne source est
+dans ce top-5 97 fois sur 100. Ça ne dit pas *où* dans les cinq.
+
+**MRR** (*Mean Reciprocal Rank*, rang réciproque moyen) : on note le
+**rang du premier** hit pertinent, puis on moyenne. Rang 1 → 1, rang 2 →
+0.5, rang 5 → 0.2, absent → 0. 0.89 = le premier bon hit est le plus
+souvent 1er ou 2e, pas seulement « quelque part dans le top-5 ».
+
+Hit@5 = rappel (« est-ce qu'on a raté ? »). MRR = classement (« est-ce
+qu'on l'a mis en haut ? »). Protocole et formules :
+[`docs/rag/EVAL.md` §2](docs/rag/EVAL.md#user-content-2-métriques).
+
 Détail : [`docs/rag/EVAL.md`](docs/rag/EVAL.md) ·
 [`docs/rag/SAFETY.md`](docs/rag/SAFETY.md) ·
 [`docs/rag/PIPELINE.md`](docs/rag/PIPELINE.md) ·
