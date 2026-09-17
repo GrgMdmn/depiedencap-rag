@@ -25,9 +25,9 @@ module DepiedencapAiCitations
     RERANK_READ_TIMEOUT = 4
     POSTS_SQL_LIMIT = 25
 
-    # Réécriture de requête multi-tour (condense_query) — modèle léger dédié,
-    # distinct du LLM de génération (Qwen 30B) : latence courte (~2-3s mesurées),
-    # pas de mode "thinking" à filtrer (contrairement à qwen3:4b sur ce serving).
+    # Réécriture de requête multi-tour (condense_query) — même LLM résident
+    # que la génération (qwen3:30b-a3b-q6k, MoE ~3B actifs, ~1 s à chaud).
+    # think:false pour éviter le budget englouti dans reasoning (vu sur qwen3:4b).
     HISTORY_TURNS = 3
     CONDENSE_MAX_TOKENS = 80
     CONDENSE_OPEN_TIMEOUT = 2

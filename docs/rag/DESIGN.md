@@ -1,11 +1,12 @@
 # Design — RAG grain post (Depiedencap)
 
-> **Dernière màj** : 14/09/2026 · **Statut** : toutes les configs A-G
-> mesurées, config gagnante identifiée (E : posts natifs + rerank),
-> sécurité testée à l'échelle. **Rien déployé en prod.**
+> **Dernière màj** : 17/09/2026 · **Statut** : config gagnante (E : posts
+> natifs + rerank) mesurée ; code en prod sur le VPS, flags membre encore
+> **OFF**, agent limité à un groupe démo. Le §0 ci-dessous est un
+> **instantané historique** (grain topic) — l'architecture actuelle :
+> [`README.md`](../../README.md) · [`PIPELINE.md`](PIPELINE.md).
 > Résultats : [`EVAL.md`](EVAL.md) · Sécurité : [`SAFETY.md`](SAFETY.md) ·
-> Architecture : [`PIPELINE.md`](PIPELINE.md)
-> Références techniques : [`REFERENCES.md`](REFERENCES.md)
+> Références : [`REFERENCES.md`](REFERENCES.md)
 
 ## 0. État actuel (rappel)
 

@@ -7,18 +7,21 @@
 > This repository documents the work — no demo URL is published.
 
 A **Discourse plugin** + a self-hosted RAG pipeline, built for a French
-community forum (Depiedencap — men's shoes, ~428k posts). Product
-principle: **the bot points members to existing threads instead of
-answering in their place.**
+community forum (Depiedencap — men's shoes, 424 835 posts / 22 230
+topics). Product principle: **the bot points members to existing threads
+instead of answering in their place.**
 
 ## What it does
 
 - **Post-grain retrieval** (not topic-grain): `bge-m3` embeddings in
-  `ai_posts_embeddings` (pgvector inside the forum's Postgres), top-25 by
-  cosine then **cross-encoder rerank** (TEI), per-thread dedup.
+  `ai_posts_embeddings` (pgvector inside the forum's Postgres on the VPS),
+  top-25 by cosine then **cross-encoder rerank** (TEI on the mini PC),
+  per-thread dedup.
 - **Multi-turn query rewriting**: the latest message plus earlier turns
-  are condensed into a standalone query by a small dedicated model before
-  retrieval (*condense question* / history-aware retriever pattern).
+  are condensed into a standalone query (*condense question* /
+  history-aware retriever). Same resident model as generation:
+  `qwen3:30b-a3b-q6k` (MoE, ~3B active, `think:false`) — not a separate
+  small rewriter.
 - **Server-side verified citations**: the LLM only emits bare `[[n]]`
   markers; the plugin maps them to `/t/slug/id/post_number` links and
   discards any link that does not actually exist in Postgres (URL
@@ -31,17 +34,40 @@ answering in their place.**
 
 ## Architecture
 
+The plugin runs **inside Discourse on the VPS**. The mini PC is only the
+inference backend (Ollama + TEI), reached over Tailscale. Gate, pgvector
+and the citation sanitizer never leave the VPS.
+
 ```
-Discourse (Ruby plugin, inside the forum process)
-   │  question → gate → rewrite (small model) → embed → pgvector → rerank → LLM → sanitizer
-   ▼
-Self-hosted mini PC (k3s)                      VPS
-  Ollama : bge-m3 (embeddings)                   Discourse + Postgres/pgvector
-           qwen3 30B MoE (~3B active)           (~428k embedded posts)
-             — generation AND query rewriting
-             (single resident model)
-  TEI    : mmarco-mMiniLMv2 cross-encoder (rerank)
+Member question
+        │
+        ▼
+[VPS]  Discourse + this Ruby plugin
+        │
+        ├─ 1. gate        regex, local, 0 LLM
+        │
+        ├─ 2. rewrite     ──Tailscale──►  [mini PC] Ollama  qwen3:30b-a3b-q6k
+        │
+        ├─ 3. embed       ──Tailscale──►  [mini PC] Ollama  bge-m3
+        │
+        ├─ 4. pgvector    Postgres local, 424 835 posts, cosine top-25
+        │
+        ├─ 5. rerank      ──Tailscale──►  [mini PC] TEI     mmarco-mMiniLMv2
+        │
+        ├─ 6. generate    ──Tailscale──►  [mini PC] Ollama  qwen3:30b-a3b-q6k
+        │
+        └─ 7. sanitizer   URL whitelist, local Postgres
+                │
+                ▼
+          answer + /t/slug/id/post_number links
 ```
+
+| Lives on the VPS | Lives on the mini PC (k3s, iGPU) |
+|---|---|
+| Discourse, this plugin, Postgres/pgvector | Ollama (`bge-m3` + `qwen3:30b-a3b-q6k`) and TEI (`mmarco`) |
+
+`qwen3:30b-a3b-q6k` is a single resident MoE (~3B active) used for both
+rewrite (`think:false`) and generation.
 
 Deliberate choice: **no RAG framework** (LangChain & co.) — a linear
 pipeline in direct code, instrumented for evaluation. Full reasoning:

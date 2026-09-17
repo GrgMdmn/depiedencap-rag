@@ -1,11 +1,12 @@
 # Chantier RAG — granularité post, retrieval avancé, évaluation
 
-> **Statut (15/09/2026)** : **déploiement prod en cours**, flags encore **OFF**
-> (comportement live inchangé). Code v2 déployé, reranker en service, backfill
-> natif posts en cours sur le VPS. Reprise / prochaine étape exacte :
-> [`PLAN_RAG_PROD_VPS.md`](../PLAN_RAG_PROD_VPS.md) § « Reprise session » (tout en haut).
-> Éval locale : config gagnante mesurée (posts+rerank, Hit@5 0.97), sécurité
-> testée (red-team + gate + clause) — `EVAL.md` / `SAFETY.md`.
+> **Statut (17/09/2026)** : plugin + pipeline en prod sur le **VPS**
+> (Discourse + Postgres/pgvector, 424 835 posts). Inférence sur le **mini
+> PC** (Ollama `bge-m3` + `qwen3:30b-a3b-q6k`, TEI mmarco) via Tailscale.
+> Flags membre encore **OFF** ; agent limité à un groupe démo. Schéma
+> public : [`README.md`](../../README.md). Reprise :
+> [`PLAN_RAG_PROD_VPS.md`](../PLAN_RAG_PROD_VPS.md) § « Reprise session ».
+> Éval : posts+rerank, Hit@5 0.97 — `EVAL.md` / `SAFETY.md`.
 
 ## Pourquoi ce chantier
 
