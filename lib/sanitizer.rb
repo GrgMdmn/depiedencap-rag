@@ -293,7 +293,10 @@ module DepiedencapAiCitations
     # 3) défaut historique « Le prêt à chausser ».
     def self.suggested_category(question, sources = nil)
       q = question.to_s
-      if q.match?(/entretien|cirage|patine|glac|tr[ée]pointe/i)
+      # Nom ET verbe : « entretien » ne matche pas « entretenir » (bug observé
+      # live 17/09 — le message « je cherche à entretenir » tombait sur la
+      # catégorie dominante des sources au lieu de la sous-cat entretien).
+      if q.match?(/entretien|entretenir|entret[ée]n|cirage|cirer|patine|glac|tr[ée]pointe|r[ée]par|ressemel|r[ée]nov|nettoy|bross/i)
         cat = find_named_category("Les souliers", "Entretien, réparation, glaçage et patine")
         if cat
           return {
