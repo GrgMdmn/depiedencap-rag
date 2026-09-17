@@ -1,124 +1,126 @@
-# depiedencap-rag — Discourse-embedded RAG agent
+# depiedencap-rag — Agent RAG ancré dans Discourse
 
-📘 Ce projet est également disponible en [français 🇫🇷](./README.fr.md)
+📘 This project is also available in [English 🇬🇧](./README.en.md)
 
-> ⚠️ **Work in progress.** The agent is currently being tested on a
-> restricted demo group and is **not publicly deployed** on the forum.
-> This repository documents the work — no demo URL is published.
+> ⚠️ **Work in progress.** L'agent est en cours de test sur un groupe
+> restreint de démonstration et **n'est pas encore déployé publiquement**
+> sur le forum. Ce dépôt documente le chantier — aucune URL de démo n'est
+> publiée.
 
-A **Discourse plugin** + a self-hosted RAG pipeline, built for a French
-community forum (Depiedencap — men's shoes, 424 835 posts / 22 230
-topics). Product principle: **the bot points members to existing threads
-instead of answering in their place.**
+Un plugin **Discourse** + un pipeline RAG auto-hébergé, conçu pour un forum
+associatif francophone (Depiedencap — souliers pour homme, 424 835 messages
+/ 22 230 sujets). Principe produit : **le bot oriente vers les fils
+existants, il ne répond pas à la place des membres.**
 
-## What it does
+## Ce que fait le plugin
 
-- **Post-grain retrieval** (not topic-grain): `bge-m3` embeddings in
-  `ai_posts_embeddings` (pgvector inside the forum's Postgres on the VPS),
-  top-25 by cosine then **cross-encoder rerank** (TEI on the mini PC),
-  per-thread dedup.
-- **Multi-turn query rewriting**: the latest message plus earlier turns
-  are condensed into a standalone query (*condense question* /
-  history-aware retriever). Same resident model as generation:
-  `qwen3:30b-a3b-q6k` (MoE, ~3B active, `think:false`) — not a separate
-  small rewriter.
-- **Server-side verified citations**: the LLM only emits bare `[[n]]`
-  markers; the plugin maps them to `/t/slug/id/post_number` links and
-  discards any link that does not actually exist in Postgres (URL
-  whitelist — the LLM never gets the last word on a link).
-- **Graduated evidence zones** (abstain / cautious / normal) driven by
-  reranker score + a **deterministic input gate** (intent regexes) for
-  dangerous or out-of-role requests — zero LLM calls.
-- Graceful degradation: embedding or reranker endpoint down → legacy
-  fallback / honest abstention, never invention.
+- Retrieval au **grain post** (et non au grain topic) : embeddings `bge-m3`
+  dans `ai_posts_embeddings` (pgvector dans la Postgres du forum, **sur le
+  VPS**), top-25 par cosine puis **rerank cross-encoder** (TEI **sur le mini
+  PC**), déduplication par fil.
+- **Réécriture de requête multi-tour** : le dernier message + les tours
+  précédents sont condensés en une requête autonome (pattern *condense
+  question* / history-aware retriever). Même modèle résident que la
+  génération : `qwen3:30b-a3b-q6k` (MoE, ~3B actifs, `think:false`) — plus
+  de petit modèle dédié à la réécriture.
+- **Citations vérifiées côté serveur** : le LLM n'écrit que des marqueurs
+  `[[n]]` ; le plugin les transforme en liens `/t/slug/id/post_number` et
+  jette tout lien qui n'existe pas réellement en base (whitelist Postgres,
+  le LLM n'a jamais le dernier mot sur une URL).
+- **Zones d'evidence graduées** (abstention / prudent / normal) pilotées
+  par le score du reranker + **gate d'entrée déterministe** (regex
+  d'intention) pour les demandes dangereuses ou hors-rôle — zéro appel LLM.
+- Dégradation gracieuse : endpoint embedding ou reranker indisponible →
+  repli legacy/abstention honnête, jamais d'invention.
 
 ## Architecture
 
-The plugin runs **inside Discourse on the VPS**. The mini PC is only the
-inference backend (Ollama + TEI), reached over Tailscale. Gate, pgvector
-and the citation sanitizer never leave the VPS.
+Le plugin tourne **dans Discourse, sur le VPS**. Le mini PC n'est que le
+backend d'inférence (Ollama + TEI), joignable via Tailscale. Le gate,
+pgvector et le sanitizer de citations ne quittent jamais le VPS.
 
 ```
-Member question
+Question membre
         │
         ▼
-[VPS]  Discourse + this Ruby plugin
+[VPS]  Discourse + ce plugin Ruby
         │
-        ├─ 1. gate        regex, local, 0 LLM
+        ├─ 1. gate          regex locale, 0 LLM
         │
-        ├─ 2. rewrite     ──Tailscale──►  [mini PC] Ollama  qwen3:30b-a3b-q6k
+        ├─ 2. réécriture    ──Tailscale──►  [mini PC] Ollama  qwen3:30b-a3b-q6k
         │
-        ├─ 3. embed       ──Tailscale──►  [mini PC] Ollama  bge-m3
+        ├─ 3. embed         ──Tailscale──►  [mini PC] Ollama  bge-m3
         │
-        ├─ 4. pgvector    Postgres local, 424 835 posts, cosine top-25
+        ├─ 4. pgvector      Postgres locale, 424 835 posts, cosine top-25
         │
-        ├─ 5. rerank      ──Tailscale──►  [mini PC] TEI     mmarco-mMiniLMv2
+        ├─ 5. rerank        ──Tailscale──►  [mini PC] TEI     mmarco-mMiniLMv2
         │
-        ├─ 6. generate    ──Tailscale──►  [mini PC] Ollama  qwen3:30b-a3b-q6k
+        ├─ 6. génération    ──Tailscale──►  [mini PC] Ollama  qwen3:30b-a3b-q6k
         │
-        └─ 7. sanitizer   URL whitelist, local Postgres
+        └─ 7. sanitizer     whitelist URL, Postgres locale
                 │
                 ▼
-          answer + /t/slug/id/post_number links
+          réponse + liens /t/slug/id/post_number
 ```
 
-| Lives on the VPS | Lives on the mini PC (k3s, iGPU) |
+| Sur le VPS | Sur le mini PC (k3s, iGPU) |
 |---|---|
-| Discourse, this plugin, Postgres/pgvector | Ollama (`bge-m3` + `qwen3:30b-a3b-q6k`) and TEI (`mmarco`) |
+| Discourse, ce plugin, Postgres/pgvector | Ollama (`bge-m3` + `qwen3:30b-a3b-q6k`) et TEI (`mmarco`) |
 
-`qwen3:30b-a3b-q6k` is a single resident MoE (~3B active) used for both
-rewrite (`think:false`) and generation.
+`qwen3:30b-a3b-q6k` est un seul MoE résident (~3B actifs) pour la
+réécriture (`think:false`) **et** la génération.
 
-Deliberate choice: **no RAG framework** (LangChain & co.) — a linear
-pipeline in direct code, instrumented for evaluation. Full reasoning:
-[`docs/rag/DESIGN.en.md` §9](docs/rag/DESIGN.en.md#user-content-9-why-not-langchain).
+Le choix délibéré : **pas de framework RAG** (LangChain & co.) — pipeline
+linéaire en code direct, instrumenté pour l'évaluation. Le raisonnement
+complet : [`docs/rag/DESIGN.md` §9](docs/rag/DESIGN.md#user-content-9-pourquoi-pas-langchain).
 
-## Measured results (real corpus, 812-question eval set)
+## Résultats mesurés (corpus réel, 812 questions d'éval)
 
-| Metric | Value |
+| Métrique | Valeur |
 |---|---|
 | Hit@5 retrieval | **0.97** |
 | MRR | 0.89 |
-| Safety (red-team, gate, refusal, evidence injection) | 20/20 |
-| Rerank overhead | ~100 ms |
+| Sécurité (red-team, gate, refus, injection-evidence) | 20/20 |
+| Surcoût rerank | ~100 ms |
 
-**Hit@5** : share of eval questions whose expected thread (or post) appears
-in the **top 5** retrieved results. 0.97 means the right source is in that
-shortlist 97 times out of 100. It does not say *where* in the five.
+**Hit@5** : part des questions d'éval dont le fil (ou le post) attendu
+apparaît dans les **5 premiers** résultats. 0.97 = la bonne source est
+dans ce top-5 97 fois sur 100. Ça ne dit pas *où* dans les cinq.
 
-**MRR** (Mean Reciprocal Rank) : scores the **rank of the first** relevant
-hit, then averages. Rank 1 → 1, rank 2 → 0.5, rank 5 → 0.2, not in the
-list → 0. 0.89 means the first good hit is usually 1st or 2nd, not merely
-"somewhere in the top 5".
+**MRR** (*Mean Reciprocal Rank*, rang réciproque moyen) : on note le
+**rang du premier** hit pertinent, puis on moyenne. Rang 1 → 1, rang 2 →
+0.5, rang 5 → 0.2, absent → 0. 0.89 = le premier bon hit est le plus
+souvent 1er ou 2e, pas seulement « quelque part dans le top-5 ».
 
-Hit@5 = recall ("did we miss it?"). MRR = ranking ("did we put it first?").
-Protocol and formulas :
-[`docs/rag/EVAL.en.md` §2](docs/rag/EVAL.en.md#user-content-2-metrics).
+Hit@5 = rappel (« est-ce qu'on a raté ? »). MRR = classement (« est-ce
+qu'on l'a mis en haut ? »). Protocole et formules :
+[`docs/rag/EVAL.md` §2](docs/rag/EVAL.md#user-content-2-métriques).
 
-Details: [`docs/rag/EVAL.en.md`](docs/rag/EVAL.en.md) ·
-[`docs/rag/SAFETY.en.md`](docs/rag/SAFETY.en.md) ·
-[`docs/rag/PIPELINE.en.md`](docs/rag/PIPELINE.en.md) ·
-[`docs/rag/REFERENCES.en.md`](docs/rag/REFERENCES.en.md)
+Détail : [`docs/rag/EVAL.md`](docs/rag/EVAL.md) ·
+[`docs/rag/SAFETY.md`](docs/rag/SAFETY.md) ·
+[`docs/rag/PIPELINE.md`](docs/rag/PIPELINE.md) ·
+[`docs/rag/REFERENCES.md`](docs/rag/REFERENCES.md)
 
-## Repository layout
+## Contenu du dépôt
 
-| Path | Content |
+| Chemin | Contenu |
 |---|---|
-| root (`plugin.rb`, `lib/`, `app/`, `config/`) | The Discourse plugin — installable via `git clone` into `plugins/` |
-| `docs/rag/*.en.md` | English design / eval / safety / pipeline / references |
-| `docs/rag/*.md` (no suffix) | Same pages in French, plus operator runbooks |
-| `prompts/` | Production system prompt (v3.1) |
-| `tools/` | Live smoke test (Discourse API) |
+| racine (`plugin.rb`, `lib/`, `app/`, `config/`) | Le plugin Discourse, installable par `git clone` dans `plugins/` |
+| `README.md` / `README.en.md` | Accueil FR (défaut) / EN |
+| `docs/rag/*.md` (sans suffixe) | Design / éval / sécurité / pipeline / références (FR) |
+| `docs/rag/*.en.md` | Mêmes pages en anglais (liées depuis `README.en.md`) |
+| `prompts/` | System prompt de production (v3.1) |
+| `tools/` | Smoke test live (API Discourse) |
 
-## Security & privacy
+## Sécurité & confidentialité
 
-- No internal endpoint, IP or account is published (sanitised export from
-  the private working repo + automated denylist check).
-- The agent stays limited to a demo group during the observation phase;
-  documented < 5 min rollback.
-- The bot refuses dangerous, illegal or generalist requests and ignores
-  hostile instructions found inside retrieved forum excerpts.
+- Aucun endpoint interne, IP ou compte n'est publié (export sanitisé
+  depuis le dépôt privé de travail + denylist-check automatique).
+- L'agent reste limité à un groupe de démonstration pendant la phase
+  d'observation ; rollback < 5 min documenté.
+- Le bot refuse les demandes dangereuses, illégales ou généralistes et
+  ignore les instructions hostiles trouvées dans les extraits du forum.
 
-## License
+## Licence
 
-AGPL-3.0 — see `LICENSE`.
+AGPL-3.0 — voir `LICENSE`.

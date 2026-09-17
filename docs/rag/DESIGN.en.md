@@ -6,7 +6,7 @@
 > + rerank) measured; code in prod on the VPS, member flags still **OFF**,
 > agent limited to a demo group. §0 below is a **historical snapshot**
 > (topic grain) — current architecture:
-> [`README.md`](../../README.md) · [`PIPELINE.en.md`](PIPELINE.en.md).
+> [`README.en.md`](../../README.en.md) · [`PIPELINE.en.md`](PIPELINE.en.md).
 > Results: [`EVAL.en.md`](EVAL.en.md) · Safety: [`SAFETY.en.md`](SAFETY.en.md) ·
 > References: [`REFERENCES.en.md`](REFERENCES.en.md)
 

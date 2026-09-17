@@ -6,20 +6,21 @@
 > (Discourse + Postgres/pgvector, 424 835 posts). Inference on the **mini
 > PC** (Ollama `bge-m3` + `qwen3:30b-a3b-q6k`, TEI mmarco) via Tailscale.
 > Member flags still **OFF**; agent limited to a demo group. Public diagram:
-> [`README.md`](../../README.md). Session resume (French working doc):
+> [`README.en.md`](../../README.en.md). Session resume (French working doc):
 > [`PLAN_RAG_PROD_VPS.md`](../PLAN_RAG_PROD_VPS.md).
 > Eval: posts+rerank, Hit@5 0.97 — [`EVAL.en.md`](EVAL.en.md) /
 > [`SAFETY.en.md`](SAFETY.en.md).
 
 ## Languages in this folder
 
-GitHub and Forgejo only auto-switch the **root** `README.md` /
-`README.fr.md`. Every other page is a normal file. Convention here:
+This repo (unlike the others): **unprefixed `.md` = French**, **`.en.md` =
+English**. That includes the root README. GitHub only renders `README.md`,
+so the landing page is French; the banner links to `README.en.md`.
 
 | Files | Language |
 |---|---|
-| `DESIGN.md`, `EVAL.md`, `SAFETY.md`, `PIPELINE.md`, `REFERENCES.md`, this folder's `README.md` | French (working language) |
-| `DESIGN.en.md`, `EVAL.en.md`, `SAFETY.en.md`, `PIPELINE.en.md`, `REFERENCES.en.md`, `README.en.md` | English (public vitrine, linked from root `README.md`) |
+| `DESIGN.md`, `EVAL.md`, `SAFETY.md`, `PIPELINE.md`, `REFERENCES.md`, this folder's `README.md` | French |
+| `DESIGN.en.md`, `EVAL.en.md`, `SAFETY.en.md`, `PIPELINE.en.md`, `REFERENCES.en.md`, `README.en.md` | English (linked from root `README.en.md`) |
 | `LOCAL_DEV.md`, `prod_snapshots/`, `../PLAN_RAG_PROD_VPS.md` | French only (operator runbooks) |
 
 ## Why this workstream

@@ -6,7 +6,7 @@
 > natifs + rerank) mesurée ; code en prod sur le VPS, flags membre encore
 > **OFF**, agent limité à un groupe démo. Le §0 ci-dessous est un
 > **instantané historique** (grain topic) — l'architecture actuelle :
-> [`README.fr.md`](../../README.fr.md) · [`PIPELINE.md`](PIPELINE.md).
+> [`README.md`](../../README.md) · [`PIPELINE.md`](PIPELINE.md).
 > Résultats : [`EVAL.md`](EVAL.md) · Sécurité : [`SAFETY.md`](SAFETY.md) ·
 > Références : [`REFERENCES.md`](REFERENCES.md)
 

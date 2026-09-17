@@ -6,14 +6,15 @@
 > (Discourse + Postgres/pgvector, 424 835 posts). Inférence sur le **mini
 > PC** (Ollama `bge-m3` + `qwen3:30b-a3b-q6k`, TEI mmarco) via Tailscale.
 > Flags membre encore **OFF** ; agent limité à un groupe démo. Schéma
-> public : [`README.fr.md`](../../README.fr.md). Reprise :
+> public : [`README.md`](../../README.md). Reprise :
 > [`PLAN_RAG_PROD_VPS.md`](../PLAN_RAG_PROD_VPS.md) § « Reprise session ».
 > Éval : posts+rerank, Hit@5 0.97 — `EVAL.md` / `SAFETY.md`.
 
-**Langues** : GitHub / Forgejo ne basculent que le README racine. Ici,
-`FOO.md` = français (travail) ; `FOO.en.md` = anglais (vitrine, liée
-depuis [`README.md`](../../README.md)). Runbooks (`LOCAL_DEV.md`,
-`PLAN_RAG_PROD_VPS.md`, `prod_snapshots/`) : français seulement.
+**Langues (ce dépôt)** : `FOO.md` = français, `FOO.en.md` = anglais —
+y compris le README racine (`README.md` / `README.en.md`). GitHub affiche
+`README.md` (donc le français) ; le bandeau envoie vers l'anglais.
+Runbooks (`LOCAL_DEV.md`, `PLAN_RAG_PROD_VPS.md`, `prod_snapshots/`) :
+français seulement.
 
 ## Pourquoi ce chantier
 
