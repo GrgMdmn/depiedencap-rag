@@ -281,8 +281,13 @@ module DepiedencapAiCitations
     def self.effective_question(post)
       return "" if post.blank?
 
-      latest = post.raw.to_s.gsub(/<[^>]+>/, " ").squish
-      condense_query(latest, history_for(post))
+      # Mémoïsé par post : PlaygroundHook (génération) puis Sanitizer (for_post
+      # + suggested_category) appellent tous effective_question — un seul appel
+      # de condensation par message utilisateur au lieu de trois.
+      Discourse.cache.fetch("dpec_effq:#{post.id}", expires_in: CACHE_TTL) do
+        latest = post.raw.to_s.gsub(/<[^>]+>/, " ").squish
+        condense_query(latest, history_for(post))
+      end
     end
 
     def self.history_for(post)
@@ -303,8 +308,8 @@ module DepiedencapAiCitations
 
     # Réécrit le dernier message en requête autonome à partir de l'historique
     # (ex. "Ok, box calf goodyear" après "mes Carmina" → "entretien Carmina
-    # box calf Goodyear"). Modèle dédié léger (pas Qwen 30B : pas de mode
-    # thinking à gérer, latence courte) — indispo/erreur → dernier message tel quel.
+    # box calf Goodyear"). Même LLM que la génération (qwen3:30b MoE, rapide
+    # à ~3B actifs, think:false forcé) — indispo/erreur → dernier message tel quel.
     def self.condense_query(latest, history)
       return latest if history.blank?
 

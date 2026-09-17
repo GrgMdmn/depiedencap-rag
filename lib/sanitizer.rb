@@ -25,8 +25,13 @@ module DepiedencapAiCitations
 
       return if post.custom_fields["depiedencap_ai_citations"] == "t"
 
-      question = user_question(post)
       user_post = originating_user_post(post)
+      # La suggestion de catégorie doit voir la requête reformulée (qui porte
+      # l'intention, ex. « entretenir »), pas le dernier message brut —
+      # sinon un tour de suivi (« ok, box calf goodyear ») suggère la mauvaise
+      # catégorie. effective_question est mémoïsé par post : pas d'appel en plus.
+      question =
+        user_post ? Retrieval.effective_question(user_post) : user_question(post)
       # Mêmes reformulation/cache que ce que le LLM a vu (PlaygroundHook) : sans
       # ça, la question réécrite par condense_query pour la génération et la
       # question brute utilisée ici pour les citations divergeraient.
