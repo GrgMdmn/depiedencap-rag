@@ -1,0 +1,4116 @@
+# Jeu d'éval retrieval — le « golden » = les fils canoniques qu'on attend.
+# expected_topic_ids : ids de topics Discourse (plusieurs = ou). Sourcés depuis
+# la base locale (titre + posts_count réels) — restent à valider par un humain
+# du forum, comme le premier lot de 13 (confirmé bon le 12/09).
+# Couvrir : définitions/technique de fabrication, avis marques, entretien,
+# achat/occasion, pointure/largeur, types de chaussures, vie du forum,
+# megathreads (dilution), grain post (réponse dans un post précis),
+# hors-sujet (attendu : abstention → aucun golden).
+
+# === A. Définitions / technique de fabrication ===============================
+
+- id: calceophilie
+  question: "Qu'est-ce que la calcéophilie ? Peux-tu m'expliquer le terme et me pointer vers des discussions du forum ?"
+  expected_topic_ids: [34091]          # « Du terme «Calcéophile» »
+  notes: définition — fil canonique attendu
+
+- id: goodyear-vs-blake
+  question: "Différence entre montage Goodyear et Blake ?"
+  expected_topic_ids: [22193, 22487]
+  notes: deux fils quasi homonymes
+
+- id: montage-norvegien-def
+  question: "Le montage norvégien (cousu norvégien), c'est quoi exactement ?"
+  expected_topic_ids: [22776, 32111]    # apologie du cousu norvégien / montage norvégien
+  notes: définition technique — à valider
+
+- id: blake-reputation
+  question: "On dit que le montage Blake a mauvaise réputation, c'est vrai ?"
+  expected_topic_ids: [22614]           # « Blake : la mauvaise réputation »
+  notes: reformulation quasi littérale
+
+- id: changer-montage-goodyear-norvegien
+  question: "Peut-on transformer un montage Goodyear en montage norvégien ?"
+  expected_topic_ids: [33560]
+  notes: fil court (8 posts) — test sur petit fil
+
+- id: points-apparents-trepointe
+  question: "À quoi servent les points apparents entre la tige et la trépointe ?"
+  expected_topic_ids: [33117]
+  notes: technique de fabrication, fil de niche
+
+- id: cousu-main-vs-machine
+  question: "Quelle différence entre cousu main et cousu machine sur une paire sur mesure ?"
+  expected_topic_ids: [31943]
+  notes: à valider
+
+# === B. Avis / opinions sur les marques ========================================
+
+- id: paraboot-avis
+  question: "Paraboot, ça vaut quoi comme marque ?"
+  expected_topic_ids: [34663]          # « Paraboot... ça vaut quoi ? »
+  notes: formulation quasi littérale — baseline facile
+
+- id: carmina-megathread
+  question: "Que pensent les membres des chaussures Carmina ?"
+  expected_topic_ids: [25392]          # « CarminaAAAAAHH !!! » (2690 posts)
+  notes: megathread — test dilution topic-embedding
+
+- id: meermin-avis
+  question: "Que pensez-vous de la marque Meermin ? Bon rapport qualité-prix ?"
+  expected_topic_ids: [20644]          # 2712 posts — plus gros megathread du forum
+  notes: megathread encore plus gros que Carmina
+
+- id: crockett-jones-avis
+  question: "Crockett & Jones, vos avis sur la marque ?"
+  expected_topic_ids: [31259]
+  notes:
+
+- id: edward-green-avis
+  question: "Edward Green, ça se justifie le prix ? Des retours d'expérience ?"
+  expected_topic_ids: [16294, 24712]
+  notes: fil « questions de débutant » + album photos
+
+- id: corthay-avis
+  question: "Corthay, qu'en pensez-vous, ça vaut le coup ?"
+  expected_topic_ids: [26321, 23332, 31370, 28318]  # + hits réels trouvés (23332 « Que pensez-vous des CORTHAY? » plus canonique)
+  notes: golden élargi 13/09 — le retrieval remontait des fils Corthay valides
+
+- id: churchs-avis
+  question: "Church's, vous en pensez quoi comme marque ?"
+  expected_topic_ids: [31631]
+  notes:
+
+- id: vass-avis
+  question: "Vass, c'est un bon choix ? Vos modèles préférés ?"
+  expected_topic_ids: [35266]          # « Votre VASS preferee » 1442 posts
+  notes: megathread
+
+- id: berluti-avis
+  question: "Berluti, on dit que c'est décrié à tort, vous en pensez quoi ?"
+  expected_topic_ids: [23914, 26418]
+  notes:
+
+- id: alden-avis
+  question: "Alden, quelqu'un peut m'en parler ? Ça vaut le coup à l'achat ?"
+  expected_topic_ids: [31195]
+  notes:
+
+- id: santoni-avis
+  question: "Santoni, vos avis sur la marque ?"
+  expected_topic_ids: [16153]
+  notes: megathread 681 posts
+
+- id: markowski-avis
+  question: "Markowski, faut-il s'en méfier ou c'est une bonne marque ?"
+  expected_topic_ids: [18598, 24178]    # fil unique réorga + « Pourquoi je déconseille Markowski »
+  notes: deux fils avec avis potentiellement contradictoires
+
+- id: septieme-largeur-avis
+  question: "Septième Largeur, vos avis sur les patines et les nouveautés ?"
+  expected_topic_ids: [15078]
+  notes:
+
+- id: gaziano-girling-avis
+  question: "Gaziano & Girling, qu'en pensez-vous ?"
+  expected_topic_ids: [31624, 34828]
+  notes:
+
+- id: trickers-avis
+  question: "Tricker's, ça vaut quoi comme marque anglaise ?"
+  expected_topic_ids: [31790]          # « Tricker's of England » 602 posts
+  notes:
+
+- id: loding-avis
+  question: "Loding, vos avis sur la marque et les modèles ?"
+  expected_topic_ids: [33591]          # 570 posts
+  notes:
+
+- id: bexley-avis
+  question: "Bexley, c'est un bon rapport qualité-prix pour débuter ?"
+  expected_topic_ids: [21423]          # 507 posts
+  notes:
+
+- id: alfred-sargent-avis
+  question: "Alfred Sargent, quelqu'un a des retours sur la marque ?"
+  expected_topic_ids: [33329]          # 571 posts
+  notes:
+
+- id: loake-avis
+  question: "Loake, ça vaut quoi par rapport aux autres marques anglaises accessibles ?"
+  expected_topic_ids: [36879, 36732]
+  notes:
+
+- id: finsbury-avis
+  question: "La qualité Finsbury a-t-elle baissé ces dernières années ?"
+  expected_topic_ids: [19152]          # « Qualité Finsbury »
+  notes:
+
+- id: altan-avis
+  question: "Altan, ça vaut quoi comme marque turque ?"
+  expected_topic_ids: [21305]          # « Altan-tation » 1655 posts, megathread
+  notes:
+
+- id: jacques-demeter-avis
+  question: "Jacques et Démeter, vos avis sur ce bottier ?"
+  expected_topic_ids: [23531]          # 950 posts
+  notes:
+
+- id: aubercy-avis
+  question: "Aubercy, c'est du beau travail français ou surcoté ?"
+  expected_topic_ids: [30063, 25577]
+  notes:
+
+- id: heschung-avis
+  question: "Heschung, quelqu'un a testé sur la durée ?"
+  expected_topic_ids: [34008, 25475]
+  notes:
+
+- id: carlos-santos-avis
+  question: "Carlos Santos, ça vaut le coup par rapport à du Goodyear plus cher ?"
+  expected_topic_ids: [25731]
+  notes:
+
+# === C. Entretien / réparation ================================================
+
+- id: cirage-frequence
+  question: "À quelle fréquence faut-il cirer ses chaussures ?"
+  expected_topic_ids: [18203]          # « Cremage, cirage : quelle frequence? »
+  notes: orthographe approximative dans le titre cible
+
+- id: renomat-renovateur
+  question: "Comment retirer les vieilles couches de cirage ? Renomat ou Renovateur ?"
+  expected_topic_ids: [25775]
+  notes: noms de produits = mots distinctifs
+
+- id: coffret-cirage
+  question: "Des idées de coffret pour ranger cirage et brosses ?"
+  expected_topic_ids: [18044]
+  notes:
+
+- id: trepointe-entretien
+  question: "Comment entretenir la trépointe d'une paire de chaussures ? Quels produits éviter ou privilégier ?"
+  expected_topic_ids: [31402, 35595]
+  notes: grain fin — la réponse est sans doute dans des posts précis
+
+- id: cirer-sans-deborder
+  question: "Comment cirer sans en mettre partout sur la tige ?"
+  expected_topic_ids: [24577]
+  notes:
+
+- id: cirer-bout-dur
+  question: "Comment bien cirer un bout dur ?"
+  expected_topic_ids: [16254]
+  notes:
+
+- id: cirer-cognac
+  question: "Comment cirer des chaussures de couleur cognac sans les foncer ?"
+  expected_topic_ids: [17449]
+  notes:
+
+- id: entretien-cordovan
+  question: "Comment entretenir du cordovan correctement ?"
+  expected_topic_ids: [24462]
+  notes:
+
+- id: ressemelage-paris
+  question: "Un bon cordonnier pour un ressemelage sur Paris ?"
+  expected_topic_ids: [15907, 35325]
+  notes:
+
+- id: ressemelage-weston-180
+  question: "Ressemelage d'une Weston 180, quelqu'un a de l'expérience ?"
+  expected_topic_ids: [29514]
+  notes:
+
+- id: demontage-weston
+  question: "Un démontage de Weston classique ou Perry, à quoi ça ressemble ?"
+  expected_topic_ids: [32139]
+  notes:
+
+- id: demontage-cj
+  question: "Démontage d'une Crockett & Jones Handgrade, des photos ou retours ?"
+  expected_topic_ids: [31577]
+  notes:
+
+- id: demontage-corthay
+  question: "Démontage d'une Corthay, qu'est-ce qu'on trouve à l'intérieur ?"
+  expected_topic_ids: [32216]
+  notes:
+
+- id: choix-embauchoirs
+  question: "Quels embauchoirs choisir et où les acheter ?"
+  expected_topic_ids: [23595]
+  notes:
+
+- id: taille-embauchoir
+  question: "Comment choisir la bonne taille d'embauchoir ?"
+  expected_topic_ids: [32600]
+  notes:
+
+- id: entretien-veau-velours-nubuck-daim
+  question: "Comment entretenir du veau velours, du nubuck ou du daim ?"
+  expected_topic_ids: [32827]
+  notes:
+
+- id: teinture-daim
+  question: "Peut-on teindre du daim soi-même ?"
+  expected_topic_ids: [28632]
+  notes:
+
+- id: decoloration-saphir
+  question: "Mon cuir s'est décoloré après un produit Saphir universel, que faire ?"
+  expected_topic_ids: [27485]
+  notes:
+
+- id: craquelures-cuir
+  question: "Comment traiter des craquelures fines sur le cuir ?"
+  expected_topic_ids: [33932, 29981, 25373, 24255]
+  notes: plusieurs fils proches, tous courts
+
+- id: glacage-secrets
+  question: "Quels sont les secrets pour réussir un glaçage ?"
+  expected_topic_ids: [17857]
+  notes:
+
+- id: enlever-glacage
+  question: "Comment enlever un glaçage raté sur le bout d'une chaussure ?"
+  expected_topic_ids: [32592]
+  notes:
+
+- id: entretien-trepointe-lisse
+  question: "Comment entretenir la lisse et la trépointe pour éviter qu'elles se dessèchent ?"
+  expected_topic_ids: [35595]
+  notes:
+
+# === D. Achat / occasion / budget =============================================
+
+- id: reprise-paraboot-occasion
+  question: "J'ai trouvé des Paraboot Chambord d'occasion, des conseils avant d'acheter ?"
+  expected_topic_ids: [27448]
+  notes:
+
+- id: reprise-weston-occasion
+  question: "Je revends mes Weston pour racheter des 180 Pécari d'occasion, bonne idée ?"
+  expected_topic_ids: [29499]
+  notes:
+
+- id: achat-paris-budget
+  question: "Où acheter des souliers de qualité à Paris pour environ 200€ ?"
+  expected_topic_ids: [24010]
+  notes:
+
+- id: ou-acheter-cintres
+  question: "Où acheter de bons cintres pour ranger mes vêtements ?"
+  expected_topic_ids: [33633]
+  notes: catégorie vêtements, pas souliers — test cross-catégorie
+
+- id: verifications-avant-achat-pap
+  question: "Quelles vérifications faire avant d'acheter du prêt-à-porter ?"
+  expected_topic_ids: [35565]
+  notes:
+
+- id: boutique-occasions-paris
+  question: "Une bonne boutique d'occasions à Paris pour du soulier ?"
+  expected_topic_ids: [33430]
+  notes:
+
+- id: achat-groupe-embauchoirs-bexley
+  question: "Il y a eu un achat groupé d'embauchoirs Bexley sur Paris ?"
+  expected_topic_ids: [26547]
+  notes: catégorie vie du forum, pas souliers
+
+- id: herring-vente-ligne
+  question: "Herring Shoes vend en ligne, quelqu'un a testé ?"
+  expected_topic_ids: [14907]
+  notes:
+
+# === E. Pointure / largeur ======================================================
+
+- id: weston-taille
+  question: "Les Weston taillent comment ? Je fais du 42 chez most."
+  expected_topic_ids: [27488]          # « ça taille comment Weston? »
+  notes: sizing — info en posts dispersés
+
+- id: weston-180-pointure
+  question: "Je me suis peut-être trompé de pointure sur une Weston 180, comment vérifier ?"
+  expected_topic_ids: [19048]
+  notes:
+
+- id: loding-pointure
+  question: "Loding, ça taille comment en pointure ?"
+  expected_topic_ids: [32037]
+  notes:
+
+- id: grande-pointure
+  question: "Quelles marques proposent de grandes pointures en soulier ?"
+  expected_topic_ids: [23776]
+  notes:
+
+- id: forcer-largeur
+  question: "Peut-on forcer un soulier trop étroit en largeur ?"
+  expected_topic_ids: [32938]
+  notes:
+
+- id: markowski-7l-vs-altan
+  question: "Entre Markowski 7e largeur et Altan, lequel choisir pour un pied large ?"
+  expected_topic_ids: [35636]
+  notes:
+
+- id: premiere-paire-7l
+  question: "Je veux une première paire en 7e largeur, des conseils ?"
+  expected_topic_ids: [18160]
+  notes:
+
+# === F. Types de chaussures ======================================================
+
+- id: derby-boucle
+  question: "Des recommandations de derby à boucle que vous aimez particulièrement ?"
+  expected_topic_ids: [33821]
+  notes:
+
+- id: richelieu-bout-rapporte
+  question: "Le richelieu bout rapporté de Mack James, des avis ?"
+  expected_topic_ids: [22507]
+  notes: question reformulée 13/09 — un membre nommerait la marque ; version vague = miss légitime
+
+- id: richelieu-bout-droit-bergeronnette
+  question: "Un richelieu bout droit en box bergeronnette, quelqu'un connaît ?"
+  expected_topic_ids: [14996]
+  notes:
+
+- id: quel-mocassin
+  question: "Quel mocassin choisir pour un usage quotidien ?"
+  expected_topic_ids: [28112]
+  notes:
+
+- id: achat-chukka
+  question: "Où acheter de bonnes chukka boots ?"
+  expected_topic_ids: [20431]
+  notes:
+
+- id: bottine-moto
+  question: "Une bottine adaptée à la moto, des recommandations ?"
+  expected_topic_ids: [26370]
+  notes:
+
+- id: recherche-chelsea
+  question: "Je cherche des chelsea boots en veau velours marron chocolat."
+  expected_topic_ids: [34403]
+  notes:
+
+- id: saddle-shoes
+  question: "Les saddle shoes, c'est un must-have ou un effet de mode ?"
+  expected_topic_ids: [27206]
+  notes:
+
+- id: spectators
+  question: "Les spectators, comment les porter sans que ça fasse trop ?"
+  expected_topic_ids: [35398]
+  notes:
+
+- id: souliers-couleur-bleus
+  question: "Des souliers bleus, c'est une tendance ou un classique ?"
+  expected_topic_ids: [26060]          # 2049 posts, megathread
+  notes: megathread couleur
+
+- id: souliers-couleur-verts
+  question: "Des souliers verts, c'est trop original pour être porté souvent ?"
+  expected_topic_ids: [27940]
+  notes: megathread couleur
+
+- id: souliers-couleur-gris
+  question: "Les souliers gris, pourquoi sont-ils si peu portés ?"
+  expected_topic_ids: [28437]
+  notes: megathread couleur
+
+# === G. Vie du forum ==============================================================
+
+- id: regles-forum
+  question: "Quelles sont les règles à respecter sur le forum ?"
+  expected_topic_ids: [36456, 26714]   # « Nouvelles règles du forum » / savoir-vivre
+  notes: vie du forum — catégorie non « souliers »
+
+- id: savoir-vivre
+  question: "Y a-t-il un recueil de règles de savoir-vivre sur le forum ?"
+  expected_topic_ids: [26714]
+  notes:
+
+- id: bannissement
+  question: "Pourquoi certains membres ont-ils été bannis du forum ?"
+  expected_topic_ids: [28939, 23072]
+  notes: sujet sensible — vérifier ton de la réponse générée
+
+- id: contacter-moderateurs
+  question: "Comment contacter les modérateurs du forum ?"
+  expected_topic_ids: [36207]
+  notes:
+
+- id: presentation-nouveau-membre
+  question: "Comment se présenter en arrivant sur le forum ?"
+  expected_topic_ids: [36872, 35471, 35153, 29757, 24944, 28350, 32527, 32413, 31006, 18186]
+  notes: golden élargi 13/09 — les fils de présentation sont nombreux et équivalents
+
+- id: charte-forum-2010
+  question: "Existe-t-il une charte qui explique l'esprit du forum ?"
+  expected_topic_ids: [36956]
+  notes:
+
+- id: charte-2026-proposition
+  question: "Il y a une nouvelle proposition de charte pour 2026 ?"
+  expected_topic_ids: [37124]
+  notes: contenu récent — bon test de fraîcheur
+
+- id: position-moderation-avatars
+  question: "Quelle est la position de la modération sur les photos utilisées en avatar ?"
+  expected_topic_ids: [34879]
+  notes: fil très court (5 posts)
+
+- id: bienvenue-nouveau
+  question: "Y a-t-il un fil pour souhaiter la bienvenue aux nouveaux membres ?"
+  expected_topic_ids: [33494, 33724, 16306, 32243, 36837, 32833, 25082, 35898, 30336]
+  notes: golden élargi 13/09 — idem, beaucoup de fils de bienvenue équivalents
+
+- id: moderateur-elrio
+  question: "Qui est ElRiO parmi les modérateurs du forum ?"
+  expected_topic_ids: [18661]
+  notes:
+
+# === H. Divers pratique ===========================================================
+
+- id: noeuds-lacets
+  question: "Comment faire de beaux nœuds de lacets ?"
+  expected_topic_ids: [14702, 31337, 15638, 32534, 17359]  # + « Technique de noeuds », « Double Noeud », « Marre des double noeuds », « laçage »
+  notes: golden élargi 13/09 — plusieurs fils noeuds/lacets équivalents
+
+- id: premiere-paire
+  question: "Je débute : quels conseils du forum pour choisir une première paire de chaussures de qualité ?"
+  expected_topic_ids: [29228, 17088]   # « Première paire de chaussures ou pas… » / étudiant
+  notes: intention « débutant » — plusieurs fils plausibles
+
+# === I. Cas grain post : la réponse vit dans un post précis d'un megathread =======
+
+- id: carmina-sizing-megathread
+  question: "Les Carmina taillent comment ? Je les trouve petites."
+  expected_topic_ids: [25392]
+  expected_post_ids: [393528, 393558]  # échange sizing posts #210/#218 — à valider
+  notes: LE test grain post — topic invisible en baseline A, le post peut suffire
+
+- id: glacage-recette-secheveux
+  question: "Il existe une recette maison pour réussir un glaçage rapide, genre au sèche-cheveux ?"
+  expected_topic_ids: [32024]
+  expected_post_ids: [530704]          # post #51 — recette précise (cirage + eau + sèche-cheveux)
+  notes: post identifié par recherche texte — golden fiable, réponse hyper spécifique
+
+# === J. Questions hors-sujet : attendu = abstention (aucun golden) ================
+# Elles testent le garde-fou « pas de source → pas d'invention ».
+# Le harness les ignore pour Hit@k/MRR (pas de expected_topic_ids) mais
+# elles doivent retourner peu/pas de sources côté hybrid.
+
+- id: hors-sujet-cuisine
+  question: "Quelle est la meilleure recette de bœuf bourguignon ?"
+  expected_topic_ids: []
+  notes: abstention attendue
+
+- id: hors-sujet-voiture
+  question: "Ma voiture ne démarre plus, que faire ?"
+  expected_topic_ids: []
+  notes: abstention attendue
+
+- id: hors-sujet-politique
+  question: "Que pensez-vous du dernier remaniement ministériel ?"
+  expected_topic_ids: []
+  notes: abstention attendue — sujet clivant à éviter en plus
+
+- id: hors-sujet-meteo
+  question: "Quel temps va-t-il faire ce week-end à Paris ?"
+  expected_topic_ids: []
+  notes: abstention attendue
+
+- id: hors-sujet-sport
+  question: "Qui a gagné le dernier match du PSG ?"
+  expected_topic_ids: []
+  notes: abstention attendue
+
+- id: hors-sujet-jardinage
+  question: "Comment tailler mes rosiers en cette saison ?"
+  expected_topic_ids: []
+  notes: abstention attendue
+
+# === K. Corpus étendu (généré par template, échelle) =============================
+# Sourcé par mining large (toutes catégories + tous les tags marques de la base
+# locale, 13/09/2026) : question = titre réel si déjà formulé comme une question,
+# sinon templates par famille de catégorie (souliers/entretien/vêtements/
+# accessoires/bons plans/art de vivre/vie du forum/comptoir). Contrairement aux
+# sections A-J (curées à la main, goldens vérifiés par pooling), ce bloc n'a PAS
+# de curation manuelle poussée : golden = le topic source lui-même (single-topic,
+# pas d'union multi-fils). Sert à mesurer la robustesse des configs sur un grand
+# volume, pas à documenter des cas fins comme A-J. Tous les topic_ids vérifiés
+# existants en base (cf. commit).
+
+- id: scaled-bienvenue-sur-depiedencap-wave
+  question: "Des infos sur Bienvenue sur Depiedencap ! :wave: ?"
+  expected_topic_ids: [5]
+  notes: "généré par template (échelle) depuis titre réel, cat 1"
+
+- id: scaled-guide-de-l-administrateur-premiers-pas
+  question: "Des avis sur Guide de l'administrateur : premiers pas ?"
+  expected_topic_ids: [6]
+  notes: "généré par template (échelle) depuis titre réel, cat 1"
+
+- id: scaled-propos-de-la-cat-gorie-la-vie-du-site
+  question: "Des infos sur À propos de la catégorie La vie du site ?"
+  expected_topic_ids: [14646]
+  notes: "généré par template (échelle) depuis titre réel, cat 141"
+
+- id: scaled-propos-de-la-cat-gorie-le-comptoir
+  question: "De quoi parle-t-on dans « À propos de la catégorie Le Comptoir » ?"
+  expected_topic_ids: [14648]
+  notes: "généré par template (échelle) depuis titre réel, cat 143"
+
+- id: scaled-propos-de-la-cat-gorie-les-souliers
+  question: "Des infos sur À propos de la catégorie Les souliers ?"
+  expected_topic_ids: [14649]
+  notes: "généré par template (échelle) depuis titre réel, cat 144"
+
+- id: scaled-propos-de-la-cat-gorie-les-v-tements
+  question: "Des infos sur À propos de la catégorie Les vêtements ?"
+  expected_topic_ids: [14650]
+  notes: "généré par template (échelle) depuis titre réel, cat 145"
+
+- id: scaled-propos-de-la-cat-gorie-bons-plans-annonc
+  question: "Des avis sur À propos de la catégorie Bons plans & annonces ?"
+  expected_topic_ids: [14652]
+  notes: "généré par template (échelle) depuis titre réel, cat 147"
+
+- id: scaled-propos-de-la-cat-gorie-art-de-vivre
+  question: "Des avis sur À propos de la catégorie Art de vivre ?"
+  expected_topic_ids: [14653]
+  notes: "généré par template (échelle) depuis titre réel, cat 148"
+
+- id: scaled-propos-de-la-cat-gorie-tutoriels-et-pris
+  question: "Quelqu'un peut m'expliquer : À propos de la catégorie Tutoriels et prise en main\
+  \ ?"
+  expected_topic_ids: [14654]
+  notes: "généré par template (échelle) depuis titre réel, cat 149"
+
+- id: scaled-propos-de-la-cat-gorie-commentaires-et-r
+  question: "Des infos sur À propos de la catégorie Commentaires et retours sur le site ?"
+  expected_topic_ids: [14655]
+  notes: "généré par template (échelle) depuis titre réel, cat 150"
+
+- id: scaled-propos-de-la-cat-gorie-publi-information
+  question: "Des avis sur À propos de la catégorie Publi-Information ?"
+  expected_topic_ids: [14665]
+  notes: "généré par template (échelle) depuis titre réel, cat 160"
+
+- id: scaled-single-malt
+  question: "Vos recommandations sur Single malt ?"
+  expected_topic_ids: [14700]
+  notes: "généré par template (échelle) depuis titre réel, cat 186"
+
+- id: scaled-ceinture-l-aiglon-et-loding-ou-finsbury
+  question: "Ceinture l'Aiglon (et Loding ou Finsbury) ?"
+  expected_topic_ids: [14704]
+  notes: "généré par template (échelle) depuis titre réel, cat 179"
+
+- id: scaled-ranger-ses-montres-et-ses-boutons-de-man
+  question: "Des conseils sur Ranger ses montres et ses boutons de manchette avec class ?"
+  expected_topic_ids: [14708]
+  notes: "généré par template (échelle) depuis titre réel, cat 172"
+
+- id: scaled-premiere-voiture-avec-supplement-d-ame-h
+  question: "Vos recommandations sur premiere voiture avec supplement d'ame? help ?"
+  expected_topic_ids: [14729]
+  notes: "généré par template (échelle) depuis titre réel, cat 188"
+
+- id: scaled-pantalons-harmont-et-blaine
+  question: "Où trouver ça : pantalons Harmont et Blaine ?"
+  expected_topic_ids: [14758]
+  notes: "généré par template (échelle) depuis titre réel, cat 182"
+
+- id: scaled-une-familiale-avec-aussi-un-suppl-ment-d
+  question: "Vos recommandations sur Une \"familiale\" avec aussi un supplément d'âme... ?"
+  expected_topic_ids: [14801]
+  notes: "généré par template (échelle) depuis titre réel, cat 188"
+
+- id: scaled-la-plus-belle-ligne-du-monde-automobile
+  question: "Discussion sur la plus belle ligne du monde automobile, vos avis ?"
+  expected_topic_ids: [14836]
+  notes: "généré par template (échelle) depuis titre réel, cat 188"
+
+- id: scaled-ap-ro-18-05-10
+  question: "Quelqu'un peut m'expliquer : Apéro - 18/05/10 ?"
+  expected_topic_ids: [14839]
+  notes: "généré par template (échelle) depuis titre réel, cat 192"
+
+- id: scaled-soldes-zilli
+  question: "Où trouver ça : Soldes Zilli ?"
+  expected_topic_ids: [14841]
+  notes: "généré par template (échelle) depuis titre réel, cat 182"
+
+- id: scaled-londres-dans-la-journ-e
+  question: "Des conseils sur Londres dans la journée ?"
+  expected_topic_ids: [14848]
+  notes: "généré par template (échelle) depuis titre réel, cat 187"
+
+- id: scaled-chaussettes-bresciani
+  question: "Des conseils sur Chaussettes Bresciani ?"
+  expected_topic_ids: [14851]
+  notes: "généré par template (échelle) depuis titre réel, cat 169"
+
+- id: scaled-chapeau-par-dbm
+  question: "Vos avis sur Chapeau, par DBM ?"
+  expected_topic_ids: [14868]
+  notes: "généré par template (échelle) depuis titre réel, cat 168"
+
+- id: scaled-15-sur-ralph-lauren
+  question: "Des infos sur ce bon plan : 15% sur Ralph Lauren ?"
+  expected_topic_ids: [14933]
+  notes: "généré par template (échelle) depuis titre réel, cat 182"
+
+- id: scaled-changement-de-v-hicule
+  question: "Des conseils sur changement de véhicule ?"
+  expected_topic_ids: [15017]
+  notes: "généré par template (échelle) depuis titre réel, cat 188"
+
+- id: scaled-diff-rence-chukka-desert-boots
+  question: "Différence Chukka - Desert Boots ?"
+  expected_topic_ids: [15026]
+  notes: "généré par template (échelle) depuis titre réel, cat 159"
+
+- id: scaled-conseil-pour-la-pochette
+  question: "Où trouver des infos sur Conseil pour la pochette ?"
+  expected_topic_ids: [15053]
+  notes: "généré par template (échelle) depuis titre réel, cat 174"
+
+- id: scaled-ap-ro-sur-nantes
+  question: "Qu'est-ce qui se dit sur Apéro sur Nantes ?"
+  expected_topic_ids: [15056]
+  notes: "généré par template (échelle) depuis titre réel, cat 192"
+
+- id: scaled-covert-coat
+  question: "Des conseils sur Covert Coat ?"
+  expected_topic_ids: [15234]
+  notes: "généré par template (échelle) depuis titre réel, cat 163"
+
+- id: scaled-pourquoi-sellerie
+  question: "Des avis sur pourquoi sellerie?- ?"
+  expected_topic_ids: [15267]
+  notes: "généré par template (échelle) depuis titre réel, cat 146"
+
+- id: scaled-quid-de-grafea
+  question: "Quid de Grafea ?"
+  expected_topic_ids: [15518]
+  notes: "généré par template (échelle) depuis titre réel, cat 178"
+
+- id: scaled-manteau-habill
+  question: "Des conseils sur Manteau habillé ?"
+  expected_topic_ids: [15577]
+  notes: "généré par template (échelle) depuis titre réel, cat 163"
+
+- id: scaled-boutons-de-manchette-styl-s-et-pas-chers
+  question: "Où trouver des infos sur Boutons de manchette stylés et pas chers ?"
+  expected_topic_ids: [15631]
+  notes: "généré par template (échelle) depuis titre réel, cat 172"
+
+- id: scaled-mes-chaussettes-rouges
+  question: "Vos avis sur mes chaussettes rouges ?"
+  expected_topic_ids: [15634]
+  notes: "généré par template (échelle) depuis titre réel, cat 169"
+
+- id: scaled-noire-ou-blanche
+  question: "Quelqu'un peut m'éclairer sur noire ou blanche ?"
+  expected_topic_ids: [15658]
+  notes: "généré par template (échelle) depuis titre réel, cat 164"
+
+- id: scaled-comment-coudre
+  question: "Des conseils sur comment coudre?. ?"
+  expected_topic_ids: [15687]
+  notes: "généré par template (échelle) depuis titre réel, cat 184"
+
+- id: scaled-cotton-society
+  question: "Cotton Society?"
+  expected_topic_ids: [15700]
+  notes: "généré par template (échelle) depuis titre réel, cat 162"
+
+- id: scaled-alfred-sargent-d-montage
+  question: "Quelqu'un a des infos ou un avis sur Alfred Sargent - démontage ?"
+  expected_topic_ids: [15726]
+  notes: "généré par template (échelle) depuis titre réel, cat 155"
+
+- id: scaled-2-edition-de-l-apero-nantais-largi
+  question: "2° edition de l'apero Nantais élargi?"
+  expected_topic_ids: [15732]
+  notes: "généré par template (échelle) depuis titre réel, cat 192"
+
+- id: scaled-porte-documents-herm-s-etrivi-re
+  question: "Des avis sur Porte documents Hermès etrivière ?"
+  expected_topic_ids: [15769]
+  notes: "généré par template (échelle) depuis titre réel, cat 146"
+
+- id: scaled-assortir-les-chaussettes-avec-le-pantalo
+  question: "Vos avis sur Assortir les chaussettes avec le pantalon ou les chaussures ?"
+  expected_topic_ids: [15772]
+  notes: "généré par template (échelle) depuis titre réel, cat 169"
+
+- id: scaled-scooter
+  question: "Discussion sur Scooter, vos avis ?"
+  expected_topic_ids: [15797]
+  notes: "généré par template (échelle) depuis titre réel, cat 188"
+
+- id: scaled-chino
+  question: "Vos avis sur Chino ?"
+  expected_topic_ids: [15801]
+  notes: "généré par template (échelle) depuis titre réel, cat 161"
+
+- id: scaled-ceinture-patin
+  question: "Vos avis sur Ceinture patiné ?"
+  expected_topic_ids: [15828]
+  notes: "généré par template (échelle) depuis titre réel, cat 179"
+
+- id: scaled-c-est-du-lobb-si-si
+  question: "Des avis sur C'est du Lobb (si si) ?"
+  expected_topic_ids: [15884]
+  notes: "généré par template (échelle) depuis titre réel, cat 155"
+
+- id: scaled-nouvel-achat-richelieu-marc-guyot
+  question: "Des avis sur nouvel achat, Richelieu marc guyot ?"
+  expected_topic_ids: [15991]
+  notes: "généré par template (échelle) depuis titre réel, cat 155"
+
+- id: scaled-loding-s-rie-limit-e
+  question: "Que pensez-vous de LODING - Série Limitée ???- ?"
+  expected_topic_ids: [16048]
+  notes: "généré par template (échelle) depuis titre réel, cat 155"
+
+- id: scaled-o-r-parater-un-kelly-vintage
+  question: "Où réparater un kelly vintage?"
+  expected_topic_ids: [16065]
+  notes: "généré par template (échelle) depuis titre réel, cat 146"
+
+- id: scaled-patines-personnalis-es-pour-vos-souliers
+  question: "Quelqu'un peut m'éclairer sur Patines personnalisées pour vos souliers par Paulus\
+  \ Bolten ?"
+  expected_topic_ids: [16135]
+  notes: "généré par template (échelle) depuis titre réel, cat 167"
+
+- id: scaled-veste-saharienne
+  question: "Quelqu'un peut m'éclairer sur veste saharienne ?"
+  expected_topic_ids: [16275]
+  notes: "généré par template (échelle) depuis titre réel, cat 163"
+
+- id: scaled-rencontre-dpec-lyon
+  question: "Rencontre DPEC Lyon?"
+  expected_topic_ids: [16286]
+  notes: "généré par template (échelle) depuis titre réel, cat 192"
+
+- id: scaled-bye-bye-bowen-on-ne-m-y-reprendra-plus
+  question: "Que pensez-vous de Bye bye Bowen (on ne m'y reprendra plus) ?"
+  expected_topic_ids: [16302]
+  notes: "généré par template (échelle) depuis titre réel, cat 155"
+
+- id: scaled-derby-bowen-one-cut
+  question: "Que pensez-vous de Derby Bowen \"one cut\" ?"
+  expected_topic_ids: [16318]
+  notes: "généré par template (échelle) depuis titre réel, cat 155"
+
+- id: scaled-spike
+  question: "Qu'est-ce qui se dit sur Spike ?"
+  expected_topic_ids: [16372]
+  notes: "généré par template (échelle) depuis titre réel, cat 151"
+
+- id: scaled-et-mont-blanc
+  question: "Et Mont blanc ???"
+  expected_topic_ids: [16443]
+  notes: "généré par template (échelle) depuis titre réel, cat 189"
+
+- id: scaled-un-bon-rhum
+  question: "Vos recommandations sur Un bon rhum ?"
+  expected_topic_ids: [16458]
+  notes: "généré par template (échelle) depuis titre réel, cat 186"
+
+- id: scaled-je-me-marie-quel-costume-chemise-soulier
+  question: "Je me marie, quel costume/chemise/souliers?"
+  expected_topic_ids: [16494]
+  notes: "généré par template (échelle) depuis titre réel, cat 164"
+
+- id: scaled-bowen-mal-aim-e
+  question: "Bowen, mal-aimée ?"
+  expected_topic_ids: [16502]
+  notes: "généré par template (échelle) depuis titre réel, cat 155"
+
+- id: scaled-c-est-l-le-rayon-gants
+  question: "C'est là le rayon gants ???"
+  expected_topic_ids: [16515]
+  notes: "généré par template (échelle) depuis titre réel, cat 173"
+
+- id: scaled-ap-ro-rennais
+  question: "Qu'est-ce qui se dit sur Apéro rennais ?"
+  expected_topic_ids: [16541]
+  notes: "généré par template (échelle) depuis titre réel, cat 192"
+
+- id: scaled-parapluie-francois-poitiers
+  question: "Des conseils sur parapluie Francois à Poitiers ?"
+  expected_topic_ids: [16555]
+  notes: "généré par template (échelle) depuis titre réel, cat 171"
+
+- id: scaled-costume-sans-ceinture
+  question: "Costume sans ceinture ?"
+  expected_topic_ids: [16716]
+  notes: "généré par template (échelle) depuis titre réel, cat 179"
+
+- id: scaled-un-article-sur-l-industrie-du-luxe-qui-d
+  question: "Discussion : Un article sur l'industrie du luxe qui délocalise, vos avis ?"
+  expected_topic_ids: [16730]
+  notes: "généré par template (échelle) depuis titre réel, cat 154"
+
+- id: scaled-lot-de-fauteuils-club-cabriolet
+  question: "Des infos sur Lot de fauteuils \"club cabriolet\" ?"
+  expected_topic_ids: [16842]
+  notes: "généré par template (échelle) depuis titre réel, cat 146"
+
+- id: scaled-du-nouveau-chez-7l
+  question: "Que pensez-vous de Du nouveau chez 7L ?"
+  expected_topic_ids: [16890]
+  notes: "généré par template (échelle) depuis titre réel, cat 155"
+
+- id: scaled-assortir-couleur-de-bdm
+  question: "Des conseils sur Assortir couleur de BdM ?"
+  expected_topic_ids: [16929]
+  notes: "généré par template (échelle) depuis titre réel, cat 172"
+
+- id: scaled-supprimer
+  question: "Vos avis sur supprimer ?"
+  expected_topic_ids: [16933]
+  notes: "généré par template (échelle) depuis titre réel, cat 174"
+
+- id: scaled-atelier-patine-du-30-novembre-2007
+  question: "Des conseils sur « Atelier Patine du 30 Novembre 2007 » ?"
+  expected_topic_ids: [16971]
+  notes: "généré par template (échelle) depuis titre réel, cat 157"
+
+- id: scaled-quelle-th-i-re
+  question: "Quelle théière ?"
+  expected_topic_ids: [16998]
+  notes: "généré par template (échelle) depuis titre réel, cat 186"
+
+- id: scaled-ap-ro-dpec-printemps-2011-vendredi-6-mai
+  question: "Qu'est-ce qui se dit sur Apéro DPEC printemps 2011 : vendredi 6 mai ?"
+  expected_topic_ids: [17062]
+  notes: "généré par template (échelle) depuis titre réel, cat 192"
+
+- id: scaled-patines-by-jmlegazel
+  question: "Des conseils sur PATINES BY JMLEGAZEL ?"
+  expected_topic_ids: [17101]
+  notes: "généré par template (échelle) depuis titre réel, cat 167"
+
+- id: scaled-panamas-p-brosset
+  question: "Où trouver des infos sur Panamas P. Brosset ?"
+  expected_topic_ids: [17108]
+  notes: "généré par template (échelle) depuis titre réel, cat 168"
+
+- id: scaled-sacs-sur-mesure-la-ba-ta
+  question: "Vos avis sur Sacs sur mesure La baïta ?"
+  expected_topic_ids: [17113]
+  notes: "généré par template (échelle) depuis titre réel, cat 177"
+
+- id: scaled-barbe-de-3-jours
+  question: "Où trouver des infos sur Barbe de 3 jours ?"
+  expected_topic_ids: [17123]
+  notes: "généré par template (échelle) depuis titre réel, cat 175"
+
+- id: scaled-quelle-cafeti-re
+  question: "Discussion sur Quelle cafetière, vos avis ?"
+  expected_topic_ids: [17181]
+  notes: "généré par template (échelle) depuis titre réel, cat 186"
+
+- id: scaled-malinge
+  question: "Des conseils sur MALINGE ?"
+  expected_topic_ids: [17472]
+  notes: "généré par template (échelle) depuis titre réel, cat 167"
+
+- id: scaled-milan
+  question: "Des conseils sur Milan ?"
+  expected_topic_ids: [17638]
+  notes: "généré par template (échelle) depuis titre réel, cat 187"
+
+- id: scaled-r-tromobile-2007
+  question: "Vos recommandations sur Rétromobile 2007 ?"
+  expected_topic_ids: [17669]
+  notes: "généré par template (échelle) depuis titre réel, cat 188"
+
+- id: scaled-o-trouver-les-fameuses-alden-405-indy-bo
+  question: "Que pensez-vous de Où trouver les fameuses Alden 405 ? (Indy boots) ?"
+  expected_topic_ids: [17674]
+  notes: "généré par template (échelle) depuis titre réel, cat 155"
+
+- id: scaled-m-canismes-de-montre
+  question: "Où trouver des infos sur Mécanismes de montre ?"
+  expected_topic_ids: [17684]
+  notes: "généré par template (échelle) depuis titre réel, cat 172"
+
+- id: scaled-vass-sur-la-baie
+  question: "Bon plan pour Vass sur la baie ?"
+  expected_topic_ids: [17700]
+  notes: "généré par template (échelle) depuis titre réel, cat 181"
+
+- id: scaled-derby-3-oeillets
+  question: "Des avis sur Derby 3 oeillets ?"
+  expected_topic_ids: [17703]
+  notes: "généré par template (échelle) depuis titre réel, cat 156"
+
+- id: scaled-et-le-parfum
+  question: "Et le parfum?"
+  expected_topic_ids: [17754]
+  notes: "généré par template (échelle) depuis titre réel, cat 175"
+
+- id: scaled-traditional-rainwear
+  question: "Quelqu'un peut m'éclairer sur TRADITIONAL RAINWEAR ?"
+  expected_topic_ids: [17837]
+  notes: "généré par template (échelle) depuis titre réel, cat 163"
+
+- id: scaled-ganterie-de-saint-junien-petit-reportage
+  question: "Où trouver des infos sur Ganterie de Saint-Junien (petit reportage video...) ?"
+  expected_topic_ids: [17858]
+  notes: "généré par template (échelle) depuis titre réel, cat 173"
+
+- id: scaled-que-porter-avec-quel-couvre-chef
+  question: "Que porter avec quel couvre-chef?"
+  expected_topic_ids: [17859]
+  notes: "généré par template (échelle) depuis titre réel, cat 168"
+
+- id: scaled-porter-la-canne-au-xxie-si-cle
+  question: "Porter la canne au XXIe siècle?"
+  expected_topic_ids: [17902]
+  notes: "généré par template (échelle) depuis titre réel, cat 171"
+
+- id: scaled-gen-ve
+  question: "Des conseils sur Genève ?"
+  expected_topic_ids: [18039]
+  notes: "généré par template (échelle) depuis titre réel, cat 187"
+
+- id: scaled-adresse-paris-pour-r-paration-d-un-trico
+  question: "Adresse à Paris pour réparation d'un tricot?"
+  expected_topic_ids: [18078]
+  notes: "généré par template (échelle) depuis titre réel, cat 166"
+
+- id: scaled-quelle-marque-choisir
+  question: "Quelle marque choisir ?"
+  expected_topic_ids: [18124]
+  notes: "généré par template (échelle) depuis titre réel, cat 177"
+
+- id: scaled-monk-shiption-heneage-200
+  question: "Monk Shiption & Heneage >200€?"
+  expected_topic_ids: [18185]
+  notes: "généré par template (échelle) depuis titre réel, cat 155"
+
+- id: scaled-pauline-brosset-chapeaux-et-casquettes-s
+  question: "Où trouver des infos sur Pauline Brosset, chapeaux et casquettes sur mesure à Paris\
+  \ ?"
+  expected_topic_ids: [18197]
+  notes: "généré par template (échelle) depuis titre réel, cat 168"
+
+- id: scaled-le-mari-en-jaquette
+  question: "Des conseils sur Le marié en jaquette... ?"
+  expected_topic_ids: [18219]
+  notes: "généré par template (échelle) depuis titre réel, cat 164"
+
+- id: scaled-pull-irlandais
+  question: "Quelqu'un peut m'éclairer sur Pull irlandais ?"
+  expected_topic_ids: [18235]
+  notes: "généré par template (échelle) depuis titre réel, cat 166"
+
+- id: scaled-petite-enqu-te-sur-le-fait-main
+  question: "Que pensez-vous de Petite enquête sur le \"fait main\" ?"
+  expected_topic_ids: [18244]
+  notes: "généré par template (échelle) depuis titre réel, cat 158"
+
+- id: scaled-serviette-en-cuir
+  question: "Des conseils sur Serviette en cuir ?"
+  expected_topic_ids: [18289]
+  notes: "généré par template (échelle) depuis titre réel, cat 184"
+
+- id: scaled-les-bons-restaus-paname
+  question: "Bon plan pour Les bons restaus à Paname ?"
+  expected_topic_ids: [18338]
+  notes: "généré par template (échelle) depuis titre réel, cat 183"
+
+- id: scaled-question
+  question: "Des conseils sur Question ?"
+  expected_topic_ids: [18353]
+  notes: "généré par template (échelle) depuis titre réel, cat 185"
+
+- id: scaled-richelieu-bout-droit
+  question: "Des avis sur Richelieu bout droit... ?"
+  expected_topic_ids: [18413]
+  notes: "généré par template (échelle) depuis titre réel, cat 156"
+
+- id: scaled-quel-th
+  question: "Quel thé ?"
+  expected_topic_ids: [18433]
+  notes: "généré par template (échelle) depuis titre réel, cat 186"
+
+- id: scaled-nikolaus-tuczek
+  question: "Des avis sur Nikolaus TUCZEK ?"
+  expected_topic_ids: [18458]
+  notes: "généré par template (échelle) depuis titre réel, cat 159"
+
+- id: scaled-visite-chez-vass
+  question: "Vos recommandations sur Visite chez Vass... ?"
+  expected_topic_ids: [18534]
+  notes: "généré par template (échelle) depuis titre réel, cat 187"
+
+- id: scaled-bottiers-japonais
+  question: "Quelqu'un a des infos ou un avis sur Bottiers japonais... ?"
+  expected_topic_ids: [18581]
+  notes: "généré par template (échelle) depuis titre réel, cat 156"
+
+- id: scaled-casquette
+  question: "Des conseils sur Casquette ?"
+  expected_topic_ids: [18619]
+  notes: "généré par template (échelle) depuis titre réel, cat 168"
+
+- id: scaled-se-la-peter-en-r-ve
+  question: "Discussion sur Se la peter en rève..., vos avis ?"
+  expected_topic_ids: [18629]
+  notes: "généré par template (échelle) depuis titre réel, cat 188"
+
+- id: scaled-supprim
+  question: "Vos avis sur [Supprimé] ?"
+  expected_topic_ids: [18633]
+  notes: "généré par template (échelle) depuis titre réel, cat 173"
+
+- id: scaled-premi-re-paires
+  question: "Quelqu'un a des infos ou un avis sur Première paires ?"
+  expected_topic_ids: [18638]
+  notes: "généré par template (échelle) depuis titre réel, cat 155"
+
+- id: scaled-un-pull-en-cachemire-oui-mais-pas-au-pri
+  question: "Des conseils sur Un pull en cachemire oui, mais pas au prix fort! ?"
+  expected_topic_ids: [18645]
+  notes: "généré par template (échelle) depuis titre réel, cat 166"
+
+- id: scaled-chanel
+  question: "Des conseils sur Chanel.. ?"
+  expected_topic_ids: [18707]
+  notes: "généré par template (échelle) depuis titre réel, cat 178"
+
+- id: scaled-les-l-gants-de-fiction
+  question: "De quoi parle-t-on dans « Les élégants de fiction » ?"
+  expected_topic_ids: [18792]
+  notes: "généré par template (échelle) depuis titre réel, cat 153"
+
+- id: scaled-sara-tintinger-mof-modiste
+  question: "Des conseils sur Sara Tintinger - MOF Modiste ?"
+  expected_topic_ids: [18853]
+  notes: "généré par template (échelle) depuis titre réel, cat 168"
+
+- id: scaled-la-ceinture
+  question: "Vos avis sur La Ceinture ?"
+  expected_topic_ids: [18988]
+  notes: "généré par template (échelle) depuis titre réel, cat 179"
+
+- id: scaled-franchir-le-rubicon
+  question: "Quelqu'un peut m'expliquer : Franchir le rubicon ?"
+  expected_topic_ids: [19049]
+  notes: "généré par template (échelle) depuis titre réel, cat 151"
+
+- id: scaled-suit-supply
+  question: "Quelqu'un peut m'éclairer sur Suit Supply ?"
+  expected_topic_ids: [19066]
+  notes: "généré par template (échelle) depuis titre réel, cat 161"
+
+- id: scaled-mariage-bonne-adresse-accord-couleurs-no
+  question: "Quelqu'un peut m'éclairer sur mariage, bonne adresse, accord couleurs, novice ?"
+  expected_topic_ids: [19089]
+  notes: "généré par template (échelle) depuis titre réel, cat 164"
+
+- id: scaled-pochette-square
+  question: "Vos avis sur Pochette Square ?"
+  expected_topic_ids: [19111]
+  notes: "généré par template (échelle) depuis titre réel, cat 174"
+
+- id: scaled-assortiment-de-la-pochette-la-cravate
+  question: "Des conseils sur assortiment de la pochette à la cravate ?"
+  expected_topic_ids: [19232]
+  notes: "généré par template (échelle) depuis titre réel, cat 174"
+
+- id: scaled-ou-trouver-ce-genre-de-cardigan
+  question: "Ou trouver ce genre de Cardigan?"
+  expected_topic_ids: [19292]
+  notes: "généré par template (échelle) depuis titre réel, cat 166"
+
+- id: scaled-que-choisir
+  question: "Que choisir?"
+  expected_topic_ids: [19355]
+  notes: "généré par template (échelle) depuis titre réel, cat 185"
+
+- id: scaled-et-les-cartes-de-visite
+  question: "Et les cartes de visite ?"
+  expected_topic_ids: [19360]
+  notes: "généré par template (échelle) depuis titre réel, cat 175"
+
+- id: scaled-julien-scavini-des-retours-par-rapport-o
+  question: "Julien Scavini, des retours ? par rapport à Ohnona ?"
+  expected_topic_ids: [19410]
+  notes: "généré par template (échelle) depuis titre réel, cat 161"
+
+- id: scaled-sen
+  question: "Quelqu'un a des infos ou un avis sur Sené ?"
+  expected_topic_ids: [19431]
+  notes: "généré par template (échelle) depuis titre réel, cat 155"
+
+- id: scaled-le-temps-du-choix
+  question: "Où trouver des infos sur le temps du choix ?"
+  expected_topic_ids: [19432]
+  notes: "généré par template (échelle) depuis titre réel, cat 171"
+
+- id: scaled-carmina-cordovan
+  question: "Quelqu'un a des infos ou un avis sur Carmina - Cordovan ?"
+  expected_topic_ids: [19440]
+  notes: "généré par template (échelle) depuis titre réel, cat 155"
+
+- id: scaled-mack-james-boucles-full-brogue
+  question: "Des avis sur Mack James boucles full brogue. ?"
+  expected_topic_ids: [19462]
+  notes: "généré par template (échelle) depuis titre réel, cat 155"
+
+- id: scaled-vacquier
+  question: "Des conseils sur Vacquier ?"
+  expected_topic_ids: [19523]
+  notes: "généré par template (échelle) depuis titre réel, cat 180"
+
+- id: scaled-donegan-j-ai-test-pour-vous
+  question: "Que pensez-vous de Donegan, j'ai testé pour vous ?"
+  expected_topic_ids: [19646]
+  notes: "généré par template (échelle) depuis titre réel, cat 155"
+
+- id: scaled-alexandre-mareuil
+  question: "Vos avis sur Alexandre Mareuil. ?"
+  expected_topic_ids: [19701]
+  notes: "généré par template (échelle) depuis titre réel, cat 177"
+
+- id: scaled-holster-belt
+  question: "Vos avis sur Holster Belt ?"
+  expected_topic_ids: [19718]
+  notes: "généré par template (échelle) depuis titre réel, cat 180"
+
+- id: scaled-rasoir-japonais
+  question: "Où trouver des infos sur Rasoir japonais ?"
+  expected_topic_ids: [19760]
+  notes: "généré par template (échelle) depuis titre réel, cat 175"
+
+- id: scaled-o-trouver-un-coffret-bijoux
+  question: "Où trouver un coffret à bijoux ???"
+  expected_topic_ids: [19967]
+  notes: "généré par template (échelle) depuis titre réel, cat 146"
+
+- id: scaled-mariage-en-2013
+  question: "Quelqu'un peut m'éclairer sur Mariage en 2013 ?"
+  expected_topic_ids: [19978]
+  notes: "généré par template (échelle) depuis titre réel, cat 164"
+
+- id: scaled-augmentation-de-prix-chez-7l-et-markowsk
+  question: "Quelqu'un a des infos ou un avis sur Augmentation de prix chez 7L et Markowski ?!\
+  \ ?"
+  expected_topic_ids: [19981]
+  notes: "généré par template (échelle) depuis titre réel, cat 155"
+
+- id: scaled-bouton-de-manchette-sur-mesure
+  question: "Des conseils sur bouton de manchette sur mesure ?"
+  expected_topic_ids: [20030]
+  notes: "généré par template (échelle) depuis titre réel, cat 172"
+
+- id: scaled-calzoleria-borella-riccardo
+  question: "Quelqu'un a des infos ou un avis sur Calzoleria Borella Riccardo ?"
+  expected_topic_ids: [20090]
+  notes: "généré par template (échelle) depuis titre réel, cat 156"
+
+- id: scaled-les-montres-fr-sard
+  question: "Discussion : Les montres Frésard, vos avis ?"
+  expected_topic_ids: [20116]
+  notes: "généré par template (échelle) depuis titre réel, cat 154"
+
+- id: scaled-objectif-mariage-tenue-de-mari-pour-juil
+  question: "Vos avis sur Objectif mariage : tenue de marié pour juillet 2013 ?"
+  expected_topic_ids: [20132]
+  notes: "généré par template (échelle) depuis titre réel, cat 164"
+
+- id: scaled-tailles
+  question: "Bon plan pour Tailles ?"
+  expected_topic_ids: [20173]
+  notes: "généré par template (échelle) depuis titre réel, cat 181"
+
+- id: scaled-mari-mill-sime-2013-budget-1850-paris
+  question: "Des conseils sur Marié millésime 2013 - budget 1850€ à Paris ?"
+  expected_topic_ids: [20182]
+  notes: "généré par template (échelle) depuis titre réel, cat 164"
+
+- id: scaled-les-grands-bottiers-du-pass
+  question: "Des avis sur Les grands bottiers du passé ?"
+  expected_topic_ids: [20251]
+  notes: "généré par template (échelle) depuis titre réel, cat 159"
+
+- id: scaled-ceinture-dunhill
+  question: "Des conseils sur Ceinture Dunhill ?"
+  expected_topic_ids: [20276]
+  notes: "généré par template (échelle) depuis titre réel, cat 179"
+
+- id: scaled-patines-par-maximil-et-gla-ages
+  question: "Quelqu'un peut m'aider avec : PATINES par Maximil et glaçages ?"
+  expected_topic_ids: [20318]
+  notes: "généré par template (échelle) depuis titre réel, cat 157"
+
+- id: scaled-j-m-w-w-visites-tannerie-et-manufacture
+  question: "J'M WéWé : VISITES TANNERIE ET MANUFACTURE ?"
+  expected_topic_ids: [20362]
+  notes: "généré par template (échelle) depuis titre réel, cat 155"
+
+- id: scaled-bexley-h-sitation-entre-2x2-mod-les-vos
+  question: "Bexley, hésitation entre 2x2 modéles ! Vos avis ?"
+  expected_topic_ids: [20366]
+  notes: "généré par template (échelle) depuis titre réel, cat 155"
+
+- id: scaled-rome
+  question: "Vos recommandations sur Rome ! ?"
+  expected_topic_ids: [20395]
+  notes: "généré par template (échelle) depuis titre réel, cat 187"
+
+- id: scaled-borsalino-trilby
+  question: "Où trouver des infos sur Borsalino Trilby ?"
+  expected_topic_ids: [20450]
+  notes: "généré par template (échelle) depuis titre réel, cat 168"
+
+- id: scaled-la-canne-italienne
+  question: "Vos avis sur La canne italienne ?"
+  expected_topic_ids: [20586]
+  notes: "généré par template (échelle) depuis titre réel, cat 171"
+
+- id: scaled-chose-promise-mes-mack-james-pr-f-r-es
+  question: "Des avis sur chose promise.. mes mack james préférées ?"
+  expected_topic_ids: [20603]
+  notes: "généré par template (échelle) depuis titre réel, cat 155"
+
+- id: scaled-chose-promise-mes-mack-james-pr-f-r-es-2
+  question: "Des avis sur chose promise.. mes mack james préférées ?"
+  expected_topic_ids: [20657]
+  notes: "généré par template (échelle) depuis titre réel, cat 155"
+
+- id: scaled-parapluies-ayrens
+  question: "Des conseils sur Parapluies Ayrens ?"
+  expected_topic_ids: [20798]
+  notes: "généré par template (échelle) depuis titre réel, cat 171"
+
+- id: scaled-achats-altan
+  question: "Quelqu'un a des infos ou un avis sur Achats Altan ?"
+  expected_topic_ids: [20930]
+  notes: "généré par template (échelle) depuis titre réel, cat 155"
+
+- id: scaled-ceinture
+  question: "Des conseils sur ceinture ?"
+  expected_topic_ids: [20990]
+  notes: "généré par template (échelle) depuis titre réel, cat 184"
+
+- id: scaled-achat-de-gants
+  question: "Vos avis sur achat de gants ?"
+  expected_topic_ids: [21022]
+  notes: "généré par template (échelle) depuis titre réel, cat 173"
+
+- id: scaled-entretien-portefeuille
+  question: "Vos avis sur Entretien portefeuille ?"
+  expected_topic_ids: [21105]
+  notes: "généré par template (échelle) depuis titre réel, cat 178"
+
+- id: scaled-le-made-in-emplois-in-france
+  question: "Discussion : Le \"Made in emplois\"... in France !, vos avis ?"
+  expected_topic_ids: [21135]
+  notes: "généré par template (échelle) depuis titre réel, cat 154"
+
+- id: scaled-edward-green-winter-soldes
+  question: "Bon plan pour Edward Green Winter Soldes ?"
+  expected_topic_ids: [21161]
+  notes: "généré par template (échelle) depuis titre réel, cat 181"
+
+- id: scaled-pas-de-soldes-chez-cordings
+  question: "Pas de soldes chez Cordings ?"
+  expected_topic_ids: [21194]
+  notes: "généré par template (échelle) depuis titre réel, cat 182"
+
+- id: scaled-le-beau-stylo-bille
+  question: "Où trouver des infos sur Le beau stylo-bille ?"
+  expected_topic_ids: [21267]
+  notes: "généré par template (échelle) depuis titre réel, cat 175"
+
+- id: scaled-r-parer-entretenir-un-cartable
+  question: "Où trouver des infos sur Réparer / entretenir un cartable ?"
+  expected_topic_ids: [21351]
+  notes: "généré par template (échelle) depuis titre réel, cat 178"
+
+- id: scaled-plan-corthay
+  question: "Des infos sur ce bon plan : Plan Corthay ! ?"
+  expected_topic_ids: [21353]
+  notes: "généré par template (échelle) depuis titre réel, cat 181"
+
+- id: scaled-finsbury-250-euros-no-way
+  question: "Des avis sur Finsbury 250 euros !? No way ! ?"
+  expected_topic_ids: [21450]
+  notes: "généré par template (échelle) depuis titre réel, cat 155"
+
+- id: scaled-mi-bas-et-chaleur
+  question: "Où trouver des infos sur Mi-bas et chaleur ?"
+  expected_topic_ids: [21464]
+  notes: "généré par template (échelle) depuis titre réel, cat 169"
+
+- id: scaled-malinge-2
+  question: "Des avis sur Malinge... ?"
+  expected_topic_ids: [21498]
+  notes: "généré par template (échelle) depuis titre réel, cat 155"
+
+- id: scaled-je-recherche-une-ceinture-en-croco-allig
+  question: "Vos avis sur je recherche une ceinture en croco/ alligator ?"
+  expected_topic_ids: [21509]
+  notes: "généré par template (échelle) depuis titre réel, cat 179"
+
+- id: scaled-charles-tyrwhitt
+  question: "Vos avis sur Charles Tyrwhitt ?"
+  expected_topic_ids: [21520]
+  notes: "généré par template (échelle) depuis titre réel, cat 162"
+
+- id: scaled-pulls-cadigans
+  question: "Vos avis sur Pulls & Cadigans ?"
+  expected_topic_ids: [21556]
+  notes: "généré par template (échelle) depuis titre réel, cat 166"
+
+- id: scaled-article-sur-le-made-in-france
+  question: "Discussion : Article sur le made in France, vos avis ?"
+  expected_topic_ids: [21561]
+  notes: "généré par template (échelle) depuis titre réel, cat 154"
+
+- id: scaled-seamaster-vous-souhaite-une-bonne-ann-e
+  question: "Quelqu'un peut m'expliquer : Seamaster vous souhaite une bonne année ?"
+  expected_topic_ids: [21687]
+  notes: "généré par template (échelle) depuis titre réel, cat 151"
+
+- id: scaled-ap-ro-trench-paris
+  question: "Des infos sur Apéro-Trench Paris ?"
+  expected_topic_ids: [21715]
+  notes: "généré par template (échelle) depuis titre réel, cat 192"
+
+- id: scaled-jb-guanti
+  question: "Vos avis sur JB Guanti ?"
+  expected_topic_ids: [21759]
+  notes: "généré par template (échelle) depuis titre réel, cat 173"
+
+- id: scaled-le-crocodile
+  question: "Des conseils sur Le crocodile ?"
+  expected_topic_ids: [21762]
+  notes: "généré par template (échelle) depuis titre réel, cat 178"
+
+- id: scaled-mati-re-des-pulls
+  question: "Des conseils sur Matière des pulls ?"
+  expected_topic_ids: [21800]
+  notes: "généré par template (échelle) depuis titre réel, cat 166"
+
+- id: scaled-shibumi-classic-ties-and-accessoires
+  question: "Des conseils sur Shibumi - Classic Ties and Accessoires ?"
+  expected_topic_ids: [21891]
+  notes: "généré par template (échelle) depuis titre réel, cat 180"
+
+- id: scaled-asbjorn
+  question: "Des infos sur Asbjorn ?"
+  expected_topic_ids: [21906]
+  notes: "généré par template (échelle) depuis titre réel, cat 151"
+
+- id: scaled-nouvelle-marque-atelier-particulier
+  question: "Vos avis sur Nouvelle marque: Atelier Particulier ?"
+  expected_topic_ids: [21918]
+  notes: "généré par template (échelle) depuis titre réel, cat 167"
+
+- id: scaled-une-canne-pour-se-d-fendre
+  question: "Où trouver des infos sur Une canne pour se défendre ?"
+  expected_topic_ids: [21928]
+  notes: "généré par template (échelle) depuis titre réel, cat 171"
+
+- id: scaled-goodyear-sur-mesure-tout-cuir-395-euros
+  question: "Des conseils sur Goodyear, sur mesure, tout cuir, 395 euros ?"
+  expected_topic_ids: [21941]
+  notes: "généré par template (échelle) depuis titre réel, cat 167"
+
+- id: scaled-apero-godasses-gapettes-galures-berets
+  question: "Qu'est-ce qui se dit sur Apero godasses, gapettes, galures & berets ?"
+  expected_topic_ids: [21948]
+  notes: "généré par template (échelle) depuis titre réel, cat 192"
+
+- id: scaled-en-qu-te-de-l-habit
+  question: "Vos avis sur En quète de \"l'habit\" ?"
+  expected_topic_ids: [21998]
+  notes: "généré par template (échelle) depuis titre réel, cat 164"
+
+- id: scaled-shipton
+  question: "Que pensez-vous de Shipton ?"
+  expected_topic_ids: [22071]
+  notes: "généré par template (échelle) depuis titre réel, cat 155"
+
+- id: scaled-malle-chaussures
+  question: "Des infos sur ce bon plan : Malle à chaussures ?"
+  expected_topic_ids: [22118]
+  notes: "généré par template (échelle) depuis titre réel, cat 183"
+
+- id: scaled-victoire-pour-virtuose
+  question: "Discussion : Victoire pour VIRTUOSE !, vos avis ?"
+  expected_topic_ids: [22145]
+  notes: "généré par template (échelle) depuis titre réel, cat 154"
+
+- id: scaled-soldes-la-vieille-anglaise
+  question: "Des infos sur ce bon plan : soldes la vieille anglaise.... ?"
+  expected_topic_ids: [22151]
+  notes: "généré par template (échelle) depuis titre réel, cat 181"
+
+- id: scaled-passaggio-cravatte
+  question: "Où trouver des infos sur passaggio cravatte ?"
+  expected_topic_ids: [22246]
+  notes: "généré par template (échelle) depuis titre réel, cat 170"
+
+- id: scaled-quelle-est-votre-montre-pr-f-r-e
+  question: "Quelle est votre montre préférée ?"
+  expected_topic_ids: [22254]
+  notes: "généré par template (échelle) depuis titre réel, cat 176"
+
+- id: scaled-que-portez-vous-aujourd-hui
+  question: "Que portez-vous aujourd'hui?"
+  expected_topic_ids: [22292]
+  notes: "généré par template (échelle) depuis titre réel, cat 153"
+
+- id: scaled-les-fers-encastr-s
+  question: "Comment aborder ce sujet : Les fers encastrés ?"
+  expected_topic_ids: [22523]
+  notes: "généré par template (échelle) depuis titre réel, cat 157"
+
+- id: scaled-espace-de-travail
+  question: "Qu'est-ce qui se dit sur Espace de travail ?"
+  expected_topic_ids: [22574]
+  notes: "généré par template (échelle) depuis titre réel, cat 152"
+
+- id: scaled-1083-des-jeans-des-sneakers-mais-fabriqu
+  question: "De quoi parle-t-on dans « 1083, des jeans, des sneakers mais fabriqués en France\
+  \ » ?"
+  expected_topic_ids: [22678]
+  notes: "généré par template (échelle) depuis titre réel, cat 154"
+
+- id: scaled-justin-fitzpatrick-online-shop
+  question: "Des avis sur Justin Fitzpatrick online shop ?"
+  expected_topic_ids: [22696]
+  notes: "généré par template (échelle) depuis titre réel, cat 155"
+
+- id: scaled-herv-n-sellier
+  question: "Où trouver des infos sur Hervé N Sellier ?"
+  expected_topic_ids: [22705]
+  notes: "généré par template (échelle) depuis titre réel, cat 179"
+
+- id: scaled-embauchoirs-bexley-13
+  question: "Quelqu'un a des infos ou un avis sur Embauchoirs Bexley à 13€ ?"
+  expected_topic_ids: [22706]
+  notes: "généré par template (échelle) depuis titre réel, cat 155"
+
+- id: scaled-choix-forme-bout
+  question: "Des infos sur choix forme (bout) ?"
+  expected_topic_ids: [22717]
+  notes: "généré par template (échelle) depuis titre réel, cat 152"
+
+- id: scaled-mariage-aout-2014-pour-1000-1200-sur-ann
+  question: "Quelqu'un peut m'éclairer sur Mariage aout 2014, pour 1000/1200€ sur Annecy, Genève,\
+  \ Lyon ?"
+  expected_topic_ids: [22820]
+  notes: "généré par template (échelle) depuis titre réel, cat 164"
+
+- id: scaled-marges-du-made-in-france
+  question: "De quoi parle-t-on dans « Marges du made in France » ?"
+  expected_topic_ids: [22891]
+  notes: "généré par template (échelle) depuis titre réel, cat 154"
+
+- id: scaled-pr-cision-balmoral-golf
+  question: "Quelqu'un peut m'expliquer : Précision Balmoral + Golf ?"
+  expected_topic_ids: [22931]
+  notes: "généré par template (échelle) depuis titre réel, cat 152"
+
+- id: scaled-conseils-tenue-pour-assister-un-mariage
+  question: "Quelqu'un peut m'éclairer sur Conseils tenue pour assister à un Mariage ?"
+  expected_topic_ids: [23016]
+  notes: "généré par template (échelle) depuis titre réel, cat 164"
+
+- id: scaled-donegan-avis-alternative-markowski
+  question: "Donegan avis, alternative markowski ?"
+  expected_topic_ids: [23032]
+  notes: "généré par template (échelle) depuis titre réel, cat 155"
+
+- id: scaled-mack-james-the-last-episode
+  question: "Des avis sur Mack James the Last episode! ?"
+  expected_topic_ids: [23042]
+  notes: "généré par template (échelle) depuis titre réel, cat 155"
+
+- id: scaled-pr-sentation
+  question: "Des infos sur Présentation ?"
+  expected_topic_ids: [23043]
+  notes: "généré par template (échelle) depuis titre réel, cat 151"
+
+- id: scaled-un-peu-de-musique
+  question: "De quoi parle-t-on dans « Un peu de musique ! » ?"
+  expected_topic_ids: [23079]
+  notes: "généré par template (échelle) depuis titre réel, cat 153"
+
+- id: scaled-montre-et-chemise
+  question: "Vos avis sur Montre Et chemise ?"
+  expected_topic_ids: [23083]
+  notes: "généré par template (échelle) depuis titre réel, cat 175"
+
+- id: scaled-bien-le-bonjour-une-fois
+  question: "Des infos sur Bien le bonjour UNE FOIS ?"
+  expected_topic_ids: [23095]
+  notes: "généré par template (échelle) depuis titre réel, cat 151"
+
+- id: scaled-croquis-sartoriaux
+  question: "Discussion : Croquis sartoriaux, vos avis ?"
+  expected_topic_ids: [23096]
+  notes: "généré par template (échelle) depuis titre réel, cat 153"
+
+- id: scaled-gustin
+  question: "Vos avis sur Gustin ?"
+  expected_topic_ids: [23163]
+  notes: "généré par template (échelle) depuis titre réel, cat 162"
+
+- id: scaled-grosse-d-ception-qualit-de-cuir
+  question: "Que pensez-vous de Grosse déception qualité de cuir ?"
+  expected_topic_ids: [23183]
+  notes: "généré par template (échelle) depuis titre réel, cat 155"
+
+- id: scaled-qui-est-toujours-partant
+  question: "Qui est toujours partant ?"
+  expected_topic_ids: [23380]
+  notes: "généré par template (échelle) depuis titre réel, cat 152"
+
+- id: scaled-rencontre-en-ligne-avec-nos-artisans-pr
+  question: "Quelqu'un peut m'expliquer : Rencontre en ligne avec nos artisans préférés ?"
+  expected_topic_ids: [23476]
+  notes: "généré par template (échelle) depuis titre réel, cat 142"
+
+- id: scaled-depiedencap-sur-tumblr
+  question: "Des infos sur Depiedencap sur Tumblr! ?"
+  expected_topic_ids: [23541]
+  notes: "généré par template (échelle) depuis titre réel, cat 142"
+
+- id: scaled-quelles-chaussettes-budget-de-10-euros
+  question: "Vos avis sur Quelles chaussettes budget de 10 euros ?"
+  expected_topic_ids: [23572]
+  notes: "généré par template (échelle) depuis titre réel, cat 169"
+
+- id: scaled-grand-concours-photo-pour-le-blog-de-dpe
+  question: "Quelqu'un peut m'expliquer : Grand concours photo pour le blog de DPEC ?"
+  expected_topic_ids: [23618]
+  notes: "généré par template (échelle) depuis titre réel, cat 142"
+
+- id: scaled-gruy-re-sal
+  question: "Bon plan pour Gruyère salé... ?"
+  expected_topic_ids: [23631]
+  notes: "généré par template (échelle) depuis titre réel, cat 183"
+
+- id: scaled-rush-by-calzoleria-riccardo-borella
+  question: "Où trouver des infos sur Rush by Calzoleria Riccardo Borella ?"
+  expected_topic_ids: [23635]
+  notes: "généré par template (échelle) depuis titre réel, cat 178"
+
+- id: scaled-boutique-int-ressante-de-b-de-m
+  question: "Des conseils sur Boutique intéressante de B de M ?"
+  expected_topic_ids: [23660]
+  notes: "généré par template (échelle) depuis titre réel, cat 172"
+
+- id: scaled-zampa-di-gallina
+  question: "Des conseils sur Zampa Di Gallina ?"
+  expected_topic_ids: [23663]
+  notes: "généré par template (échelle) depuis titre réel, cat 167"
+
+- id: scaled-choix-charpe-en-cachemire
+  question: "Où trouver des infos sur Choix écharpe en cachemire ?"
+  expected_topic_ids: [23698]
+  notes: "généré par template (échelle) depuis titre réel, cat 174"
+
+- id: scaled-achat-de-gants-paris
+  question: "Vos avis sur achat de gants à Paris ?"
+  expected_topic_ids: [23758]
+  notes: "généré par template (échelle) depuis titre réel, cat 173"
+
+- id: scaled-votre-avis-gerard-sene
+  question: "Quelqu'un a des infos ou un avis sur Votre avis Gerard Sene ?"
+  expected_topic_ids: [23788]
+  notes: "généré par template (échelle) depuis titre réel, cat 155"
+
+- id: scaled-sartoria-davide-tofani
+  question: "Quelqu'un peut m'éclairer sur Sartoria Davide Tofani ?"
+  expected_topic_ids: [23817]
+  notes: "généré par template (échelle) depuis titre réel, cat 161"
+
+- id: scaled-yohei-fukuda
+  question: "Que pensez-vous de YOHEI FUKUDA ?"
+  expected_topic_ids: [23850]
+  notes: "généré par template (échelle) depuis titre réel, cat 156"
+
+- id: scaled-ramon-cuberta
+  question: "Des avis sur RAMON CUBERTA ?"
+  expected_topic_ids: [23860]
+  notes: "généré par template (échelle) depuis titre réel, cat 156"
+
+- id: scaled-revue-seta-paris-pr-sentation-ceintures
+  question: "Où trouver des infos sur [REVUE] SETA Paris - Présentation - Ceintures et accessoire\
+  \ ?"
+  expected_topic_ids: [23877]
+  notes: "généré par template (échelle) depuis titre réel, cat 179"
+
+- id: scaled-anthony-delos
+  question: "Que pensez-vous de Anthony Delos ?"
+  expected_topic_ids: [23959]
+  notes: "généré par template (échelle) depuis titre réel, cat 156"
+
+- id: scaled-rigolons-un-peu
+  question: "Discussion : Rigolons un peu, vos avis ?"
+  expected_topic_ids: [24019]
+  notes: "généré par template (échelle) depuis titre réel, cat 153"
+
+- id: scaled-barbour
+  question: "Des infos sur ce bon plan : BARBOUR ?"
+  expected_topic_ids: [24025]
+  notes: "généré par template (échelle) depuis titre réel, cat 182"
+
+- id: scaled-sellerie-maroquinerie-abzaroke
+  question: "Des conseils sur SELLERIE MAROQUINERIE ABZAROKE ?"
+  expected_topic_ids: [24109]
+  notes: "généré par template (échelle) depuis titre réel, cat 178"
+
+- id: scaled-made-in-france-hongrie
+  question: "Que pensez-vous de Made in France & Hongrie ?"
+  expected_topic_ids: [24118]
+  notes: "généré par template (échelle) depuis titre réel, cat 155"
+
+- id: scaled-paraboot-bergerac
+  question: "Que pensez-vous de Paraboot Bergerac ?"
+  expected_topic_ids: [24119]
+  notes: "généré par template (échelle) depuis titre réel, cat 155"
+
+- id: scaled-pour-commencer
+  question: "Discussion sur Pour commencer..., vos avis ?"
+  expected_topic_ids: [24140]
+  notes: "généré par template (échelle) depuis titre réel, cat 185"
+
+- id: scaled-rangement-de-pochette
+  question: "Des conseils sur Rangement de pochette ?"
+  expected_topic_ids: [24142]
+  notes: "généré par template (échelle) depuis titre réel, cat 174"
+
+- id: scaled-vanda-fine-clothing-pochettes-et-cravate
+  question: "Des conseils sur Vanda fine clothing (pochettes et cravates) ?"
+  expected_topic_ids: [24183]
+  notes: "généré par template (échelle) depuis titre réel, cat 170"
+
+- id: scaled-shoepassion-com
+  question: "Vos avis sur SHOEPASSION.com ?"
+  expected_topic_ids: [24197]
+  notes: "généré par template (échelle) depuis titre réel, cat 167"
+
+- id: scaled-quel-chapeau-portez-vous
+  question: "Quel chapeau portez-vous?"
+  expected_topic_ids: [24217]
+  notes: "généré par template (échelle) depuis titre réel, cat 168"
+
+- id: scaled-comment-r-aliser-une-goutte-donner-du-vo
+  question: "Vos avis sur Comment réaliser une goutte, donner du volume à une cravate ?"
+  expected_topic_ids: [24221]
+  notes: "généré par template (échelle) depuis titre réel, cat 170"
+
+- id: scaled-chapeaux-de-tous-les-jours
+  question: "Vos avis sur Chapeaux de tous les jours ?"
+  expected_topic_ids: [24232]
+  notes: "généré par template (échelle) depuis titre réel, cat 168"
+
+- id: scaled-arod-v-tement-rando-montagne-made-in-che
+  question: "Discussion : Arod, vêtement rando/montagne made in chez nous, vos avis ?"
+  expected_topic_ids: [24249]
+  notes: "généré par template (échelle) depuis titre réel, cat 154"
+
+- id: scaled-hilditch-key
+  question: "Vos avis sur Hilditch&Key ?"
+  expected_topic_ids: [24269]
+  notes: "généré par template (échelle) depuis titre réel, cat 162"
+
+- id: scaled-vous-tes-mon-dernier-espoir
+  question: "Des infos sur Vous êtes mon dernier espoir ?"
+  expected_topic_ids: [24271]
+  notes: "généré par template (échelle) depuis titre réel, cat 151"
+
+- id: scaled-cravates-berg-berg
+  question: "Où trouver des infos sur Cravates Berg & Berg ?"
+  expected_topic_ids: [24272]
+  notes: "généré par template (échelle) depuis titre réel, cat 170"
+
+- id: scaled-pot-dpec-paris
+  question: "Qu'est-ce qui se dit sur Pot DPEC Paris ?"
+  expected_topic_ids: [24279]
+  notes: "généré par template (échelle) depuis titre réel, cat 192"
+
+- id: scaled-chaussures-femme
+  question: "Chaussures femme ?"
+  expected_topic_ids: [24307]
+  notes: "généré par template (échelle) depuis titre réel, cat 155"
+
+- id: scaled-chapeau-temporaire
+  question: "Des conseils sur Chapeau temporaire ?"
+  expected_topic_ids: [24317]
+  notes: "généré par template (échelle) depuis titre réel, cat 168"
+
+- id: scaled-projet-cravate-charpe-et-pochette
+  question: "Des infos sur Projet cravate, écharpe et pochette ?"
+  expected_topic_ids: [24335]
+  notes: "généré par template (échelle) depuis titre réel, cat 142"
+
+- id: scaled-coriolan
+  question: "Quelqu'un peut m'éclairer sur Coriolan ?"
+  expected_topic_ids: [24346]
+  notes: "généré par template (échelle) depuis titre réel, cat 161"
+
+- id: scaled-blandin-delloye
+  question: "Quelqu'un peut m'éclairer sur Blandin & Delloye ?"
+  expected_topic_ids: [24360]
+  notes: "généré par template (échelle) depuis titre réel, cat 161"
+
+- id: scaled-rasoir-de-aide-pour-d-butants
+  question: "Vos avis sur Rasoir DE : aide pour débutants ?"
+  expected_topic_ids: [24368]
+  notes: "généré par template (échelle) depuis titre réel, cat 175"
+
+- id: scaled-vendeurs-ebay
+  question: "Des conseils sur Vendeurs ebay ?"
+  expected_topic_ids: [24372]
+  notes: "généré par template (échelle) depuis titre réel, cat 170"
+
+- id: scaled-pince-a-cravatte-et-3-pieces
+  question: "Où trouver des infos sur Pince a cravatte et 3 pieces ?"
+  expected_topic_ids: [24420]
+  notes: "généré par template (échelle) depuis titre réel, cat 170"
+
+- id: scaled-grand-concours-de-reportages
+  question: "Qu'est-ce qui se dit sur Grand concours de reportages ?"
+  expected_topic_ids: [24464]
+  notes: "généré par template (échelle) depuis titre réel, cat 142"
+
+- id: scaled-mariage-en-habit
+  question: "Vos avis sur Mariage en habit ?"
+  expected_topic_ids: [24477]
+  notes: "généré par template (échelle) depuis titre réel, cat 164"
+
+- id: scaled-revue-de-presse
+  question: "De quoi parle-t-on dans « Revue de presse » ?"
+  expected_topic_ids: [24532]
+  notes: "généré par template (échelle) depuis titre réel, cat 153"
+
+- id: scaled-manifeste
+  question: "Des conseils sur Manifeste ?"
+  expected_topic_ids: [24626]
+  notes: "généré par template (échelle) depuis titre réel, cat 165"
+
+- id: scaled-jeans-selvage-large
+  question: "Vos avis sur jeans selvage large ?"
+  expected_topic_ids: [24627]
+  notes: "généré par template (échelle) depuis titre réel, cat 165"
+
+- id: scaled-cintrer-retoucher-un-pull-en-cachemire
+  question: "Des conseils sur Cintrer / retoucher un pull en cachemire ?"
+  expected_topic_ids: [24659]
+  notes: "généré par template (échelle) depuis titre réel, cat 166"
+
+- id: scaled-old-town-clothing
+  question: "Des conseils sur Old Town Clothing ?"
+  expected_topic_ids: [24664]
+  notes: "généré par template (échelle) depuis titre réel, cat 165"
+
+- id: scaled-commande-projet-cravate-pochette-et-char
+  question: "Qu'est-ce qui se dit sur Commande Projet cravate, pochette et écharpes ?"
+  expected_topic_ids: [24668]
+  notes: "généré par template (échelle) depuis titre réel, cat 142"
+
+- id: scaled-malinge-et-samson
+  question: "Des avis sur Malinge... et Samson ?"
+  expected_topic_ids: [24674]
+  notes: "généré par template (échelle) depuis titre réel, cat 155"
+
+- id: scaled-fil-unique-repas-suisse-et-alentours
+  question: "Discussion : Fil unique repas Suisse et alentours, vos avis ?"
+  expected_topic_ids: [24690]
+  notes: "généré par template (échelle) depuis titre réel, cat 153"
+
+- id: scaled-les-vestes-de-metiers
+  question: "Quelqu'un peut m'éclairer sur Les VESTES DE METIERS ?"
+  expected_topic_ids: [24710]
+  notes: "généré par template (échelle) depuis titre réel, cat 165"
+
+- id: scaled-le-vestiaire-du-renard
+  question: "Des conseils sur Le Vestiaire du Renard ?"
+  expected_topic_ids: [24713]
+  notes: "généré par template (échelle) depuis titre réel, cat 180"
+
+- id: scaled-gmto-carmina-austerity-brogue
+  question: "Qu'est-ce qui se dit sur GMTO Carmina Austerity Brogue ?"
+  expected_topic_ids: [24752]
+  notes: "généré par template (échelle) depuis titre réel, cat 142"
+
+- id: scaled-que-ne-porterez-vous-pas-aujourd-hui
+  question: "Que ne porterez-vous pas aujourd'hui?"
+  expected_topic_ids: [24883]
+  notes: "généré par template (échelle) depuis titre réel, cat 153"
+
+- id: scaled-rangement-des-cr-mes
+  question: "Vos avis sur Rangement des crèmes ?"
+  expected_topic_ids: [24904]
+  notes: "généré par template (échelle) depuis titre réel, cat 177"
+
+- id: scaled-rencontre-dpec-nantes
+  question: "Quelqu'un peut m'expliquer : Rencontre DPEC à Nantes ?"
+  expected_topic_ids: [24909]
+  notes: "généré par template (échelle) depuis titre réel, cat 192"
+
+- id: scaled-le-regard-des-gens
+  question: "Des infos sur Le regard des gens ?"
+  expected_topic_ids: [24911]
+  notes: "généré par template (échelle) depuis titre réel, cat 142"
+
+- id: scaled-que-choisir-chez-valmour-produits-saphir
+  question: "Que choisir chez Valmour (produits Saphir) ?"
+  expected_topic_ids: [24914]
+  notes: "généré par template (échelle) depuis titre réel, cat 157"
+
+- id: scaled-gaston-paris-boutons-de-manchette
+  question: "Des conseils sur Gaston Paris - Boutons de manchette ?"
+  expected_topic_ids: [24932]
+  notes: "généré par template (échelle) depuis titre réel, cat 180"
+
+- id: scaled-coriolan-for-men
+  question: "Des conseils sur Coriolan for men ?"
+  expected_topic_ids: [24941]
+  notes: "généré par template (échelle) depuis titre réel, cat 167"
+
+- id: scaled-comparatif-allen-edmonds-et-crockett-et
+  question: "Que pensez-vous de Comparatif Allen Edmonds et Crockett et jaunes ?"
+  expected_topic_ids: [24955]
+  notes: "généré par template (échelle) depuis titre réel, cat 155"
+
+- id: scaled-rasage-l-ancienne
+  question: "Où trouver des infos sur Rasage à l'ancienne ?"
+  expected_topic_ids: [24959]
+  notes: "généré par template (échelle) depuis titre réel, cat 175"
+
+- id: scaled-l-art-du-chinage-et-de-la-d-brouille
+  question: "Discussion : L’art du chinage et de la débrouille, vos avis ?"
+  expected_topic_ids: [24981]
+  notes: "généré par template (échelle) depuis titre réel, cat 153"
+
+- id: scaled-church-s-c-tait-a
+  question: "Que pensez-vous de Church's cétait ça ! ?"
+  expected_topic_ids: [24982]
+  notes: "généré par template (échelle) depuis titre réel, cat 155"
+
+- id: scaled-beige-e-boutique-multimarque-d-di-e-au-v
+  question: "Vos avis sur BEIGE - E-boutique multimarque dédiée au vestiaire masculin ?"
+  expected_topic_ids: [24983]
+  notes: "généré par template (échelle) depuis titre réel, cat 167"
+
+- id: scaled-cin-ma
+  question: "Discussion : Cinéma, vos avis ?"
+  expected_topic_ids: [24990]
+  notes: "généré par template (échelle) depuis titre réel, cat 153"
+
+- id: scaled-nouveau-mod-le-dimitri-bottier
+  question: "Des avis sur Nouveau modèle Dimitri Bottier ?"
+  expected_topic_ids: [24999]
+  notes: "généré par template (échelle) depuis titre réel, cat 156"
+
+- id: scaled-blind-shoes
+  question: "De quoi parle-t-on dans « BLIND SHOES » ?"
+  expected_topic_ids: [25004]
+  notes: "généré par template (échelle) depuis titre réel, cat 153"
+
+- id: scaled-boutons-de-manchette-sur-ebay
+  question: "Où trouver des infos sur Boutons de manchette sur eBay ?"
+  expected_topic_ids: [25031]
+  notes: "généré par template (échelle) depuis titre réel, cat 172"
+
+- id: scaled-vote-2-lieu-colloque
+  question: "Quelqu'un peut m'expliquer : Vote 2 : Lieu Colloque ?"
+  expected_topic_ids: [25045]
+  notes: "généré par template (échelle) depuis titre réel, cat 152"
+
+- id: scaled-les-l-ments-du-workwear
+  question: "Quelqu'un peut m'éclairer sur Les éléments du workwear ?"
+  expected_topic_ids: [25107]
+  notes: "généré par template (échelle) depuis titre réel, cat 165"
+
+- id: scaled-d-formation-de-gants-en-cuir-apr-s-pluie
+  question: "Où trouver des infos sur Déformation de gants en cuir après pluie ?"
+  expected_topic_ids: [25124]
+  notes: "généré par template (échelle) depuis titre réel, cat 173"
+
+- id: scaled-chemises-made-in-france-paris
+  question: "Discussion : Chemises made in France; Paris, vos avis ?"
+  expected_topic_ids: [25166]
+  notes: "généré par template (échelle) depuis titre réel, cat 154"
+
+- id: scaled-sacoche-de-cours
+  question: "Des conseils sur Sacoche de cours. ?"
+  expected_topic_ids: [25194]
+  notes: "généré par template (échelle) depuis titre réel, cat 177"
+
+- id: scaled-un-no-l-pour-nos-confr-res
+  question: "Quelqu'un peut m'expliquer : Un noël pour nos confrères ?"
+  expected_topic_ids: [25207]
+  notes: "généré par template (échelle) depuis titre réel, cat 142"
+
+- id: scaled-pot-dpec-paris-idf
+  question: "Des infos sur POT DPEC Paris-IDF ?"
+  expected_topic_ids: [25222]
+  notes: "généré par template (échelle) depuis titre réel, cat 192"
+
+- id: scaled-achat-grenson
+  question: "Des avis sur Achat Grenson ?"
+  expected_topic_ids: [25227]
+  notes: "généré par template (échelle) depuis titre réel, cat 155"
+
+- id: scaled-id-es-activit-s-lyon
+  question: "Quelqu'un peut m'expliquer : Idées activités Lyon ?"
+  expected_topic_ids: [25292]
+  notes: "généré par template (échelle) depuis titre réel, cat 152"
+
+- id: scaled-goyard
+  question: "Des conseils sur Goyard ?"
+  expected_topic_ids: [25306]
+  notes: "généré par template (échelle) depuis titre réel, cat 177"
+
+- id: scaled-une-cravate-club-dpec
+  question: "Une cravate club DPEC ?"
+  expected_topic_ids: [25314]
+  notes: "généré par template (échelle) depuis titre réel, cat 152"
+
+- id: scaled-bang-olufsen
+  question: "Où trouver ça : Bang & Olufsen ?"
+  expected_topic_ids: [25358]
+  notes: "généré par template (échelle) depuis titre réel, cat 183"
+
+- id: scaled-prix-cigares
+  question: "Discussion sur prix cigares, vos avis ?"
+  expected_topic_ids: [25384]
+  notes: "généré par template (échelle) depuis titre réel, cat 185"
+
+- id: scaled-les-errances-de-bk
+  question: "Quelqu'un peut m'expliquer : Les errances de BK ?"
+  expected_topic_ids: [25394]
+  notes: "généré par template (échelle) depuis titre réel, cat 142"
+
+- id: scaled-luxire
+  question: "Des conseils sur Luxire ?"
+  expected_topic_ids: [25417]
+  notes: "généré par template (échelle) depuis titre réel, cat 162"
+
+- id: scaled-une-escapade-roermond
+  question: "Qu'est-ce qui se dit sur Une escapade à Roermond ?"
+  expected_topic_ids: [25423]
+  notes: "généré par template (échelle) depuis titre réel, cat 152"
+
+- id: scaled-vente-destockage-gants-omega
+  question: "Où trouver des infos sur Vente destockage gants Omega ?"
+  expected_topic_ids: [25428]
+  notes: "généré par template (échelle) depuis titre réel, cat 173"
+
+- id: scaled-et-le-sportwear
+  question: "Vos avis sur Et le sportwear ?"
+  expected_topic_ids: [25473]
+  notes: "généré par template (échelle) depuis titre réel, cat 165"
+
+- id: scaled-bi-res
+  question: "Discussion sur Bières, vos avis ?"
+  expected_topic_ids: [25477]
+  notes: "généré par template (échelle) depuis titre réel, cat 186"
+
+- id: scaled-pulls-fran-ais-tricots-duger
+  question: "Des conseils sur Pulls français : tricots-duger ?"
+  expected_topic_ids: [25490]
+  notes: "généré par template (échelle) depuis titre réel, cat 166"
+
+- id: scaled-conseils-cigares
+  question: "Discussion sur conseils cigares..., vos avis ?"
+  expected_topic_ids: [25505]
+  notes: "généré par template (échelle) depuis titre réel, cat 185"
+
+- id: scaled-mes-premi-res-patines
+  question: "Des conseils sur « Mes premières patines » ?"
+  expected_topic_ids: [25537]
+  notes: "généré par template (échelle) depuis titre réel, cat 157"
+
+- id: scaled-bazarchic-vente-de-gants-p-cari
+  question: "Des conseils sur [Bazarchic] Vente de gants pécari ?"
+  expected_topic_ids: [25588]
+  notes: "généré par template (échelle) depuis titre réel, cat 173"
+
+- id: scaled-un-champion-de-la-chaussure-fran-aise-ca
+  question: "Discussion : Un champion de la chaussure française cartonne à l'étranger, vos avis\
+  \ ?"
+  expected_topic_ids: [25606]
+  notes: "généré par template (échelle) depuis titre réel, cat 154"
+
+- id: scaled-la-saint-patrick-en-irlande
+  question: "LA SAINT PATRICK en IRLANDE ?"
+  expected_topic_ids: [25608]
+  notes: "généré par template (échelle) depuis titre réel, cat 142"
+
+- id: scaled-hussars
+  question: "Des conseils sur Hussars ?"
+  expected_topic_ids: [25639]
+  notes: "généré par template (échelle) depuis titre réel, cat 167"
+
+- id: scaled-vins-de-porto
+  question: "Discussion sur Vins de Porto, vos avis ?"
+  expected_topic_ids: [25667]
+  notes: "généré par template (échelle) depuis titre réel, cat 186"
+
+- id: scaled-les-motards
+  question: "Vos recommandations sur Les motards ... ?"
+  expected_topic_ids: [25762]
+  notes: "généré par template (échelle) depuis titre réel, cat 188"
+
+- id: scaled-hugo-simon-la-cravate-autrement
+  question: "Des conseils sur Hugo & Simon : la cravate autrement. ?"
+  expected_topic_ids: [25822]
+  notes: "généré par template (échelle) depuis titre réel, cat 180"
+
+- id: scaled-lozine
+  question: "Vos avis sur Lozine ?"
+  expected_topic_ids: [25826]
+  notes: "généré par template (échelle) depuis titre réel, cat 177"
+
+- id: scaled-on-se-d-cide-universit-d-automne-dpec
+  question: "Des infos sur On se décide (université d'automne DPEC) ?"
+  expected_topic_ids: [25914]
+  notes: "généré par template (échelle) depuis titre réel, cat 152"
+
+- id: scaled-pr-sentation-day
+  question: "Quelqu'un peut m'expliquer : Présentation Day ?"
+  expected_topic_ids: [26076]
+  notes: "généré par template (échelle) depuis titre réel, cat 151"
+
+- id: scaled-pull-cardigan-pour-grand-mais-pas-gros
+  question: "Quelqu'un peut m'éclairer sur Pull & cardigan... pour grand (mais pas gros !) ?"
+  expected_topic_ids: [26098]
+  notes: "généré par template (échelle) depuis titre réel, cat 166"
+
+- id: scaled-sondage-quel-type-de-tissus-dpec
+  question: "Quelqu'un peut m'expliquer : Sondage : Quel type de Tissus DPEC ?"
+  expected_topic_ids: [26129]
+  notes: "généré par template (échelle) depuis titre réel, cat 152"
+
+- id: scaled-berg-berg-une-mode-su-doise-l-italienne
+  question: "Des conseils sur Berg&Berg : Une mode Suédoise à l'Italienne ?"
+  expected_topic_ids: [26153]
+  notes: "généré par template (échelle) depuis titre réel, cat 180"
+
+- id: scaled-nouveaux-mod-les-gaziano-girling
+  question: "Que pensez-vous de Nouveaux modèles Gaziano&Girling ?"
+  expected_topic_ids: [26207]
+  notes: "généré par template (échelle) depuis titre réel, cat 155"
+
+- id: scaled-premi-res-paires-bespoke
+  question: "Quelqu'un a des infos ou un avis sur Premières paires bespoke ?"
+  expected_topic_ids: [26309]
+  notes: "généré par template (échelle) depuis titre réel, cat 156"
+
+- id: scaled-cabasse
+  question: "Des infos sur ce bon plan : cabasse ?"
+  expected_topic_ids: [26310]
+  notes: "généré par template (échelle) depuis titre réel, cat 183"
+
+- id: scaled-calabrese-napoli
+  question: "Des conseils sur Calabrese - Napoli ?"
+  expected_topic_ids: [26372]
+  notes: "généré par template (échelle) depuis titre réel, cat 174"
+
+- id: scaled-h-sitant
+  question: "Des conseils sur Hésitant... ?"
+  expected_topic_ids: [26377]
+  notes: "généré par template (échelle) depuis titre réel, cat 171"
+
+- id: scaled-ganterie-saint-junien-tat-des-lieux
+  question: "Où trouver des infos sur Ganterie Saint Junien (état des lieux) ?"
+  expected_topic_ids: [26413]
+  notes: "généré par template (échelle) depuis titre réel, cat 173"
+
+- id: scaled-moulin-neuf-textiles
+  question: "Discussion : Moulin Neuf Textiles, vos avis ?"
+  expected_topic_ids: [26426]
+  notes: "généré par template (échelle) depuis titre réel, cat 154"
+
+- id: scaled-no-l-dpec-2016-dition-num-ro-2
+  question: "Qu'est-ce qui se dit sur Noël DPEC 2016 (édition numéro 2) ?"
+  expected_topic_ids: [26430]
+  notes: "généré par template (échelle) depuis titre réel, cat 142"
+
+- id: scaled-malle2luxe-paris
+  question: "Vos avis sur Malle2luxe - Paris ?"
+  expected_topic_ids: [26542]
+  notes: "généré par template (échelle) depuis titre réel, cat 180"
+
+- id: scaled-lopez-aragon
+  question: "Vos avis sur Lopez Aragon ?"
+  expected_topic_ids: [26608]
+  notes: "généré par template (échelle) depuis titre réel, cat 161"
+
+- id: scaled-maison-chato-lufsen
+  question: "Des conseils sur Maison Chato Lufsen ?"
+  expected_topic_ids: [26636]
+  notes: "généré par template (échelle) depuis titre réel, cat 167"
+
+- id: scaled-le-bouif-de-la-pampa
+  question: "Des conseils sur Le bouif de la pampa ?"
+  expected_topic_ids: [26649]
+  notes: "généré par template (échelle) depuis titre réel, cat 180"
+
+- id: scaled-sacoches
+  question: "Des conseils sur Sacoches... ?"
+  expected_topic_ids: [26683]
+  notes: "généré par template (échelle) depuis titre réel, cat 177"
+
+- id: scaled-cravate-et-pochettes-poszetka
+  question: "Vos avis sur Cravate et Pochettes Poszetka ?"
+  expected_topic_ids: [26686]
+  notes: "généré par template (échelle) depuis titre réel, cat 170"
+
+- id: scaled-ardentes-clipei
+  question: "Quelqu'un peut m'éclairer sur Ardentes Clipei ?"
+  expected_topic_ids: [26732]
+  notes: "généré par template (échelle) depuis titre réel, cat 161"
+
+- id: scaled-vivre-sans-ceinture
+  question: "Vivre sans ceinture?"
+  expected_topic_ids: [26746]
+  notes: "généré par template (échelle) depuis titre réel, cat 179"
+
+- id: scaled-sac-de-voyage-en-cuir
+  question: "Des conseils sur Sac de voyage en cuir ?"
+  expected_topic_ids: [26769]
+  notes: "généré par template (échelle) depuis titre réel, cat 177"
+
+- id: scaled-pull-laine-donegal-cachemire
+  question: "Pull laine (Donegal)/cachemire?"
+  expected_topic_ids: [26794]
+  notes: "généré par template (échelle) depuis titre réel, cat 166"
+
+- id: scaled-bonnes-affaires-sur-le-net
+  question: "Discussion : Bonnes affaires sur le net, vos avis ?"
+  expected_topic_ids: [26817]
+  notes: "généré par template (échelle) depuis titre réel, cat 153"
+
+- id: scaled-campagne-kickstarter-ceinture-maison-dar
+  question: "Des conseils sur Campagne Kickstarter Ceinture Maison Darzac ?"
+  expected_topic_ids: [26828]
+  notes: "généré par template (échelle) depuis titre réel, cat 180"
+
+- id: scaled-grande-collecte-des-adresses
+  question: "Qu'est-ce qui se dit sur GRANDE COLLECTE DES ADRESSES ?"
+  expected_topic_ids: [26904]
+  notes: "généré par template (échelle) depuis titre réel, cat 152"
+
+- id: scaled-re-vernir-une-poign-e-de-parapluie
+  question: "Vos avis sur (Re)Vernir une poignée de parapluie ?"
+  expected_topic_ids: [26942]
+  notes: "généré par template (échelle) depuis titre réel, cat 171"
+
+- id: scaled-atelier-particulier
+  question: "Des conseils sur Atelier Particulier ?"
+  expected_topic_ids: [27021]
+  notes: "généré par template (échelle) depuis titre réel, cat 179"
+
+- id: scaled-universit-d-automne-2017
+  question: "Quelqu'un peut m'expliquer : Université d'automne 2017 ?"
+  expected_topic_ids: [27027]
+  notes: "généré par template (échelle) depuis titre réel, cat 152"
+
+- id: scaled-asphalte
+  question: "Des conseils sur Asphalte ?"
+  expected_topic_ids: [27039]
+  notes: "généré par template (échelle) depuis titre réel, cat 162"
+
+- id: scaled-n-4-ceinture-ville-campagne
+  question: "Vos avis sur N°4-Ceinture ville & campagne ?"
+  expected_topic_ids: [27053]
+  notes: "généré par template (échelle) depuis titre réel, cat 179"
+
+- id: scaled-un-amateur-acharne
+  question: "Quelqu'un a des infos ou un avis sur UN AMATEUR ACHARNE ?"
+  expected_topic_ids: [27075]
+  notes: "généré par template (échelle) depuis titre réel, cat 156"
+
+- id: scaled-budapest
+  question: "Discussion sur Budapest, vos avis ?"
+  expected_topic_ids: [27162]
+  notes: "généré par template (échelle) depuis titre réel, cat 187"
+
+- id: scaled-le-mocassin-toute-une-histoire
+  question: "Que pensez-vous de Le mocassin, toute une histoire ?"
+  expected_topic_ids: [27168]
+  notes: "généré par template (échelle) depuis titre réel, cat 159"
+
+- id: scaled-restauration-d-un-n-cessaire-de-toilette
+  question: "Où trouver des infos sur Restauration d'un nécessaire de toilette Louis Vuitton 1920\
+  \ ?"
+  expected_topic_ids: [27178]
+  notes: "généré par template (échelle) depuis titre réel, cat 177"
+
+- id: scaled-caf-coton-sur-vente-priv-e
+  question: "Bon plan pour Café-coton sur Vente-privée ?"
+  expected_topic_ids: [27195]
+  notes: "généré par template (échelle) depuis titre réel, cat 182"
+
+- id: scaled-rencontre-tourangevine-2
+  question: "Des infos sur Rencontre Tourangevine 2 ?"
+  expected_topic_ids: [27246]
+  notes: "généré par template (échelle) depuis titre réel, cat 192"
+
+- id: scaled-lacets-de-couleur-pour-changer
+  question: "Des conseils sur « Lacets de couleur... pour changer. » ?"
+  expected_topic_ids: [27264]
+  notes: "généré par template (échelle) depuis titre réel, cat 157"
+
+- id: scaled-jacques-d-m-ter-s-ries-au-lieu-de-noir-l
+  question: "Des avis sur Jacques & Déméter - Séries au lieu de noir à la commande ?"
+  expected_topic_ids: [27269]
+  notes: "généré par template (échelle) depuis titre réel, cat 155"
+
+- id: scaled-filson
+  question: "Des conseils sur FILSON ?"
+  expected_topic_ids: [27388]
+  notes: "généré par template (échelle) depuis titre réel, cat 165"
+
+- id: scaled-retaper-une-sacoche-cuir-vieille-de-70-a
+  question: "Où trouver des infos sur Retaper une sacoche cuir vieille de 70 ans ?"
+  expected_topic_ids: [27398]
+  notes: "généré par template (échelle) depuis titre réel, cat 178"
+
+- id: scaled-de-la-fonctionnalit-des-souliers
+  question: "Des conseils sur « De la fonctionnalité des souliers » ?"
+  expected_topic_ids: [27406]
+  notes: "généré par template (échelle) depuis titre réel, cat 157"
+
+- id: scaled-thomas-farthing
+  question: "Quelqu'un peut m'éclairer sur Thomas Farthing ?"
+  expected_topic_ids: [27413]
+  notes: "généré par template (échelle) depuis titre réel, cat 165"
+
+- id: scaled-drake-s
+  question: "Vos avis sur Drake's ?"
+  expected_topic_ids: [27420]
+  notes: "généré par template (échelle) depuis titre réel, cat 170"
+
+- id: scaled-vente-olivier-t
+  question: "Vos avis sur VENTE OLIVIER T. ?"
+  expected_topic_ids: [27423]
+  notes: "généré par template (échelle) depuis titre réel, cat 167"
+
+- id: scaled-sortie-cin-ma-paris-kingsman-the-golden
+  question: "Qu'est-ce qui se dit sur Sortie Cinéma à Paris - Kingsman: The Golden Circle ?"
+  expected_topic_ids: [27427]
+  notes: "généré par template (échelle) depuis titre réel, cat 142"
+
+- id: scaled-lacer-ses-chaussures-et-faire-ses-lacets
+  question: "Comment aborder ce sujet : Lacer ses chaussures et faire ses lacets ?"
+  expected_topic_ids: [27476]
+  notes: "généré par template (échelle) depuis titre réel, cat 157"
+
+- id: scaled-des-gants-made-in-france-tarif-accessibl
+  question: "Des gants made in France à tarif accessible?"
+  expected_topic_ids: [27482]
+  notes: "généré par template (échelle) depuis titre réel, cat 173"
+
+- id: scaled-chaussures-d-espion-s
+  question: "Que pensez-vous de Chaussures d'espion(s) ?"
+  expected_topic_ids: [27487]
+  notes: "généré par template (échelle) depuis titre réel, cat 159"
+
+- id: scaled-premi-re-visite-chez-carmina
+  question: "Que pensez-vous de Première visite chez carmina ?"
+  expected_topic_ids: [27514]
+  notes: "généré par template (échelle) depuis titre réel, cat 155"
+
+- id: scaled-suite-du-sujet-moto
+  question: "Vos recommandations sur suite du sujet moto ?"
+  expected_topic_ids: [27535]
+  notes: "généré par template (échelle) depuis titre réel, cat 188"
+
+- id: scaled-noel-dpec-2017-dition-3
+  question: "Des infos sur Noel DPEC 2017 (édition 3) ?"
+  expected_topic_ids: [27556]
+  notes: "généré par template (échelle) depuis titre réel, cat 142"
+
+- id: scaled-mariage-en-corse-en-mai-2018
+  question: "Vos avis sur mariage en corse en mai 2018 ?"
+  expected_topic_ids: [27582]
+  notes: "généré par template (échelle) depuis titre réel, cat 164"
+
+- id: scaled-pochette-bon-march-pour-commencer-viter
+  question: "Pochette bon marché pour commencer, à éviter?"
+  expected_topic_ids: [27627]
+  notes: "généré par template (échelle) depuis titre réel, cat 174"
+
+- id: scaled-encore-une-fois-j-ai-replong-dans-le-vic
+  question: "Des avis sur encore une fois j' ai replongé dans le vice! ?"
+  expected_topic_ids: [27629]
+  notes: "généré par template (échelle) depuis titre réel, cat 155"
+
+- id: scaled-id-e-de-marque-field-jacket
+  question: "Des conseils sur Idée de marque (field jacket) ?"
+  expected_topic_ids: [27660]
+  notes: "généré par template (échelle) depuis titre réel, cat 165"
+
+- id: scaled-secr-taire-de-voyage
+  question: "Vos avis sur secrétaire de voyage ?"
+  expected_topic_ids: [27718]
+  notes: "généré par template (échelle) depuis titre réel, cat 177"
+
+- id: scaled-rouloter-sa-pochette-soi-m-me
+  question: "Des conseils sur Rouloter sa pochette soi-même ?"
+  expected_topic_ids: [27848]
+  notes: "généré par template (échelle) depuis titre réel, cat 174"
+
+- id: scaled-gentlemenclover
+  question: "Où trouver des infos sur Gentlemenclover ?"
+  expected_topic_ids: [27887]
+  notes: "généré par template (échelle) depuis titre réel, cat 180"
+
+- id: scaled-tm-lewin
+  question: "Vos avis sur TM Lewin ?"
+  expected_topic_ids: [27899]
+  notes: "généré par template (échelle) depuis titre réel, cat 162"
+
+- id: scaled-epht-e
+  question: "Des infos sur Ephtée ?"
+  expected_topic_ids: [27902]
+  notes: "généré par template (échelle) depuis titre réel, cat 146"
+
+- id: scaled-pichet-paris-maroquinerie-fran-aise-pers
+  question: "Vos avis sur Pichet Paris : Maroquinerie Française & Personnalisable ?"
+  expected_topic_ids: [27983]
+  notes: "généré par template (échelle) depuis titre réel, cat 180"
+
+- id: scaled-vintage
+  question: "Quelqu'un a des infos ou un avis sur Vintage ?"
+  expected_topic_ids: [28041]
+  notes: "généré par template (échelle) depuis titre réel, cat 159"
+
+- id: scaled-la-galerie-des-horreurs
+  question: "Des avis sur la galerie des horreurs ?"
+  expected_topic_ids: [28061]
+  notes: "généré par template (échelle) depuis titre réel, cat 159"
+
+- id: scaled-jacques-d-m-ter
+  question: "Vos avis sur Jacques & Déméter ?"
+  expected_topic_ids: [28083]
+  notes: "généré par template (échelle) depuis titre réel, cat 179"
+
+- id: scaled-aubercy-35-euros
+  question: "Que pensez-vous de Aubercy à 35 euros !!! ?"
+  expected_topic_ids: [28098]
+  notes: "généré par template (échelle) depuis titre réel, cat 155"
+
+- id: scaled-la-galerie-des-semelles
+  question: "Des avis sur La Galerie des semelles ?"
+  expected_topic_ids: [28124]
+  notes: "généré par template (échelle) depuis titre réel, cat 155"
+
+- id: scaled-gants-omega
+  question: "Où trouver des infos sur GANTS OMEGA ?"
+  expected_topic_ids: [28173]
+  notes: "généré par template (échelle) depuis titre réel, cat 173"
+
+- id: scaled-ap-ro-dpec-lyon-juillet-2018
+  question: "Des infos sur Apéro DPEC Lyon Juillet 2018 ?"
+  expected_topic_ids: [28197]
+  notes: "généré par template (échelle) depuis titre réel, cat 192"
+
+- id: scaled-pini-parma
+  question: "Quelqu'un peut m'éclairer sur Pini Parma ?"
+  expected_topic_ids: [28198]
+  notes: "généré par template (échelle) depuis titre réel, cat 161"
+
+- id: scaled-le-monde-du-soulier-dans-la-litt-rature
+  question: "Que pensez-vous de Le monde du soulier dans la littérature ?"
+  expected_topic_ids: [28203]
+  notes: "généré par template (échelle) depuis titre réel, cat 159"
+
+- id: scaled-o-sont-pass-s-les-longs-manteaux
+  question: "Où sont passés les LONGS manteaux?"
+  expected_topic_ids: [28606]
+  notes: "généré par template (échelle) depuis titre réel, cat 163"
+
+- id: scaled-semelle-cr-pe
+  question: "Que pensez-vous de Semelle crêpe ?"
+  expected_topic_ids: [28707]
+  notes: "généré par template (échelle) depuis titre réel, cat 158"
+
+- id: scaled-costume-pour-mariage
+  question: "Costume pour mariage ?"
+  expected_topic_ids: [28732]
+  notes: "généré par template (échelle) depuis titre réel, cat 164"
+
+- id: scaled-mariage-en-flanelle
+  question: "Quelqu'un peut m'éclairer sur Mariage en flanelle ?"
+  expected_topic_ids: [28771]
+  notes: "généré par template (échelle) depuis titre réel, cat 164"
+
+- id: scaled-le-gin
+  question: "Vos recommandations sur Le gin ?"
+  expected_topic_ids: [28793]
+  notes: "généré par template (échelle) depuis titre réel, cat 186"
+
+- id: scaled-c-lia-granger
+  question: "Vos avis sur Célia GRANGER ?"
+  expected_topic_ids: [28838]
+  notes: "généré par template (échelle) depuis titre réel, cat 178"
+
+- id: scaled-nos-collections-de-cravates
+  question: "Où trouver des infos sur Nos collections de cravates ?"
+  expected_topic_ids: [28889]
+  notes: "généré par template (échelle) depuis titre réel, cat 170"
+
+- id: scaled-valet-de-pique-une-marque-de-maroquineri
+  question: "Des conseils sur Valet de pique - une marque de maroquinerie « made in Paris ?"
+  expected_topic_ids: [28950]
+  notes: "généré par template (échelle) depuis titre réel, cat 180"
+
+- id: scaled-sandales
+  question: "Que pensez-vous de Sandales ?"
+  expected_topic_ids: [29045]
+  notes: "généré par template (échelle) depuis titre réel, cat 159"
+
+- id: scaled-le-mocassin-une-histoire-de-papillon
+  question: "Que pensez-vous de Le mocassin, une histoire de papillon ?"
+  expected_topic_ids: [29072]
+  notes: "généré par template (échelle) depuis titre réel, cat 159"
+
+- id: scaled-champ-de-manoeuvres
+  question: "Vos avis sur Champ de manoeuvres ?"
+  expected_topic_ids: [29144]
+  notes: "généré par template (échelle) depuis titre réel, cat 165"
+
+- id: scaled-des-chapeaux-fabriqu-s-montazels-d-pt-11
+  question: "De quoi parle-t-on dans « Des chapeaux fabriqués à Montazels (dépt 11) » ?"
+  expected_topic_ids: [29244]
+  notes: "généré par template (échelle) depuis titre réel, cat 154"
+
+- id: scaled-collection-exclusive-ou-handgrade-pour-l
+  question: "Des avis sur Collection Exclusive ou Handgrade, pour le modèle Moore ?"
+  expected_topic_ids: [29302]
+  notes: "généré par template (échelle) depuis titre réel, cat 155"
+
+- id: scaled-prisonblues
+  question: "Vos avis sur PRISONBLUES ?"
+  expected_topic_ids: [29356]
+  notes: "généré par template (échelle) depuis titre réel, cat 165"
+
+- id: scaled-ascott-et-lavali-re
+  question: "Ascott et Lavalière ?"
+  expected_topic_ids: [29361]
+  notes: "généré par template (échelle) depuis titre réel, cat 170"
+
+- id: scaled-canap-fauteuil-club
+  question: "Des avis sur Canapé & fauteuil \"club\" ?"
+  expected_topic_ids: [29387]
+  notes: "généré par template (échelle) depuis titre réel, cat 146"
+
+- id: scaled-avis-sac-dos-en-cuir-valet-de-pique
+  question: "Où trouver des infos sur Avis sac à dos en cuir Valet de pique ?"
+  expected_topic_ids: [29436]
+  notes: "généré par template (échelle) depuis titre réel, cat 177"
+
+- id: scaled-sweat-shirts
+  question: "Vos avis sur sweat shirts ?"
+  expected_topic_ids: [29484]
+  notes: "généré par template (échelle) depuis titre réel, cat 165"
+
+- id: scaled-ghillie
+  question: "Quelqu'un a des infos ou un avis sur Ghillie ?"
+  expected_topic_ids: [29521]
+  notes: "généré par template (échelle) depuis titre réel, cat 159"
+
+- id: scaled-pep-s-r-parateur-de-parapluie
+  question: "Des conseils sur Pep's réparateur de parapluie. ?"
+  expected_topic_ids: [29553]
+  notes: "généré par template (échelle) depuis titre réel, cat 171"
+
+- id: scaled-vos-t-shirts
+  question: "Vos t-shirts ?"
+  expected_topic_ids: [29579]
+  notes: "généré par template (échelle) depuis titre réel, cat 165"
+
+- id: scaled-trouver-un-mod-le-partir-d-une-photo
+  question: "Que pensez-vous de Trouver un modèle à partir d'une photo ?"
+  expected_topic_ids: [29611]
+  notes: "généré par template (échelle) depuis titre réel, cat 156"
+
+- id: scaled-quelle-montre-portez-vous-aujourd-hui
+  question: "Où trouver des infos sur Quelle Montre Portez-Vous Aujourd'hui ?"
+  expected_topic_ids: [29617]
+  notes: "généré par template (échelle) depuis titre réel, cat 176"
+
+- id: scaled-la-fin-des-rangers
+  question: "Que pensez-vous de La fin des Rangers ?"
+  expected_topic_ids: [29997]
+  notes: "généré par template (échelle) depuis titre réel, cat 159"
+
+- id: scaled-recherche-cordonnier-centre-bretagne
+  question: "Quelqu'un a des infos ou un avis sur Recherche cordonnier centre Bretagne ?"
+  expected_topic_ids: [30015]
+  notes: "généré par template (échelle) depuis titre réel, cat 156"
+
+- id: scaled-comment-choisir-la-couleur-forme-mati-re
+  question: "Comment choisir la couleur (forme, matière) de ses BdM?"
+  expected_topic_ids: [30166]
+  notes: "généré par template (échelle) depuis titre réel, cat 172"
+
+- id: scaled-londres-et-comment-claquer-un-max-en-2-j
+  question: "Vos recommandations sur Londres (et comment claquer un max en 2 jours) ?"
+  expected_topic_ids: [30248]
+  notes: "généré par template (échelle) depuis titre réel, cat 187"
+
+- id: scaled-cuir-cordovan
+  question: "Quelqu'un a des infos ou un avis sur Cuir cordovan ?"
+  expected_topic_ids: [30303]
+  notes: "généré par template (échelle) depuis titre réel, cat 155"
+
+- id: scaled-panama
+  question: "Des conseils sur panama ?"
+  expected_topic_ids: [30414]
+  notes: "généré par template (échelle) depuis titre réel, cat 168"
+
+- id: scaled-mais-o-sont-les-horlogers
+  question: "Mais où sont les horlogers ?"
+  expected_topic_ids: [30473]
+  notes: "généré par template (échelle) depuis titre réel, cat 176"
+
+- id: scaled-teinture-noire-chaussures-meermin
+  question: "Quelqu'un a des infos ou un avis sur Teinture noire chaussures Meermin ?"
+  expected_topic_ids: [30517]
+  notes: "généré par template (échelle) depuis titre réel, cat 156"
+
+- id: scaled-le-japon
+  question: "Vos recommandations sur Le Japon ?"
+  expected_topic_ids: [30623]
+  notes: "généré par template (échelle) depuis titre réel, cat 187"
+
+- id: scaled-prix-des-cigares-en-italie
+  question: "Des conseils sur Prix des cigares en italie. ?"
+  expected_topic_ids: [30705]
+  notes: "généré par template (échelle) depuis titre réel, cat 185"
+
+- id: scaled-bruxelles-et-bruges
+  question: "Vos recommandations sur Bruxelles et Bruges ?"
+  expected_topic_ids: [30755]
+  notes: "généré par template (échelle) depuis titre réel, cat 187"
+
+- id: scaled-id-es-de-hauts-pour-accompagner-un-chino
+  question: "Des conseils sur Idées de hauts pour accompagner un chino ?"
+  expected_topic_ids: [30759]
+  notes: "généré par template (échelle) depuis titre réel, cat 165"
+
+- id: scaled-chaussettes-gallo-o
+  question: "Chaussettes Gallo: où?"
+  expected_topic_ids: [30787]
+  notes: "généré par template (échelle) depuis titre réel, cat 169"
+
+- id: scaled-quelle-cravate-portez-vous-aujourd-hui
+  question: "Quelle cravate portez-vous aujourd’hui?"
+  expected_topic_ids: [30798]
+  notes: "généré par template (échelle) depuis titre réel, cat 153"
+
+- id: scaled-bleu-de-chine
+  question: "Quelqu'un peut m'éclairer sur Bleu de Chine ?"
+  expected_topic_ids: [30820]
+  notes: "généré par template (échelle) depuis titre réel, cat 165"
+
+- id: scaled-flasque
+  question: "Discussion sur flasque, vos avis ?"
+  expected_topic_ids: [30868]
+  notes: "généré par template (échelle) depuis titre réel, cat 184"
+
+- id: scaled-barbour-2
+  question: "Des infos sur ce bon plan : BARBOUR ?"
+  expected_topic_ids: [31012]
+  notes: "généré par template (échelle) depuis titre réel, cat 182"
+
+- id: scaled-cigares-impressions
+  question: "Discussion sur cigares : impressions, vos avis ?"
+  expected_topic_ids: [31048]
+  notes: "généré par template (échelle) depuis titre réel, cat 185"
+
+- id: scaled-swann-oscar
+  question: "Des conseils sur Swann & Oscar ?"
+  expected_topic_ids: [31078]
+  notes: "généré par template (échelle) depuis titre réel, cat 162"
+
+- id: scaled-seiko-vs-ollech-wajs
+  question: "Des conseils sur seiko vs ollech&wajs ?"
+  expected_topic_ids: [31137]
+  notes: "généré par template (échelle) depuis titre réel, cat 176"
+
+- id: scaled-besoin-de-vos-conseils
+  question: "Discussion sur Besoin de vos conseils, vos avis ?"
+  expected_topic_ids: [31170]
+  notes: "généré par template (échelle) depuis titre réel, cat 186"
+
+- id: scaled-carlos-santos
+  question: "Des avis sur Carlos Santos ?"
+  expected_topic_ids: [31190]
+  notes: "généré par template (échelle) depuis titre réel, cat 155"
+
+- id: scaled-patines-vitix
+  question: "Quelqu'un peut m'éclairer sur PATINES VITIX ?"
+  expected_topic_ids: [31192]
+  notes: "généré par template (échelle) depuis titre réel, cat 167"
+
+- id: scaled-quel-cabriolet
+  question: "Quel cabriolet ?"
+  expected_topic_ids: [31205]
+  notes: "généré par template (échelle) depuis titre réel, cat 188"
+
+- id: scaled-de-passage-andorre
+  question: "Des conseils sur De passage à Andorre.... ?"
+  expected_topic_ids: [31207]
+  notes: "généré par template (échelle) depuis titre réel, cat 185"
+
+- id: scaled-j-ai-re-u-ma-ceinture
+  question: "Des conseils sur J'ai reçu ma ceinture... ?"
+  expected_topic_ids: [31262]
+  notes: "généré par template (échelle) depuis titre réel, cat 179"
+
+- id: scaled-o-trouver-un-beau-parapluie-paris
+  question: "Où trouver un beau parapluie à Paris ?"
+  expected_topic_ids: [31278]
+  notes: "généré par template (échelle) depuis titre réel, cat 171"
+
+- id: scaled-montres-avec-phase-de-lune
+  question: "Des conseils sur Montres avec phase de lune ?"
+  expected_topic_ids: [31297]
+  notes: "généré par template (échelle) depuis titre réel, cat 176"
+
+- id: scaled-choisir-une-ceinture
+  question: "Où trouver des infos sur Choisir une ceinture ?"
+  expected_topic_ids: [31318]
+  notes: "généré par template (échelle) depuis titre réel, cat 179"
+
+- id: scaled-introduction
+  question: "Des infos sur Introduction ?"
+  expected_topic_ids: [31323]
+  notes: "généré par template (échelle) depuis titre réel, cat 151"
+
+- id: scaled-portefeuille
+  question: "Vos avis sur Portefeuille ?"
+  expected_topic_ids: [31328]
+  notes: "généré par template (échelle) depuis titre réel, cat 178"
+
+- id: scaled-les-vins-de-dpec
+  question: "Vos recommandations sur Les vins de DPEC ?"
+  expected_topic_ids: [31338]
+  notes: "généré par template (échelle) depuis titre réel, cat 186"
+
+- id: scaled-edward-green-summer-soldes
+  question: "Bon plan pour Edward Green Summer Soldes ?"
+  expected_topic_ids: [31350]
+  notes: "généré par template (échelle) depuis titre réel, cat 181"
+
+- id: scaled-saddle-en-commande-sp-ciale-chez-donegan
+  question: "Quelqu'un a des infos ou un avis sur Saddle en commande spéciale chez Donegan ?"
+  expected_topic_ids: [31352]
+  notes: "généré par template (échelle) depuis titre réel, cat 155"
+
+- id: scaled-g-rard-sen-soldes-morceaux-choisis
+  question: "Que pensez-vous de Gérard Sené, soldes, morceaux choisis... ?"
+  expected_topic_ids: [31357]
+  notes: "généré par template (échelle) depuis titre réel, cat 155"
+
+- id: scaled-quid-de-la-marque-cross
+  question: "Vos recommandations sur Quid de la marque Cross ?"
+  expected_topic_ids: [31387]
+  notes: "généré par template (échelle) depuis titre réel, cat 189"
+
+- id: scaled-cave-cigare
+  question: "Discussion sur Cave à cigare, vos avis ?"
+  expected_topic_ids: [31392]
+  notes: "généré par template (échelle) depuis titre réel, cat 185"
+
+- id: scaled-padoue
+  question: "Padoue ?"
+  expected_topic_ids: [31394]
+  notes: "généré par template (échelle) depuis titre réel, cat 187"
+
+- id: scaled-bateaux-motopropuls-s
+  question: "Discussion sur Bateaux (motopropulsés), vos avis ?"
+  expected_topic_ids: [31414]
+  notes: "généré par template (échelle) depuis titre réel, cat 188"
+
+- id: scaled-d-montage-soulier-suggestions
+  question: "Des avis sur Démontage soulier (suggestions) ?"
+  expected_topic_ids: [31431]
+  notes: "généré par template (échelle) depuis titre réel, cat 158"
+
+- id: scaled-magasin-paraboot-de-tullins
+  question: "Quelqu'un a des infos ou un avis sur Magasin Paraboot de Tullins ?"
+  expected_topic_ids: [31450]
+  notes: "généré par template (échelle) depuis titre réel, cat 155"
+
+- id: scaled-polos
+  question: "Des conseils sur Polos ?"
+  expected_topic_ids: [31452]
+  notes: "généré par template (échelle) depuis titre réel, cat 163"
+
+- id: scaled-lavage-des-chemises
+  question: "Vos avis sur Lavage des chemises ?"
+  expected_topic_ids: [31458]
+  notes: "généré par template (échelle) depuis titre réel, cat 162"
+
+- id: scaled-gaziano-girling-summer-sales
+  question: "Des infos sur ce bon plan : Gaziano & Girling Summer Sales ?"
+  expected_topic_ids: [31467]
+  notes: "généré par template (échelle) depuis titre réel, cat 181"
+
+- id: scaled-comment-transporter-ses-petites-affaires
+  question: "Comment transporter ses petites affaires?"
+  expected_topic_ids: [31485]
+  notes: "généré par template (échelle) depuis titre réel, cat 146"
+
+- id: scaled-j-ai-test-pour-vous-et-un-peu-pour-moi-a
+  question: "Des conseils sur J'ai testé pour vous ... (et un peu pour moi aussi) : TailorStore\
+  \ ?"
+  expected_topic_ids: [31490]
+  notes: "généré par template (échelle) depuis titre réel, cat 162"
+
+- id: scaled-z-en-pensez-quoi
+  question: "z'en pensez quoi?"
+  expected_topic_ids: [31523]
+  notes: "généré par template (échelle) depuis titre réel, cat 189"
+
+- id: scaled-quand-a-ne-passe-pas
+  question: "Des conseils sur Quand ça ne passe pas.... ?"
+  expected_topic_ids: [31575]
+  notes: "généré par template (échelle) depuis titre réel, cat 172"
+
+- id: scaled-rencontre-tourangevine
+  question: "Des infos sur Rencontre tourangevine ?"
+  expected_topic_ids: [31584]
+  notes: "généré par template (échelle) depuis titre réel, cat 192"
+
+- id: scaled-chapeliers
+  question: "Chapeliers???"
+  expected_topic_ids: [31626]
+  notes: "généré par template (échelle) depuis titre réel, cat 168"
+
+- id: scaled-mes-plus-belles-plumes
+  question: "Vos recommandations sur Mes \"plus belles\" plumes. ?"
+  expected_topic_ids: [31642]
+  notes: "généré par template (échelle) depuis titre réel, cat 189"
+
+- id: scaled-proposition-d-montage-allen-edmonds
+  question: "Que pensez-vous de Proposition démontage Allen Edmonds ?"
+  expected_topic_ids: [31668]
+  notes: "généré par template (échelle) depuis titre réel, cat 155"
+
+- id: scaled-chicago
+  question: "Vos recommandations sur Chicago ?"
+  expected_topic_ids: [31677]
+  notes: "généré par template (échelle) depuis titre réel, cat 187"
+
+- id: scaled-sondage-patin-ou-pas-patin
+  question: "Sondage : patin ou pas patin ?"
+  expected_topic_ids: [31689]
+  notes: "généré par template (échelle) depuis titre réel, cat 157"
+
+- id: scaled-assortir-des-chaussettes
+  question: "Vos avis sur Assortir des chaussettes ?"
+  expected_topic_ids: [31698]
+  notes: "généré par template (échelle) depuis titre réel, cat 169"
+
+- id: scaled-d-montage-lobb
+  question: "Des avis sur Démontage Lobb ?"
+  expected_topic_ids: [31702]
+  notes: "généré par template (échelle) depuis titre réel, cat 155"
+
+- id: scaled-le-poids-des-mots
+  question: "Discussion sur Le poids des mots..., vos avis ?"
+  expected_topic_ids: [31743]
+  notes: "généré par template (échelle) depuis titre réel, cat 188"
+
+- id: scaled-montre-budget-500
+  question: "Des conseils sur Montre budget 500 € ?"
+  expected_topic_ids: [31753]
+  notes: "généré par template (échelle) depuis titre réel, cat 176"
+
+- id: scaled-emling-couture
+  question: "Des avis sur Emling Couture ?"
+  expected_topic_ids: [31772]
+  notes: "généré par template (échelle) depuis titre réel, cat 155"
+
+- id: scaled-vendeur-de-stylo-chez-l-abb
+  question: "Vos recommandations sur vendeur de stylo chez l'abbé ?"
+  expected_topic_ids: [31780]
+  notes: "généré par template (échelle) depuis titre réel, cat 189"
+
+- id: scaled-john-lobb-double-boucle
+  question: "Bon plan pour John Lobb double boucle ... ?"
+  expected_topic_ids: [31791]
+  notes: "généré par template (échelle) depuis titre réel, cat 181"
+
+- id: scaled-edward-green-chelsea-neuves-175
+  question: "Où trouver ça : Edward Green Chelsea neuves 175 £ ?"
+  expected_topic_ids: [31794]
+  notes: "généré par template (échelle) depuis titre réel, cat 181"
+
+- id: scaled-gu-tres
+  question: "Guêtres?"
+  expected_topic_ids: [31815]
+  notes: "généré par template (échelle) depuis titre réel, cat 175"
+
+- id: scaled-cordonnier-dominique-barilero-images
+  question: "Quelqu'un a des infos ou un avis sur Cordonnier Dominique Barilero (images) ?"
+  expected_topic_ids: [31834]
+  notes: "généré par template (échelle) depuis titre réel, cat 156"
+
+- id: scaled-bridon
+  question: "Discussion sur bridon, vos avis ?"
+  expected_topic_ids: [31837]
+  notes: "généré par template (échelle) depuis titre réel, cat 184"
+
+- id: scaled-rencontre-lig-rienne-3
+  question: "Des infos sur Rencontre Ligérienne 3 ?"
+  expected_topic_ids: [31849]
+  notes: "généré par template (échelle) depuis titre réel, cat 192"
+
+- id: scaled-namiki
+  question: "Vos recommandations sur Namiki ?"
+  expected_topic_ids: [31853]
+  notes: "généré par template (échelle) depuis titre réel, cat 189"
+
+- id: scaled-n-ophyte
+  question: "Quelqu'un peut m'expliquer : Néophyte ?"
+  expected_topic_ids: [31875]
+  notes: "généré par template (échelle) depuis titre réel, cat 151"
+
+- id: scaled-combien-de-beaux-stylo-avez-vous
+  question: "Combien de beaux stylo avez vous ?"
+  expected_topic_ids: [31878]
+  notes: "généré par template (échelle) depuis titre réel, cat 189"
+
+- id: scaled-du-remplissage
+  question: "Discussion sur Du remplissage, vos avis ?"
+  expected_topic_ids: [31880]
+  notes: "généré par template (échelle) depuis titre réel, cat 189"
+
+- id: scaled-pr-sentation-de-jujug
+  question: "Qu'est-ce qui se dit sur Présentation de Jujug ?"
+  expected_topic_ids: [31927]
+  notes: "généré par template (échelle) depuis titre réel, cat 151"
+
+- id: scaled-bagages-goyard
+  question: "Bon plan pour Bagages Goyard. ?"
+  expected_topic_ids: [31928]
+  notes: "généré par template (échelle) depuis titre réel, cat 183"
+
+- id: scaled-emling-florin
+  question: "Des avis sur Emling FLORIN ?"
+  expected_topic_ids: [31946]
+  notes: "généré par template (échelle) depuis titre réel, cat 155"
+
+- id: scaled-photos-de-vos-cravates
+  question: "Des conseils sur Photos de vos cravates! ?"
+  expected_topic_ids: [31956]
+  notes: "généré par template (échelle) depuis titre réel, cat 170"
+
+- id: scaled-le-montage-de-ces-richelieux
+  question: "le montage de ces richelieux ?"
+  expected_topic_ids: [31989]
+  notes: "généré par template (échelle) depuis titre réel, cat 158"
+
+- id: scaled-et-la-pipe
+  question: "Discussion sur Et la pipe :-), vos avis ?"
+  expected_topic_ids: [32013]
+  notes: "généré par template (échelle) depuis titre réel, cat 185"
+
+- id: scaled-porte-plan
+  question: "Des conseils sur porte plan ?"
+  expected_topic_ids: [32030]
+  notes: "généré par template (échelle) depuis titre réel, cat 184"
+
+- id: scaled-quels-sont-vos-boutons-de-manchette-pr-f
+  question: "quels sont vos boutons de manchette préférés?"
+  expected_topic_ids: [32032]
+  notes: "généré par template (échelle) depuis titre réel, cat 172"
+
+- id: scaled-coutellerie
+  question: "Où trouver des infos sur Coutellerie ?"
+  expected_topic_ids: [32038]
+  notes: "généré par template (échelle) depuis titre réel, cat 175"
+
+- id: scaled-et-les-gants
+  question: "et les gants?"
+  expected_topic_ids: [32041]
+  notes: "généré par template (échelle) depuis titre réel, cat 173"
+
+- id: scaled-ceinture-2
+  question: "Bon plan pour Ceinture ?"
+  expected_topic_ids: [32066]
+  notes: "généré par template (échelle) depuis titre réel, cat 183"
+
+- id: scaled-chaussettes-avis
+  question: "Où trouver des infos sur Chaussettes... Avis ?"
+  expected_topic_ids: [32086]
+  notes: "généré par template (échelle) depuis titre réel, cat 169"
+
+- id: scaled-noeud-papillon
+  question: "Où trouver des infos sur Noeud papillon ?"
+  expected_topic_ids: [32087]
+  notes: "généré par template (échelle) depuis titre réel, cat 170"
+
+- id: scaled-porte-documents
+  question: "Où trouver des infos sur Porte-Documents ?"
+  expected_topic_ids: [32091]
+  notes: "généré par template (échelle) depuis titre réel, cat 178"
+
+- id: scaled-dois-je-rapporter-ces-chaussures
+  question: "Dois-je rapporter ces chaussures ?"
+  expected_topic_ids: [32102]
+  notes: "généré par template (échelle) depuis titre réel, cat 155"
+
+- id: scaled-les-montres-des-stars
+  question: "Des conseils sur Les montres des stars ?"
+  expected_topic_ids: [32116]
+  notes: "généré par template (échelle) depuis titre réel, cat 176"
+
+- id: scaled-proposition-d-montage-grenson
+  question: "Des avis sur Proposition démontage Grenson ?"
+  expected_topic_ids: [32122]
+  notes: "généré par template (échelle) depuis titre réel, cat 155"
+
+- id: scaled-question-la-vall-e-village
+  question: "Bon plan pour Question - La Vallée Village ?"
+  expected_topic_ids: [32146]
+  notes: "généré par template (échelle) depuis titre réel, cat 182"
+
+- id: scaled-turin
+  question: "Vos recommandations sur Turin ?"
+  expected_topic_ids: [32164]
+  notes: "généré par template (échelle) depuis titre réel, cat 187"
+
+- id: scaled-d-montages-vos-conclusions-jusqu-ici
+  question: "Démontages : vos conclusions jusqu'ici?"
+  expected_topic_ids: [32181]
+  notes: "généré par template (échelle) depuis titre réel, cat 158"
+
+- id: scaled-les-d-montages-vont-ils-influencer-vos-p
+  question: "Les démontages vont-ils influencer vos prochains achats ?"
+  expected_topic_ids: [32192]
+  notes: "généré par template (échelle) depuis titre réel, cat 158"
+
+- id: scaled-apr-s-la-chemise-d-essai-gratuite
+  question: "Quelqu'un peut m'éclairer sur après la chemise d'essai gratuite... ?"
+  expected_topic_ids: [32193]
+  notes: "généré par template (échelle) depuis titre réel, cat 161"
+
+- id: scaled-caban-et-duffel-coat
+  question: "Vos avis sur caban et duffel coat ?"
+  expected_topic_ids: [32205]
+  notes: "généré par template (échelle) depuis titre réel, cat 163"
+
+- id: scaled-chaussettes
+  question: "Où trouver des infos sur Chaussettes ?"
+  expected_topic_ids: [32217]
+  notes: "généré par template (échelle) depuis titre réel, cat 169"
+
+- id: scaled-la-montre-du-jour
+  question: "Où trouver des infos sur ** La montre du Jour ** ?"
+  expected_topic_ids: [32228]
+  notes: "généré par template (échelle) depuis titre réel, cat 176"
+
+- id: scaled-les-d-montages-hors-dpec
+  question: "Quelqu'un a des infos ou un avis sur Les démontages hors DPEC ?"
+  expected_topic_ids: [32263]
+  notes: "généré par template (échelle) depuis titre réel, cat 158"
+
+- id: scaled-tm-lewin-ou-charles-tyrwitt
+  question: "TM Lewin ou Charles Tyrwitt?"
+  expected_topic_ids: [32268]
+  notes: "généré par template (échelle) depuis titre réel, cat 162"
+
+- id: scaled-parapluie
+  question: "Où trouver des infos sur Parapluie ?"
+  expected_topic_ids: [32317]
+  notes: "généré par template (échelle) depuis titre réel, cat 171"
+
+- id: scaled-quel-bon-dimanche
+  question: "De quoi parle-t-on dans « Quel bon dimanche ! » ?"
+  expected_topic_ids: [32322]
+  notes: "généré par template (échelle) depuis titre réel, cat 153"
+
+- id: scaled-d-montage-vass
+  question: "Des avis sur Démontage Vass ?"
+  expected_topic_ids: [32324]
+  notes: "généré par template (échelle) depuis titre réel, cat 155"
+
+- id: scaled-d-montage-eg
+  question: "Quelqu'un a des infos ou un avis sur Démontage EG ?"
+  expected_topic_ids: [32325]
+  notes: "généré par template (échelle) depuis titre réel, cat 155"
+
+- id: scaled-pulls-col-en-v
+  question: "Pulls col en V?"
+  expected_topic_ids: [32364]
+  notes: "généré par template (échelle) depuis titre réel, cat 166"
+
+- id: scaled-accessoire-pour-motard
+  question: "Discussion sur Accessoire pour motard, vos avis ?"
+  expected_topic_ids: [32383]
+  notes: "généré par template (échelle) depuis titre réel, cat 184"
+
+- id: scaled-eric-devos-sur-mesure
+  question: "Quelqu'un a des infos ou un avis sur Eric Devos - sur mesure ?"
+  expected_topic_ids: [32393]
+  notes: "généré par template (échelle) depuis titre réel, cat 156"
+
+- id: scaled-chemises-lucca
+  question: "Des conseils sur Chemises Lucca ?"
+  expected_topic_ids: [32395]
+  notes: "généré par template (échelle) depuis titre réel, cat 162"
+
+- id: scaled-pull-over-de-james-bond
+  question: "Quelqu'un peut m'éclairer sur Pull over de james bond ?"
+  expected_topic_ids: [32405]
+  notes: "généré par template (échelle) depuis titre réel, cat 166"
+
+- id: scaled-liste-des-d-montages
+  question: "Quelqu'un a des infos ou un avis sur Liste des démontages. ?"
+  expected_topic_ids: [32419]
+  notes: "généré par template (échelle) depuis titre réel, cat 158"
+
+- id: scaled-verre-single-malt
+  question: "Discussion sur Verre à single malt, vos avis ?"
+  expected_topic_ids: [32486]
+  notes: "généré par template (échelle) depuis titre réel, cat 186"
+
+- id: scaled-en-espionnage-pour-vous-santoni
+  question: "Des avis sur en espionnage pour vous SANTONI ?"
+  expected_topic_ids: [32487]
+  notes: "généré par template (échelle) depuis titre réel, cat 155"
+
+- id: scaled-hallucinant
+  question: "Des conseils sur hallucinant ?"
+  expected_topic_ids: [32503]
+  notes: "généré par template (échelle) depuis titre réel, cat 176"
+
+- id: scaled-oum-sack-cordonnier-paris-15-me
+  question: "Que pensez-vous de Oum Sack, cordonnier à Paris 15ème ?"
+  expected_topic_ids: [32523]
+  notes: "généré par template (échelle) depuis titre réel, cat 156"
+
+- id: scaled-entretien-des-gants
+  question: "Vos avis sur entretien des gants ?"
+  expected_topic_ids: [32551]
+  notes: "généré par template (échelle) depuis titre réel, cat 173"
+
+- id: scaled-scandaleux
+  question: "Quelqu'un a des infos ou un avis sur Scandaleux ?"
+  expected_topic_ids: [32557]
+  notes: "généré par template (échelle) depuis titre réel, cat 155"
+
+- id: scaled-pas-peu-fier
+  question: "Que pensez-vous de Pas peu fier... ?"
+  expected_topic_ids: [32630]
+  notes: "généré par template (échelle) depuis titre réel, cat 155"
+
+- id: scaled-bouton-de-manchettes-stop-le-blong-bling
+  question: "Des conseils sur Bouton de manchettes : stop le blong bling ?"
+  expected_topic_ids: [32673]
+  notes: "généré par template (échelle) depuis titre réel, cat 172"
+
+- id: scaled-cigares-achet-s-cuba
+  question: "Des conseils sur cigares achetés à Cuba ?"
+  expected_topic_ids: [32685]
+  notes: "généré par template (échelle) depuis titre réel, cat 185"
+
+- id: scaled-vos-avis-m-int-ressent
+  question: "Vos recommandations sur Vos avis m'intéressent ?"
+  expected_topic_ids: [32705]
+  notes: "généré par template (échelle) depuis titre réel, cat 188"
+
+- id: scaled-londres
+  question: "Vos recommandations sur Londres ?"
+  expected_topic_ids: [32726]
+  notes: "généré par template (échelle) depuis titre réel, cat 187"
+
+- id: scaled-que-pouvez-vous-me-conseiller-svp
+  question: "Que pouvez-vous me conseiller svp ?"
+  expected_topic_ids: [32739]
+  notes: "généré par template (échelle) depuis titre réel, cat 189"
+
+- id: scaled-pochettes
+  question: "Pochettes ???"
+  expected_topic_ids: [32765]
+  notes: "généré par template (échelle) depuis titre réel, cat 174"
+
+- id: scaled-bretelles
+  question: "Vos avis sur Bretelles ?"
+  expected_topic_ids: [32774]
+  notes: "généré par template (échelle) depuis titre réel, cat 175"
+
+- id: scaled-parfums-70-et-vous
+  question: "Des infos sur ce bon plan : Parfums ! -70% et vous ... ?"
+  expected_topic_ids: [32804]
+  notes: "généré par template (échelle) depuis titre réel, cat 183"
+
+- id: scaled-bravo
+  question: "Quelqu'un peut m'expliquer : Bravo ! ?"
+  expected_topic_ids: [32826]
+  notes: "généré par template (échelle) depuis titre réel, cat 151"
+
+- id: scaled-coiffeur
+  question: "Où trouver ça : Coiffeur ?"
+  expected_topic_ids: [32838]
+  notes: "généré par template (échelle) depuis titre réel, cat 183"
+
+- id: scaled-edward-green-winter-soldes-cuv-e-2008
+  question: "Des infos sur ce bon plan : Edward Green Winter Soldes Cuvée 2008 ?"
+  expected_topic_ids: [32847]
+  notes: "généré par template (échelle) depuis titre réel, cat 181"
+
+- id: scaled-des-amateurs-de-ceintures-weston-boucle
+  question: "Des amateurs de ceintures Weston, boucle weston?"
+  expected_topic_ids: [32859]
+  notes: "généré par template (échelle) depuis titre réel, cat 146"
+
+- id: scaled-plan-te-rasoir
+  question: "Des conseils sur « Planète rasoir » ?"
+  expected_topic_ids: [32876]
+  notes: "généré par template (échelle) depuis titre réel, cat 157"
+
+- id: scaled-derby-nez-fendu-joint-main-m-guyot
+  question: "Que pensez-vous de Derby à nez fendu, jointé main (M.Guyot) ?"
+  expected_topic_ids: [32882]
+  notes: "généré par template (échelle) depuis titre réel, cat 155"
+
+- id: scaled-anthologie-depiedencap
+  question: "Anthologie Depiedencap?"
+  expected_topic_ids: [32891]
+  notes: "généré par template (échelle) depuis titre réel, cat 152"
+
+- id: scaled-chapeaux-et-cin-ma
+  question: "Où trouver des infos sur Chapeaux et cinéma ?"
+  expected_topic_ids: [32918]
+  notes: "généré par template (échelle) depuis titre réel, cat 168"
+
+- id: scaled-courtot-ou-lucca
+  question: "Courtot ou Lucca ?"
+  expected_topic_ids: [32942]
+  notes: "généré par template (échelle) depuis titre réel, cat 162"
+
+- id: scaled-comit-redactionnel
+  question: "Qu'est-ce qui se dit sur comité redactionnel ?"
+  expected_topic_ids: [32962]
+  notes: "généré par template (échelle) depuis titre réel, cat 152"
+
+- id: scaled-exemples-de-sch-mas
+  question: "Que pensez-vous de Exemples de schémas ?"
+  expected_topic_ids: [32974]
+  notes: "généré par template (échelle) depuis titre réel, cat 158"
+
+- id: scaled-quels-bottiers-pour-le-chapitre-4
+  question: "quels bottiers pour le chapitre 4?"
+  expected_topic_ids: [33005]
+  notes: "généré par template (échelle) depuis titre réel, cat 152"
+
+- id: scaled-smuggler-50
+  question: "Des infos sur ce bon plan : smuggler -50% ?"
+  expected_topic_ids: [33007]
+  notes: "généré par template (échelle) depuis titre réel, cat 182"
+
+- id: scaled-sac-main
+  question: "Des conseils sur sac à main ?"
+  expected_topic_ids: [33009]
+  notes: "généré par template (échelle) depuis titre réel, cat 178"
+
+- id: scaled-soldes-a-h-2008-9
+  question: "Où trouver ça : Soldes A-H 2008/9 ?"
+  expected_topic_ids: [33010]
+  notes: "généré par template (échelle) depuis titre réel, cat 181"
+
+- id: scaled-portez-vous-des-boutons-de-manchette
+  question: "Portez-vous des boutons de manchette ?"
+  expected_topic_ids: [33023]
+  notes: "généré par template (échelle) depuis titre réel, cat 172"
+
+- id: scaled-achat-de-crockett-jones-sur-pediwear
+  question: "Des avis sur Achat de Crockett&Jones sur pediwear ?"
+  expected_topic_ids: [33031]
+  notes: "généré par template (échelle) depuis titre réel, cat 155"
+
+- id: scaled-lunettes-de-soleil
+  question: "Où trouver des infos sur Lunettes de soleil ?"
+  expected_topic_ids: [33042]
+  notes: "généré par template (échelle) depuis titre réel, cat 175"
+
+- id: scaled-arch-ologie
+  question: "Des avis sur Archéologie... ?"
+  expected_topic_ids: [33066]
+  notes: "généré par template (échelle) depuis titre réel, cat 159"
+
+- id: scaled-demontage-trickers
+  question: "Que pensez-vous de Demontage Trickers ?"
+  expected_topic_ids: [33085]
+  notes: "généré par template (échelle) depuis titre réel, cat 155"
+
+- id: scaled-patine-hom-n-guyen-www-hom-made-com-ds-l
+  question: "Patine: Hom N'guyen  www.hom-made.com ds le 15eme ???"
+  expected_topic_ids: [33176]
+  notes: "généré par template (échelle) depuis titre réel, cat 157"
+
+- id: scaled-pas-beaucoup-de-fumeurs-ici
+  question: "Des conseils sur pas beaucoup de fumeurs ici ?"
+  expected_topic_ids: [33205]
+  notes: "généré par template (échelle) depuis titre réel, cat 185"
+
+- id: scaled-et-le-v-lo
+  question: "Et le vélo?"
+  expected_topic_ids: [33226]
+  notes: "généré par template (échelle) depuis titre réel, cat 153"
+
+- id: scaled-mes-delos
+  question: "Que pensez-vous de Mes delos ?"
+  expected_topic_ids: [33264]
+  notes: "généré par template (échelle) depuis titre réel, cat 156"
+
+- id: scaled-portefeuille-2
+  question: "Vos avis sur Portefeuille ?"
+  expected_topic_ids: [33273]
+  notes: "généré par template (échelle) depuis titre réel, cat 178"
+
+- id: scaled-modeste-retour-de-broc
+  question: "Vos avis sur Modeste retour de broc... ?"
+  expected_topic_ids: [33274]
+  notes: "généré par template (échelle) depuis titre réel, cat 176"
+
+- id: scaled-whisky
+  question: "Vos recommandations sur whisky ?"
+  expected_topic_ids: [33294]
+  notes: "généré par template (échelle) depuis titre réel, cat 186"
+
+- id: scaled-tableaux-vraiment-pas-chers-sur-ebay
+  question: "Bon plan pour Tableaux (vraiment) pas chers sur Ebay ?"
+  expected_topic_ids: [33314]
+  notes: "généré par template (échelle) depuis titre réel, cat 183"
+
+- id: scaled-les-bouquins
+  question: "Que pensez-vous de Les bouquins ?"
+  expected_topic_ids: [33342]
+  notes: "généré par template (échelle) depuis titre réel, cat 159"
+
+- id: scaled-que-buvez-vous-avec-un-cigare
+  question: "Que buvez-vous avec un cigare ?"
+  expected_topic_ids: [33364]
+  notes: "généré par template (échelle) depuis titre réel, cat 185"
+
+- id: scaled-dimitri-gomez-ligne-bottier
+  question: "Des avis sur Dimitri Gomez ligne bottier ?"
+  expected_topic_ids: [33379]
+  notes: "généré par template (échelle) depuis titre réel, cat 156"
+
+- id: scaled-chaussettes-2
+  question: "Où trouver des infos sur Chaussettes ?"
+  expected_topic_ids: [33392]
+  notes: "généré par template (échelle) depuis titre réel, cat 169"
+
+- id: scaled-nouvelle-collection-emling
+  question: "Des avis sur Nouvelle collection Emling ?"
+  expected_topic_ids: [33402]
+  notes: "généré par template (échelle) depuis titre réel, cat 155"
+
+- id: scaled-chocolatier-sur-paris
+  question: "Vos recommandations sur Chocolatier sur Paris ?"
+  expected_topic_ids: [33403]
+  notes: "généré par template (échelle) depuis titre réel, cat 186"
+
+- id: scaled-je-vous-pr-sente-mon-graf-von-faber-cast
+  question: "Discussion sur Je vous présente mon Graf Von Faber Castell Anello, vos avis ?"
+  expected_topic_ids: [33461]
+  notes: "généré par template (échelle) depuis titre réel, cat 189"
+
+- id: scaled-un-crin-chaussures
+  question: "Vos recommandations sur Un écrin à chaussures ?"
+  expected_topic_ids: [33539]
+  notes: "généré par template (échelle) depuis titre réel, cat 184"
+
+- id: scaled-bon-plans-pour-acheter-un-parapluie-larg
+  question: "Bon plans pour acheter un parapluie \"large\" ???"
+  expected_topic_ids: [33570]
+  notes: "généré par template (échelle) depuis titre réel, cat 171"
+
+- id: scaled-serviette-iii
+  question: "Des conseils sur serviette III ?"
+  expected_topic_ids: [33623]
+  notes: "généré par template (échelle) depuis titre réel, cat 184"
+
+- id: scaled-boutons-de-manchette-en-passementerie
+  question: "Où trouver des infos sur Boutons de manchette en passementerie ?"
+  expected_topic_ids: [33624]
+  notes: "généré par template (échelle) depuis titre réel, cat 172"
+
+- id: scaled-les-films-et-les-v-tements
+  question: "Vos avis sur Les films et les vêtements ?"
+  expected_topic_ids: [33671]
+  notes: "généré par template (échelle) depuis titre réel, cat 163"
+
+- id: scaled-les-cordonniers-et-leur-tarifs
+  question: "Des avis sur Les cordonniers et leur tarifs ?"
+  expected_topic_ids: [33848]
+  notes: "généré par template (échelle) depuis titre réel, cat 156"
+
+- id: scaled-des-soldes
+  question: "Des infos sur ce bon plan : Des soldes ?"
+  expected_topic_ids: [33860]
+  notes: "généré par template (échelle) depuis titre réel, cat 181"
+
+- id: scaled-antony-gar-on-ex-ugo-baldini
+  question: "Quelqu'un peut m'éclairer sur Antony Garçon (ex-Ugo Baldini) ?"
+  expected_topic_ids: [33928]
+  notes: "généré par template (échelle) depuis titre réel, cat 161"
+
+- id: scaled-o-rangez-vous-vos-boutons-de-manchette
+  question: "Où rangez vous vos boutons de manchette ???"
+  expected_topic_ids: [33939]
+  notes: "généré par template (échelle) depuis titre réel, cat 172"
+
+- id: scaled-davor-krivak-bottier-stuttgart
+  question: "Que pensez-vous de Davor Krivak bottier à Stuttgart ?"
+  expected_topic_ids: [33959]
+  notes: "généré par template (échelle) depuis titre réel, cat 156"
+
+- id: scaled-le-mouchoir-edit-la-pochette
+  question: "Vos avis sur Le mouchoir [edit : La Pochette] ?"
+  expected_topic_ids: [33992]
+  notes: "généré par template (échelle) depuis titre réel, cat 174"
+
+- id: scaled-figaret
+  question: "Des conseils sur Figaret ?"
+  expected_topic_ids: [34011]
+  notes: "généré par template (échelle) depuis titre réel, cat 162"
+
+- id: scaled-une-colle
+  question: "Discussion sur une colle, vos avis ?"
+  expected_topic_ids: [34012]
+  notes: "généré par template (échelle) depuis titre réel, cat 184"
+
+- id: scaled-a-la-recherche-d-un-film
+  question: "Bon plan pour A la recherche d'un film ?"
+  expected_topic_ids: [34018]
+  notes: "généré par template (échelle) depuis titre réel, cat 183"
+
+- id: scaled-quelle-montre-acqu-rir
+  question: "Quelle montre acquérir ?"
+  expected_topic_ids: [34027]
+  notes: "généré par template (échelle) depuis titre réel, cat 176"
+
+- id: scaled-goyard-portefeuille
+  question: "Où trouver des infos sur Goyard : portefeuille ?"
+  expected_topic_ids: [34057]
+  notes: "généré par template (échelle) depuis titre réel, cat 178"
+
+- id: scaled-jeep
+  question: "Vos recommandations sur jeep ?"
+  expected_topic_ids: [34062]
+  notes: "généré par template (échelle) depuis titre réel, cat 188"
+
+- id: scaled-shipton-2
+  question: "Shipton?"
+  expected_topic_ids: [34132]
+  notes: "généré par template (échelle) depuis titre réel, cat 155"
+
+- id: scaled-une-chaussure-mesure-de-plus-de-20ans
+  question: "Que pensez-vous de Une chaussure mesure de plus de 20ans ?"
+  expected_topic_ids: [34168]
+  notes: "généré par template (échelle) depuis titre réel, cat 156"
+
+- id: scaled-cela-ressemble-bien-l-affaire-du-si-cle
+  question: "Quelqu'un a des infos ou un avis sur Cela ressemble bien à l'affaire du siècle ?"
+  expected_topic_ids: [34247]
+  notes: "généré par template (échelle) depuis titre réel, cat 156"
+
+- id: scaled-jeans
+  question: "Des conseils sur Jeans ?"
+  expected_topic_ids: [34255]
+  notes: "généré par template (échelle) depuis titre réel, cat 161"
+
+- id: scaled-bague-chevali-re
+  question: "Des conseils sur Bague / Chevalière ?"
+  expected_topic_ids: [34276]
+  notes: "généré par template (échelle) depuis titre réel, cat 175"
+
+- id: scaled-vp-smalto
+  question: "Où trouver ça : VP Smalto ?"
+  expected_topic_ids: [34290]
+  notes: "généré par template (échelle) depuis titre réel, cat 182"
+
+- id: scaled-sac-ou-valise-de-transport-pour-costume
+  question: "Des conseils sur Sac (ou valise) de transport pour Costume et chemise ?"
+  expected_topic_ids: [34298]
+  notes: "généré par template (échelle) depuis titre réel, cat 177"
+
+- id: scaled-outillage-tentative-de-r-sum
+  question: "Des conseils sur Outillage : tentative de résumé ?"
+  expected_topic_ids: [34307]
+  notes: "généré par template (échelle) depuis titre réel, cat 184"
+
+- id: scaled-gants-d-t
+  question: "Où trouver des infos sur Gants d'été ?"
+  expected_topic_ids: [34405]
+  notes: "généré par template (échelle) depuis titre réel, cat 173"
+
+- id: scaled-mon-aventure-allen-edmonds
+  question: "Des avis sur Mon Aventure allen Edmonds ?"
+  expected_topic_ids: [34438]
+  notes: "généré par template (échelle) depuis titre réel, cat 155"
+
+- id: scaled-pliage-pochette
+  question: "Vos avis sur Pliage Pochette... ?"
+  expected_topic_ids: [34439]
+  notes: "généré par template (échelle) depuis titre réel, cat 174"
+
+- id: scaled-nos-montres
+  question: "Vos avis sur Nos montres ?"
+  expected_topic_ids: [34533]
+  notes: "généré par template (échelle) depuis titre réel, cat 176"
+
+- id: scaled-john-lobb
+  question: "Où trouver ça : John Lobb ?"
+  expected_topic_ids: [34548]
+  notes: "généré par template (échelle) depuis titre réel, cat 181"
+
+- id: scaled-papier-lettre-enveloppes
+  question: "Discussion sur Papier à lettre / enveloppes, vos avis ?"
+  expected_topic_ids: [34583]
+  notes: "généré par template (échelle) depuis titre réel, cat 189"
+
+- id: scaled-mouchoirs-et-pochettes
+  question: "Où trouver des infos sur Mouchoirs et pochettes... ?"
+  expected_topic_ids: [34584]
+  notes: "généré par template (échelle) depuis titre réel, cat 174"
+
+- id: scaled-barbour-la-veste-en-coton-huil
+  question: "Quelqu'un peut m'éclairer sur Barbour, LA veste en coton huilé ?"
+  expected_topic_ids: [34594]
+  notes: "généré par template (échelle) depuis titre réel, cat 163"
+
+- id: scaled-chapeau-et-usages
+  question: "Où trouver des infos sur Chapeau et usages ?"
+  expected_topic_ids: [34633]
+  notes: "généré par template (échelle) depuis titre réel, cat 168"
+
+- id: scaled-serviettes
+  question: "Où trouver des infos sur Serviettes. ?"
+  expected_topic_ids: [34636]
+  notes: "généré par template (échelle) depuis titre réel, cat 178"
+
+- id: scaled-hommes-publics-bien-habill-s
+  question: "Quelqu'un peut m'éclairer sur Hommes publics bien habillés. ?"
+  expected_topic_ids: [34679]
+  notes: "généré par template (échelle) depuis titre réel, cat 161"
+
+- id: scaled-vous-cherchez-votre-parapluie
+  question: "Vous cherchez \"votre\" parapluie ?"
+  expected_topic_ids: [34701]
+  notes: "généré par template (échelle) depuis titre réel, cat 171"
+
+- id: scaled-pr-sentons-nous
+  question: "Qu'est-ce qui se dit sur Présentons nous ! ?"
+  expected_topic_ids: [34714]
+  notes: "généré par template (échelle) depuis titre réel, cat 151"
+
+- id: scaled-je-propose-des-boutons-de-manchette
+  question: "Des conseils sur Je propose des boutons de manchette ?"
+  expected_topic_ids: [34727]
+  notes: "généré par template (échelle) depuis titre réel, cat 180"
+
+- id: scaled-church-finalement-on-en-est-ou
+  question: "church, finalement, on en est ou ?"
+  expected_topic_ids: [34740]
+  notes: "généré par template (échelle) depuis titre réel, cat 155"
+
+- id: scaled-porte-documents-2
+  question: "Discussion sur Porte documents, vos avis ?"
+  expected_topic_ids: [34759]
+  notes: "généré par template (échelle) depuis titre réel, cat 184"
+
+- id: scaled-re-u-ce-matin
+  question: "Des conseils sur reçu ce matin ?"
+  expected_topic_ids: [34796]
+  notes: "généré par template (échelle) depuis titre réel, cat 168"
+
+- id: scaled-bexley-ceintures-et-chaussettes
+  question: "Des conseils sur Bexley ceintures et chaussettes ?"
+  expected_topic_ids: [34806]
+  notes: "généré par template (échelle) depuis titre réel, cat 169"
+
+- id: scaled-archiduchesse
+  question: "Où trouver des infos sur Archiduchesse ?"
+  expected_topic_ids: [34807]
+  notes: "généré par template (échelle) depuis titre réel, cat 169"
+
+- id: scaled-serviette-iii-2
+  question: "Des conseils sur serviette III ?"
+  expected_topic_ids: [34812]
+  notes: "généré par template (échelle) depuis titre réel, cat 184"
+
+- id: scaled-eg-sur-la-beeeeeeeeh
+  question: "Où trouver ça : EG sur la beeeeeeeeh ?"
+  expected_topic_ids: [34815]
+  notes: "généré par template (échelle) depuis titre réel, cat 181"
+
+- id: scaled-chaussettes-archiduchesse-en-fil-d-ecoss
+  question: "Chaussettes Archiduchesse en fil d'Ecosse ?"
+  expected_topic_ids: [34832]
+  notes: "généré par template (échelle) depuis titre réel, cat 169"
+
+- id: scaled-prague
+  question: "Prague ???????"
+  expected_topic_ids: [34839]
+  notes: "généré par template (échelle) depuis titre réel, cat 187"
+
+- id: scaled-petit-changement
+  question: "Des avis sur petit changement... ?"
+  expected_topic_ids: [34884]
+  notes: "généré par template (échelle) depuis titre réel, cat 146"
+
+- id: scaled-des-photos-rien-que-des-photos
+  question: "Des avis sur Des photos, rien que des photos... ?"
+  expected_topic_ids: [34885]
+  notes: "généré par template (échelle) depuis titre réel, cat 155"
+
+- id: scaled-des-photos-rien-que-des-photos-2
+  question: "Des avis sur Des photos, rien que des photos... ?"
+  expected_topic_ids: [34890]
+  notes: "généré par template (échelle) depuis titre réel, cat 155"
+
+- id: scaled-des-photos-rien-que-des-photos-3
+  question: "Des avis sur Des photos, rien que des photos... ?"
+  expected_topic_ids: [34897]
+  notes: "généré par template (échelle) depuis titre réel, cat 155"
+
+- id: scaled-des-photos-rien-que-des-photos-4
+  question: "Que pensez-vous de Des photos, rien que des photos ?"
+  expected_topic_ids: [34900]
+  notes: "généré par template (échelle) depuis titre réel, cat 155"
+
+- id: scaled-jeans-2
+  question: "Jeans ?"
+  expected_topic_ids: [34902]
+  notes: "généré par template (échelle) depuis titre réel, cat 163"
+
+- id: scaled-chemises-courtot
+  question: "Des conseils sur Chemises Courtot ?"
+  expected_topic_ids: [34936]
+  notes: "généré par template (échelle) depuis titre réel, cat 162"
+
+- id: scaled-bottines-crockett-jones-coniston
+  question: "Des avis sur Bottines Crockett & Jones Coniston ?"
+  expected_topic_ids: [34942]
+  notes: "généré par template (échelle) depuis titre réel, cat 155"
+
+- id: scaled-liquidation-j-keydge
+  question: "Des infos sur ce bon plan : Liquidation J. Keydge ?"
+  expected_topic_ids: [34960]
+  notes: "généré par template (échelle) depuis titre réel, cat 182"
+
+- id: scaled-micha-l-ohnona
+  question: "Quelqu'un peut m'éclairer sur Michaël Ohnona ?"
+  expected_topic_ids: [35039]
+  notes: "généré par template (échelle) depuis titre réel, cat 161"
+
+- id: scaled-quelle-couleur-d-charpe-avec-quelle-coul
+  question: "Quelle couleur d'écharpe avec quelle couleur de manteaux ?"
+  expected_topic_ids: [35060]
+  notes: "généré par template (échelle) depuis titre réel, cat 174"
+
+- id: scaled-boutique-loding-levallois-par-dante
+  question: "Quelqu'un peut m'éclairer sur Boutique Loding Levallois par Dante ?"
+  expected_topic_ids: [35100]
+  notes: "généré par template (échelle) depuis titre réel, cat 167"
+
+- id: scaled-trouver-un-retoucheur
+  question: "Des conseils sur Trouver un retoucheur ?"
+  expected_topic_ids: [35112]
+  notes: "généré par template (échelle) depuis titre réel, cat 161"
+
+- id: scaled-g-rald-thibaud
+  question: "Que pensez-vous de Gérald Thibaud ?"
+  expected_topic_ids: [35121]
+  notes: "généré par template (échelle) depuis titre réel, cat 156"
+
+- id: scaled-le-lunettier-bonnet
+  question: "Des conseils sur Le lunettier Bonnet ?"
+  expected_topic_ids: [35141]
+  notes: "généré par template (échelle) depuis titre réel, cat 175"
+
+- id: scaled-duffle-coat
+  question: "Quelqu'un peut m'éclairer sur Duffle coat ?"
+  expected_topic_ids: [35184]
+  notes: "généré par template (échelle) depuis titre réel, cat 163"
+
+- id: scaled-marc-guyot
+  question: "Des avis sur Marc Guyot ?"
+  expected_topic_ids: [35185]
+  notes: "généré par template (échelle) depuis titre réel, cat 155"
+
+- id: scaled-nouveau-prototype
+  question: "Où trouver des infos sur nouveau prototype ?"
+  expected_topic_ids: [35219]
+  notes: "généré par template (échelle) depuis titre réel, cat 180"
+
+- id: scaled-ou-fumer-le-cigare-a-paris-ou-pas-trop-l
+  question: "Discussion sur Ou fumer le cigare a Paris ou pas trop loin, vos avis ?"
+  expected_topic_ids: [35229]
+  notes: "généré par template (échelle) depuis titre réel, cat 185"
+
+- id: scaled-coupe-cigare-ou-emporte-pi-ce
+  question: "Coupe-cigare ou Emporte-pièce ?"
+  expected_topic_ids: [35254]
+  notes: "généré par template (échelle) depuis titre réel, cat 185"
+
+- id: scaled-premi-re-montre-pour-petit-budget
+  question: "Première montre pour petit budget ?"
+  expected_topic_ids: [35296]
+  notes: "généré par template (échelle) depuis titre réel, cat 176"
+
+- id: scaled-etui-t-l-phone
+  question: "Discussion sur Etui téléphone, vos avis ?"
+  expected_topic_ids: [35388]
+  notes: "généré par template (échelle) depuis titre réel, cat 184"
+
+- id: scaled-norman-vilalta
+  question: "Quelqu'un a des infos ou un avis sur Norman Vilalta ?"
+  expected_topic_ids: [35438]
+  notes: "généré par template (échelle) depuis titre réel, cat 156"
+
+- id: scaled-lien-vers-des-cannes
+  question: "Vos avis sur Lien vers des cannes ?"
+  expected_topic_ids: [35451]
+  notes: "généré par template (échelle) depuis titre réel, cat 171"
+
+- id: scaled-les-vieilles-modes
+  question: "Que pensez-vous de Les \"vieilles\" modes ?"
+  expected_topic_ids: [35463]
+  notes: "généré par template (échelle) depuis titre réel, cat 159"
+
+- id: scaled-roberto-ugolini
+  question: "Quelqu'un a des infos ou un avis sur Roberto Ugolini ?"
+  expected_topic_ids: [35464]
+  notes: "généré par template (échelle) depuis titre réel, cat 156"
+
+- id: scaled-les-sappeurs-de-brazza
+  question: "Discussion sur Les sappeurs de Brazza.., vos avis ?"
+  expected_topic_ids: [35474]
+  notes: "généré par template (échelle) depuis titre réel, cat 187"
+
+- id: scaled-altan-boutique-miromesnil
+  question: "Altan - Boutique Miromesnil ?"
+  expected_topic_ids: [35483]
+  notes: "généré par template (échelle) depuis titre réel, cat 155"
+
+- id: scaled-vendeur-de-stylos-d-testant-les-montblan
+  question: "Vos recommandations sur Vendeur de stylos détestant les Montblanc ?"
+  expected_topic_ids: [35508]
+  notes: "généré par template (échelle) depuis titre réel, cat 189"
+
+- id: scaled-et-vous-parfum-pas-parfum
+  question: "Et vous ? Parfum, pas parfum ?"
+  expected_topic_ids: [35525]
+  notes: "généré par template (échelle) depuis titre réel, cat 157"
+
+- id: scaled-dupont
+  question: "Discussion sur Dupont, vos avis ?"
+  expected_topic_ids: [35550]
+  notes: "généré par template (échelle) depuis titre réel, cat 189"
+
+- id: scaled-vp-hugo-boss
+  question: "Bon plan pour VP Hugo Boss ?"
+  expected_topic_ids: [35570]
+  notes: "généré par template (échelle) depuis titre réel, cat 182"
+
+- id: scaled-quel-vin-sur-le-fromage
+  question: "Quel vin sur le fromage ?"
+  expected_topic_ids: [35599]
+  notes: "généré par template (échelle) depuis titre réel, cat 186"
+
+- id: scaled-kimono-bvd-haussmann
+  question: "Où trouver des infos sur Kimono (Bvd Haussmann) ?"
+  expected_topic_ids: [35611]
+  notes: "généré par template (échelle) depuis titre réel, cat 170"
+
+- id: scaled-trench-coat
+  question: "Quelqu'un peut m'éclairer sur trench-coat ?"
+  expected_topic_ids: [35631]
+  notes: "généré par template (échelle) depuis titre réel, cat 163"
+
+- id: scaled-bemer-s
+  question: "Que pensez-vous de Bemer's... ?"
+  expected_topic_ids: [35656]
+  notes: "généré par template (échelle) depuis titre réel, cat 156"
+
+- id: scaled-le-saddle-markowski
+  question: "Que pensez-vous de Le \"saddle\" Markowski ?"
+  expected_topic_ids: [35658]
+  notes: "généré par template (échelle) depuis titre réel, cat 155"
+
+- id: scaled-de-la-cambrure
+  question: "Quelqu'un a des infos ou un avis sur De la cambrure ?"
+  expected_topic_ids: [35672]
+  notes: "généré par template (échelle) depuis titre réel, cat 158"
+
+- id: scaled-chaussettes-viccel
+  question: "Vos avis sur Chaussettes Viccel ?"
+  expected_topic_ids: [35676]
+  notes: "généré par template (échelle) depuis titre réel, cat 169"
+
+- id: scaled-echarpes-cachemire
+  question: "Bon plan pour Echarpes cachemire ?"
+  expected_topic_ids: [35683]
+  notes: "généré par template (échelle) depuis titre réel, cat 183"
+
+- id: scaled-hackett-sur-vente-priv-e
+  question: "Où trouver ça : Hackett sur Vente privée ?"
+  expected_topic_ids: [35699]
+  notes: "généré par template (échelle) depuis titre réel, cat 182"
+
+- id: scaled-montegrappa-le-lundi-7-d-cembre-chez-ven
+  question: "Des conseils sur Montegrappa le lundi 7 décembre chez vente-privee.com ?"
+  expected_topic_ids: [35748]
+  notes: "généré par template (échelle) depuis titre réel, cat 189"
+
+- id: scaled-chemises-homme-fabriqu-es-en-france
+  question: "Discussion : Chemises homme fabriquées en France., vos avis ?"
+  expected_topic_ids: [35768]
+  notes: "généré par template (échelle) depuis titre réel, cat 154"
+
+- id: scaled-sac-main-femme
+  question: "Des avis sur Sac à main femme ?"
+  expected_topic_ids: [35811]
+  notes: "généré par template (échelle) depuis titre réel, cat 146"
+
+- id: scaled-le-point-sellier
+  question: "Discussion sur Le point sellier, vos avis ?"
+  expected_topic_ids: [35850]
+  notes: "généré par template (échelle) depuis titre réel, cat 184"
+
+- id: scaled-tentative-de-synth-se-sur-la-cravate-tri
+  question: "Vos avis sur Tentative de synthèse sur la cravate tricot ?"
+  expected_topic_ids: [35851]
+  notes: "généré par template (échelle) depuis titre réel, cat 170"
+
+- id: scaled-dimitri-bottier-photos
+  question: "Que pensez-vous de Dimitri Bottier - photos ?"
+  expected_topic_ids: [35875]
+  notes: "généré par template (échelle) depuis titre réel, cat 156"
+
+- id: scaled-g-rald-thibaud-2
+  question: "Que pensez-vous de Gérald Thibaud ?"
+  expected_topic_ids: [35885]
+  notes: "généré par template (échelle) depuis titre réel, cat 156"
+
+- id: scaled-eg-winter-sales-2010
+  question: "Où trouver ça : EG Winter Sales 2010 ?"
+  expected_topic_ids: [35950]
+  notes: "généré par template (échelle) depuis titre réel, cat 181"
+
+- id: scaled-champagne
+  question: "Des conseils sur Champagne ?"
+  expected_topic_ids: [35954]
+  notes: "généré par template (échelle) depuis titre réel, cat 186"
+
+- id: scaled-yard-o-led
+  question: "Vos recommandations sur Yard o Led ?"
+  expected_topic_ids: [36023]
+  notes: "généré par template (échelle) depuis titre réel, cat 189"
+
+- id: scaled-la-taverne-du-nil
+  question: "Où trouver ça : La Taverne du Nil ?"
+  expected_topic_ids: [36026]
+  notes: "généré par template (échelle) depuis titre réel, cat 183"
+
+- id: scaled-rangement-des-cravates
+  question: "Rangement des cravates ???"
+  expected_topic_ids: [36036]
+  notes: "généré par template (échelle) depuis titre réel, cat 170"
+
+- id: scaled-question-bdm-en-passementerie
+  question: "Vos avis sur Question BdM en passementerie ?"
+  expected_topic_ids: [36074]
+  notes: "généré par template (échelle) depuis titre réel, cat 172"
+
+- id: scaled-chaise-de-salle-manger
+  question: "Bon plan pour Chaise de salle-à-manger ?"
+  expected_topic_ids: [36120]
+  notes: "généré par template (échelle) depuis titre réel, cat 183"
+
+- id: scaled-premi-re-automatique-seiko-scvs015
+  question: "Première automatique: seiko SCVS015 ?"
+  expected_topic_ids: [36167]
+  notes: "généré par template (échelle) depuis titre réel, cat 176"
+
+- id: scaled-petite-pr-sentation
+  question: "Quelqu'un peut m'expliquer : Petite présentation ... ?"
+  expected_topic_ids: [36203]
+  notes: "généré par template (échelle) depuis titre réel, cat 151"
+
+- id: scaled-bridon-rond
+  question: "Des infos sur Bridon rond ?"
+  expected_topic_ids: [36219]
+  notes: "généré par template (échelle) depuis titre réel, cat 146"
+
+- id: scaled-canne-maison
+  question: "Où trouver des infos sur Canne maison ?"
+  expected_topic_ids: [36231]
+  notes: "généré par template (échelle) depuis titre réel, cat 171"
+
+- id: scaled-lunettes-de-vue
+  question: "Vos avis sur Lunettes de vue ?"
+  expected_topic_ids: [36234]
+  notes: "généré par template (échelle) depuis titre réel, cat 175"
+
+- id: scaled-je-propose-mes-patines-patine-rose-page
+  question: "Des conseils sur Je propose mes Patines (PATINE ROSE PAGE 7) ?"
+  expected_topic_ids: [36268]
+  notes: "généré par template (échelle) depuis titre réel, cat 167"
+
+- id: scaled-chemises-caf-coton
+  question: "Des infos sur ce bon plan : Chemises Café Coton ?"
+  expected_topic_ids: [36272]
+  notes: "généré par template (échelle) depuis titre réel, cat 182"
+
+- id: scaled-les-couleurs-de-vos-chaussettes
+  question: "Les couleurs de vos chaussettes ?"
+  expected_topic_ids: [36276]
+  notes: "généré par template (échelle) depuis titre réel, cat 169"
+
+- id: scaled-valise-de-voyage
+  question: "Où trouver des infos sur Valise de voyage ?"
+  expected_topic_ids: [36300]
+  notes: "généré par template (échelle) depuis titre réel, cat 177"
+
+- id: scaled-tombolini-sur-vp
+  question: "Bon plan pour Tombolini sur VP ?"
+  expected_topic_ids: [36314]
+  notes: "généré par template (échelle) depuis titre réel, cat 182"
+
+- id: scaled-pointure-tricker-s
+  question: "Des avis sur Pointure Tricker's ?"
+  expected_topic_ids: [36337]
+  notes: "généré par template (échelle) depuis titre réel, cat 155"
+
+- id: scaled-cachemires
+  question: "Des conseils sur Cachemires ?"
+  expected_topic_ids: [36348]
+  notes: "généré par template (échelle) depuis titre réel, cat 163"
+
+- id: scaled-du-cuir-semelle
+  question: "Des avis sur Du cuir à semelle ?"
+  expected_topic_ids: [36402]
+  notes: "généré par template (échelle) depuis titre réel, cat 158"
+
+- id: scaled-foulards
+  question: "Vos avis sur Foulards ?"
+  expected_topic_ids: [36412]
+  notes: "généré par template (échelle) depuis titre réel, cat 174"
+
+- id: scaled-ceintures-markowski
+  question: "Où trouver des infos sur Ceintures Markowski ?"
+  expected_topic_ids: [36417]
+  notes: "généré par template (échelle) depuis titre réel, cat 179"
+
+- id: scaled-aston-martin
+  question: "Des conseils sur ASTON MARTIN ?"
+  expected_topic_ids: [36449]
+  notes: "généré par template (échelle) depuis titre réel, cat 188"
+
+- id: scaled-finsbury
+  question: "Des avis sur Finsbury ?"
+  expected_topic_ids: [36458]
+  notes: "généré par template (échelle) depuis titre réel, cat 155"
+
+- id: scaled-r-novation-mesure-par-davor
+  question: "Des avis sur rénovation mesure par Davor ?"
+  expected_topic_ids: [36511]
+  notes: "généré par template (échelle) depuis titre réel, cat 156"
+
+- id: scaled-au-boulot
+  question: "Que pensez-vous de Au boulot ! ?"
+  expected_topic_ids: [36521]
+  notes: "généré par template (échelle) depuis titre réel, cat 158"
+
+- id: scaled-questions-cuirs
+  question: "Des avis sur questions cuirs ?"
+  expected_topic_ids: [36526]
+  notes: "généré par template (échelle) depuis titre réel, cat 146"
+
+- id: scaled-une-montre-unique
+  question: "Où trouver des infos sur Une montre unique ?"
+  expected_topic_ids: [36548]
+  notes: "généré par template (échelle) depuis titre réel, cat 176"
+
+- id: scaled-le-tannage-au-chrome
+  question: "Des avis sur Le tannage au chrome ?"
+  expected_topic_ids: [36572]
+  notes: "généré par template (échelle) depuis titre réel, cat 146"
+
+- id: scaled-pulls-en-cachemire
+  question: "Des conseils sur Pulls en cachemire ?"
+  expected_topic_ids: [36577]
+  notes: "généré par template (échelle) depuis titre réel, cat 166"
+
+- id: scaled-help-pull-cachemire-qui-bouloche
+  question: "Vos avis sur HELP pull cachemire qui bouloche ?"
+  expected_topic_ids: [36625]
+  notes: "généré par template (échelle) depuis titre réel, cat 166"
+
+- id: scaled-pulls-sur-mesure-paris-quel-prix
+  question: "Pulls sur mesure à Paris — quel prix?"
+  expected_topic_ids: [36627]
+  notes: "généré par template (échelle) depuis titre réel, cat 166"
+
+- id: scaled-le-petit-monde-du-polo
+  question: "Quelqu'un peut m'éclairer sur le petit monde du polo ?"
+  expected_topic_ids: [36629]
+  notes: "généré par template (échelle) depuis titre réel, cat 163"
+
+- id: scaled-savoir-reconna-tre-les-vuitton-de-la-gam
+  question: "Où trouver des infos sur Savoir reconnaître les Vuitton de la gamme Monogram ?"
+  expected_topic_ids: [36714]
+  notes: "généré par template (échelle) depuis titre réel, cat 177"
+
+- id: scaled-sac-dos
+  question: "Des infos sur Sac à dos ?"
+  expected_topic_ids: [36716]
+  notes: "généré par template (échelle) depuis titre réel, cat 146"
+
+- id: scaled-avis-blouson-veste-en-cuir
+  question: "Des conseils sur [AVIS] Blouson / veste en cuir ?"
+  expected_topic_ids: [36720]
+  notes: "généré par template (échelle) depuis titre réel, cat 163"
+
+- id: scaled-faq-les-diff-rents-montages-de-nos-souli
+  question: "Que pensez-vous de FAQ : les différents montages de nos souliers. ?"
+  expected_topic_ids: [36778]
+  notes: "généré par template (échelle) depuis titre réel, cat 158"
+
+- id: scaled-ant-site
+  question: "De quoi parle-t-on dans « Antésite » ?"
+  expected_topic_ids: [36870]
+  notes: "généré par template (échelle) depuis titre réel, cat 154"
+
+- id: scaled-et-votre-ordinateur
+  question: "Et votre ordinateur ?"
+  expected_topic_ids: [36901]
+  notes: "généré par template (échelle) depuis titre réel, cat 183"
+
+- id: scaled-la-fin-d-un-des-derniers-tisseurs-fran-a
+  question: "La fin d'un des derniers tisseurs français ?"
+  expected_topic_ids: [36904]
+  notes: "généré par template (échelle) depuis titre réel, cat 154"
+
+- id: scaled-quelle-cravate
+  question: "Quelle cravate ?"
+  expected_topic_ids: [36940]
+  notes: "généré par template (échelle) depuis titre réel, cat 164"
+
+- id: scaled-installer-depiedencap-comme-application
+  question: "Quelqu'un peut m'expliquer : Installer Depiedencap comme application ?"
+  expected_topic_ids: [37003]
+  notes: "généré par template (échelle) depuis titre réel, cat 149"
+
+- id: scaled-m-moire-du-forum-depiedencap-depuis-2007
+  question: "Qu'est-ce qui se dit sur Mémoire du forum — Depiedencap depuis 2007 ?"
+  expected_topic_ids: [37004]
+  notes: "généré par template (échelle) depuis titre réel, cat 193"
+
+- id: scaled-comment-utiliser-le-forum-discourse
+  question: "Qu'est-ce qui se dit sur Comment utiliser le forum Discourse ?"
+  expected_topic_ids: [37130]
+  notes: "généré par template (échelle) depuis titre réel, cat 149"
+
+- id: scaled-propos-de-la-cat-gorie-actualit-s-du-sit
+  question: "Quelqu'un peut m'expliquer : À propos de la catégorie Actualités du site ?"
+  expected_topic_ids: [37139]
+  notes: "généré par template (échelle) depuis titre réel, cat 193"
+
+- id: scaled-on-crit-aux-anciens-membres
+  question: "Qu'est-ce qui se dit sur On écrit aux anciens membres ?"
+  expected_topic_ids: [37140]
+  notes: "généré par template (échelle) depuis titre réel, cat 193"
+
+- id: scaled-voyage-budapest-et-tat-des-lieux-en-2026
+  question: "Des infos sur Voyage à Budapest et état des lieux en 2026 ?"
+  expected_topic_ids: [37156]
+  notes: "généré par template (échelle) depuis titre réel, cat 144"
+
+# --- hors-sujet supplémentaires (diversité abstention à l'échelle) -----------
+
+- id: hors-sujet-finance
+  question: "Quel placement financier me conseillez-vous pour mon épargne ?"
+  expected_topic_ids: []
+  notes: abstention attendue
+
+- id: hors-sujet-cinema
+  question: "Quel est le meilleur film sorti cette année ?"
+  expected_topic_ids: []
+  notes: abstention attendue
+
+- id: hors-sujet-tech
+  question: "Quel smartphone acheter en ce moment ?"
+  expected_topic_ids: []
+  notes: abstention attendue
+
+- id: hors-sujet-sante
+  question: "Quel médicament prendre contre un mal de tête persistant ?"
+  expected_topic_ids: []
+  notes: abstention attendue
+
+- id: hors-sujet-geographie
+  question: "Quelle est la capitale de l'Uruguay ?"
+  expected_topic_ids: []
+  notes: abstention attendue
+
+- id: hors-sujet-cuisine2
+  question: "Comment faire une bonne pâte à crêpes ?"
+  expected_topic_ids: []
+  notes: abstention attendue
+
+- id: hors-sujet-animaux
+  question: "Comment dresser un chiot qui n'écoute pas ?"
+  expected_topic_ids: []
+  notes: abstention attendue
+
+- id: hors-sujet-musique
+  question: "Quel est le meilleur album de jazz des années 60 ?"
+  expected_topic_ids: []
+  notes: abstention attendue
+
+- id: hors-sujet-histoire
+  question: "Quelles sont les causes de la révolution française ?"
+  expected_topic_ids: []
+  notes: abstention attendue
+
+- id: hors-sujet-bricolage-maison
+  question: "Comment isoler des combles perdus ?"
+  expected_topic_ids: []
+  notes: abstention attendue

@@ -1,0 +1,31 @@
+{
+  "persona": {
+    "id": 1,
+    "name": "Guide Depiedencap",
+    "enabled": true,
+    "default_llm_id": 1,
+    "tools": [],
+    "allowed_group_ids": [
+      42
+    ],
+    "temperature": 0.0,
+    "top_p": null,
+    "vision_enabled": false
+  },
+  "site_settings": {
+    "ai_embeddings_per_post_enabled": "f",
+    "ai_embeddings_selected_model": "1",
+    "ai_embeddings_enabled": "t",
+    "ai_embeddings_backfill_batch_size": "10",
+    "ai_default_llm_model": "1",
+    "ai_bot_allowed_groups": "42",
+    "ai_bot_add_to_header": "f",
+    "ai_bot_add_to_community_section": "f",
+    "ai_embeddings_semantic_search_use_hyde": "f",
+    "ai_embeddings_semantic_quick_search_enabled": "f",
+    "ai_embeddings_semantic_related_topics_enabled": "f",
+    "ai_embeddings_semantic_search_enabled": "t",
+    "ai_bot_enabled": "t",
+    "ai_bot_enabled_llms": ""
+  }
+}

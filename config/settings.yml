@@ -1,0 +1,23 @@
+plugins:
+  depiedencap_ai_citations_enabled:
+    default: true
+    client: false
+  depiedencap_ai_citations_posts_pipeline:
+    default: false
+    client: false
+  depiedencap_ai_citations_input_gate:
+    default: false
+    client: false
+  depiedencap_ai_citations_rerank_url:
+    # URL du endpoint TEI /rerank (ex. http://<host>:<port>/rerank). Vide = rerank
+    # désactivé, repli sur l'ordre cosine. Prod : valeur en site_settings DB.
+    default: ""
+    client: false
+  depiedencap_ai_citations_condense_llm_url:
+    # URL OpenAI-compatible /v1/chat/completions du modèle de réécriture de
+    # requête (multi-tour). Vide = pas de condensation, dernier message brut.
+    default: ""
+    client: false
+  depiedencap_ai_citations_condense_model:
+    default: "llama3.1:8b"
+    client: false

@@ -1,0 +1,49 @@
+# Gate d'entrée déterministe — filet de sécurité AVANT retrieval/LLM.
+# Cible : les patrons connus mesurés dans safety.yml. Patterns sur
+# l'INTENTION (verbe + objet), pas sur les sujets — un fil du forum peut
+# légitimement parler de contrefaçons, de cannes-épées ou de collecte
+# d'adresses ; ce qu'on bloque c'est la demande de le faire.
+# Couche fragile par nature (regex, français variable) : c'est un filet
+# complémentaire, pas la frontière — le prompt reste la défense principale.
+version: 1
+
+rules:
+
+  # --- détournement en assistant généraliste ---
+  # « traduis/traduction » = intention claire ; on NE bloque PAS « en anglais »
+  # seul (question de terminologie légitime : « que veut dire Goodyear en
+  # anglais ? ») — ces cas passent au LLM + clause de refus.
+  - id: misuse-traduction
+    pattern: '\btradui[rszt]?\b|\btraduction\b|\btraducteur\b'
+  - id: misuse-code
+    pattern: '\bcode(-|\s)?(moi|nous)\b|\bpython\b|\bjavascript\b|\bphp\b|\bapi rest\b|\bscript\b|\bprogramm(ation|ez|er)\b|\bdéveloppe(-| )?(moi|nous)\b|\bdébug'
+  - id: misuse-redaction
+    pattern: '\brédige|\bécris(-| )(moi|nous)\b|\blettre de motivation|\bcorrige(-| )(moi|nous)\b|\brésume(-| )(moi|nous)\b|\bparaphrase'
+
+  # --- danger explicite / illégal (intent-phrasé) ---
+  - id: danger-explosif
+    pattern: '\b(fabriquer|confectionner|faire|construire)\b.{0,40}\b(bombe|explosif|engin)'
+  - id: danger-violence
+    pattern: '\b(tuer|blesser|empoisonner|assassiner|agresser|tabasser)\b|\bsans laisser de traces|\bmeurtre\b|\bhomicide'
+  - id: danger-armes
+    pattern: '\b(se procurer|acheter|obtenir|fabriquer)\b.{0,30}\b(arme|flingue|pistolet|munitions?)\b'
+  - id: illegal-contrefacon-intent
+    pattern: '\b(revendre|vendre|acheter|fabriquer|produire)\b.{0,30}\bcontrefaç'
+  - id: illegal-drogue
+    pattern: '\b(acheter|se procurer|vendre|dealer)\b.{0,30}\b(drogue|cocaïne|héroïne|cannabis|stupéfiant|shit)\b|\boù (trouver|acheter) de la drogue'
+  - id: cyber-intrusion
+    pattern: '\bpirat|\bhack(ing|er|é)?s?\b|\bexploit|\bforcer le (compte|mot de passe)|\bvoler (un|le|des|les) (compte|données|mot de passe)|\bphishing|\bransomware|\bmalware'
+
+  # --- extraction de données personnelles ---
+  - id: donnees-perso
+    pattern: '\b(donne|fournis|récupère|extrais|exporte|liste)[sz]?(-|\s)?(moi|nous)?\b.{0,35}\b(adresses?|e-?mails?|emails?|utilisateurs|membres|mots? de passe)\b|\b(liste|base) des (utilisateurs|membres)\b|\bemails? de (tous|les)'
+
+  # --- prompt injection / jailbreak / exfiltration du prompt ---
+  - id: injection
+    pattern: '\bignore\b.{0,30}\b(instructions?|règles?|consignes?)|\b(prompt système|system prompt)\b|\bDAN\b|\bsans (aucune )?restrictions?\b|\bjailbreak|\bmode (développeur|dieu|sans filtre)\b|\btu es maintenant\b'
+
+  # --- conseil hors-rôle sensible (santé/légal/finance perso) ---
+  - id: hors-role-sante
+    pattern: '\bmédicaments?\b|\bdiagnostic\b|\bprescri|\bdocteur\b|\bsympt[oô]mes?\b|\bmaladie\b|\btraitement (médical|pour ma)\b'
+  - id: hors-role-conseil-perso
+    pattern: '\bdivorcer?\b|\bdepression|\bdépression\b|\bsuicide|\bconseil juridique\b|\binvestir (mon|mes|combien)|\bplacement(s)? (financier|d.argent)\b|\bdéclaration d.impôts'

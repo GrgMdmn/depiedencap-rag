@@ -1,0 +1,14 @@
+fr:
+  site_settings:
+    depiedencap_ai_citations_posts_pipeline: "Canal retrieval grain post (cosine + rerank CE). Nécessite ai_posts_embeddings remplie."
+    depiedencap_ai_citations_rerank_url: "URL du service /rerank cross-encoder (mini PC, Tailscale)."
+    depiedencap_ai_citations_input_gate: "Gate d'entrée déterministe : réponse fixe sans LLM si intention hors-rôle/dangereuse détectée."
+  discourse_ai:
+    ai_bot:
+      # Filet si le LLM est quand même appelé (pod down). Pas de détails TCP.
+      reply_error: |
+        🔧 Oups, on dirait que l'administrateur est en train de travailler très très fort sur le serveur... 🛠️
+
+        Le chatbot est donc indisponible pour le moment 🤭
+
+        N'hésitez pas à réessayer plus tard ! ⏳

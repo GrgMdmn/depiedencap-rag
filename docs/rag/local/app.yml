@@ -1,0 +1,55 @@
+## app.yml — Discourse LOCAL (dev RAG). AUCUN SECRET, aucun SMTP, pas de TLS.
+## Copier vers /var/discourse/containers/app.yml (sudo) puis :
+##   sudo ./launcher bootstrap app && sudo ./launcher start app
+## Basé sur docs/discourse_app.yml.example — différences : localhost, pas de
+## SMTP, pas d'envoi mail, port 80 seul, host.docker.internal pour Ollama local.
+
+templates:
+  - "templates/postgres.template.yml"
+  - "templates/redis.template.yml"
+  - "templates/web.template.yml"
+
+docker_args:
+  - '--add-host=host.docker.internal:host-gateway'
+
+expose:
+  - "80:80"
+
+params:
+  db_default_text_search_config: "pg_catalog.english"
+  # version: tests-passed  # ou pinner la version du dump si le restore râle
+
+env:
+  LC_ALL: en_US.UTF-8
+  LANG: en_US.UTF-8
+  LANGUAGE: en_US.UTF-8
+  DISCOURSE_DEFAULT_LOCALE: fr
+  DISCOURSE_HOSTNAME: 'localhost'
+  DISCOURSE_DEVELOPER_EMAILS: '<admin-email>'
+  UNICORN_WORKERS: 2
+  DISCOURSE_MAX_ADMIN_API_REQS_PER_MINUTE: 10000
+  DISCOURSE_MAX_REQS_PER_IP_PER_10_SECONDS: 10000
+  DISCOURSE_MAX_REQS_PER_IP_PER_MINUTE: 10000
+  DISCOURSE_MAX_REQS_PER_IP_MODE: none
+
+volumes:
+  - volume:
+      host: /var/discourse/shared/standalone
+      guest: /shared
+  - volume:
+      host: /var/discourse/shared/standalone/log/var-log
+      guest: /var/log
+
+hooks:
+  after_code:
+    - exec:
+        cd: $home/plugins
+        cmd:
+          - git clone https://github.com/discourse/docker_manager.git
+          - cp -r /shared/depiedencap-plugins/discourse-depiedencap-locale . 2>/dev/null || true
+          - cp -r /shared/depiedencap-plugins/depiedencap-onboarding . 2>/dev/null || true
+          - cp -r /shared/depiedencap-plugins/depiedencap-ai-citations . 2>/dev/null || true
+
+run:
+  - exec: echo "Beginning of custom commands"
+  - exec: echo "End of custom commands"
