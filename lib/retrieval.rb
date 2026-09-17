@@ -145,6 +145,9 @@ module DepiedencapAiCitations
       - Then [[2]], [[3]] in that order. Do not skip [[1]]. Do not jump to [[5]] before [[1]]–[[3]].
       - 3 to 5 citations. NEVER write URLs or /t/… yourself.
       - NEVER invent brands/titles/jargon absent from titles/excerpts.
+      - Fidelity: paraphrase excerpts faithfully — never invert their meaning
+        or add a judgment the excerpt does not make (e.g. if an excerpt praises
+        a leather as easy-care, do not call it demanding).
       - Do NOT call tools.
 
       ### Output format (mandatory)
@@ -355,11 +358,12 @@ module DepiedencapAiCitations
 
     CONDENSE_SYSTEM_PROMPT = (
       "Tu réécris le dernier message d'une conversation de forum en UNE " \
-      "requête de recherche autonome et complète, en français. Reprends " \
-      "dans la reformulation les éléments importants déjà mentionnés dans " \
-      "l'historique (marque, modèle, matière, montage) même si le dernier " \
-      "message ne les répète pas, tant qu'ils restent le sujet de la " \
-      "conversation. Si le dernier message change clairement de sujet, ne " \
+      "requête de recherche autonome et complète, en français. Le dernier " \
+      "message exprime le besoin principal : il doit dominer la requête. " \
+      "L'historique ne sert qu'à le préciser — reprends les éléments déjà " \
+      "mentionnés (marque, modèle, matière, montage) seulement s'ils restent " \
+      "le sujet, et garde la hiérarchie : matière/montage/intention d'abord, " \
+      "marque ensuite. Si le dernier message change clairement de sujet, ne " \
       "garde que le dernier message. Réponds UNIQUEMENT avec la requête " \
       "reformulée, une seule phrase, sans préambule ni guillemets."
     ).freeze
