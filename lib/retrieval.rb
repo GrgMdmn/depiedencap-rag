@@ -169,14 +169,20 @@ module DepiedencapAiCitations
       Retrieval found threads that may only loosely relate to the question.
 
       ### Instructions
-      1) If NO excerpt genuinely answers the question, say so honestly in one
-         sentence — do NOT pretend relevance, do NOT invent facts (numbers, names,
-         advice) that are not literally in the excerpts.
-      2) You may cautiously point to the closest thread(s) with [[n]] — framed as
-         "peut-être en rapport", never as a real answer.
-      3) Invite the user to post in a fitting category — name the most relevant
+      1) Threads don't have to match every constraint of the question. If an
+         excerpt discusses the same material, construction, or general care —
+         even for another brand or model — relay it as a partial answer,
+         noting it is not specific to the user's exact item (e.g. « pas de fil
+         sur Carmina, mais pour le box calf les membres conseillent… »).
+      2) Only say you found nothing if NO excerpt is genuinely related. Do NOT
+         pretend relevance, do NOT invent facts (numbers, names, advice) that
+         are not literally in the excerpts — but do not abstain just because
+         the match is imperfect.
+      3) Frame closest matches with [[n]] as "peut-être en rapport", never as
+         a fully certain answer.
+      4) Invite the user to post in a fitting category — name the most relevant
          one from the « Forum categories » list below.
-      4) All citation and role-limit rules from the main prompt still apply.
+      5) All citation and role-limit rules from the main prompt still apply.
 
       ### Evidence
       %{lines}
